@@ -1,0 +1,68 @@
+﻿@model EditAdminViewModel
+
+
+
+
+<hr />
+
+<div class="row" style="border:solid;">
+    <h2>admin Information</h2>
+    <form asp-action="Update" method="post" asp-controller="Admin">
+        <div class="col-md-4" style="border:solid;">
+            <div class="form-group">
+                <label asp-for="firstName" class="control-label"></label>
+                <input readonly asp-for="firstName" class="form-control" />
+                <span asp-validation-for="firstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="middleName" class="control-label"></label>
+                <input readonly asp-for="middleName" class="form-control" />
+                <span asp-validation-for="middleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="lastName" class="control-label"></label>
+                <input readonly asp-for="lastName" class="form-control" />
+                <span asp-validation-for="lastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input readonly asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label>
+                <input readonly asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input readonly asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="gender" class="control-label"></label>
+                <label>Male</label>
+                @Html.RadioButtonFor(model => model.gender, "Male", new { disabled = "disabled"})
+
+                <label>Female</label>
+                @Html.RadioButtonFor(model => model.gender, "Female",  new { disabled = "disabled"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="dob" class="control-label"></label>
+            <input ReadOnly type="datetime" asp-for="dob" class="form-control" />
+            <span asp-validation-for="dob" class="text-danger"></span>
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

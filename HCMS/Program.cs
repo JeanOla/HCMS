@@ -18,6 +18,7 @@ builder.Services.AddScoped<HCMSDbContext, HCMSDbContext>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IadminRepository, AdminRepository>();
+builder.Services.AddScoped<IDoctorScheduleRepository, DoctorScheduleRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

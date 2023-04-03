@@ -4,6 +4,7 @@ using HCMS.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    partial class HCMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230403062311_scheduleTimeNullable")]
+    partial class scheduleTimeNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,9 +119,9 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b7ee90e0-e8ec-40c7-926f-6a49469c11ec",
+                            Id = "810693a9-bf87-442f-a2c0-a8687bb755b6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ab6681d4-8455-469b-ba57-41516b96fd66",
+                            ConcurrencyStamp = "5789517e-11ca-4d51-b758-fbf1db01bff4",
                             Email = "juandelacruz@gmail.com",
                             EmailConfirmed = false,
                             Gender = "Male",
@@ -127,11 +129,11 @@ namespace HCMS.Migrations
                             PasswordHash = "juandelacruz123",
                             PhoneNumber = "09191231231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "30193e5d-5ac1-461e-8b20-f13bd6b021d4",
+                            SecurityStamp = "1cfd5b43-1e5c-40d0-9a9b-8eea1b34a98e",
                             TwoFactorEnabled = false,
                             UserName = "juandc",
                             address = "Sta. Rosa, Laguna",
-                            dob = new DateTime(2023, 4, 3, 22, 17, 16, 510, DateTimeKind.Local).AddTicks(9923),
+                            dob = new DateTime(2023, 4, 3, 14, 23, 10, 664, DateTimeKind.Local).AddTicks(1092),
                             firstName = "Juan",
                             lastName = "Cruz",
                             middleName = "Dela",
@@ -147,9 +149,11 @@ namespace HCMS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("DoctorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -158,21 +162,22 @@ namespace HCMS.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("appointmentDay")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("appointmentime")
+                    b.Property<DateTime>("appoinmentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("caseId")
                         .HasColumnType("int");
 
+                    b.Property<int>("casesId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("caseId");
+                    b.HasIndex("casesId");
 
                     b.ToTable("appointments");
                 });
@@ -186,21 +191,22 @@ namespace HCMS.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("diagnosis")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("patientId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("reason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("doctorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("medicalRecordId")
+                        .HasColumnType("int");
 
                     b.Property<string>("treatmentPlan")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("patientId");
+                    b.HasIndex("medicalRecordId");
 
                     b.ToTable("cases");
                 });
@@ -317,9 +323,8 @@ namespace HCMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("doctorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("doctorId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("endTime")
                         .HasColumnType("datetime2");
@@ -328,8 +333,6 @@ namespace HCMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("doctorId");
 
                     b.ToTable("schedules");
                 });
@@ -387,15 +390,15 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ca716172-faf2-4be9-b5da-9cdd3f905cae",
-                            ConcurrencyStamp = "c7d062ee-5226-4fb5-97ad-439dd9bc5dfb",
+                            Id = "9852e5f5-c15e-4f8e-86fd-3c787d5fd3ba",
+                            ConcurrencyStamp = "3eee7590-a113-40a0-8d5e-03295621bebf",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c5d3a0d2-613b-4cc7-9832-f1dfb4c811d5",
-                            ConcurrencyStamp = "65210d5a-9261-44a5-abce-de97891322ee",
+                            Id = "f3ba463f-e22b-43b3-a4a9-1617a0aea270",
+                            ConcurrencyStamp = "062b65c0-3d71-439e-9013-7acde040dd9f",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         });
@@ -518,15 +521,23 @@ namespace HCMS.Migrations
 
             modelBuilder.Entity("HCMS.Models.Appointment", b =>
                 {
+                    b.HasOne("HCMS.Models.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HCMS.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.HasOne("HCMS.Models.Cases", "cases")
                         .WithMany("Appointments")
-                        .HasForeignKey("caseId")
+                        .HasForeignKey("casesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Patient");
 
                     b.Navigation("User");
 
@@ -535,13 +546,13 @@ namespace HCMS.Migrations
 
             modelBuilder.Entity("HCMS.Models.Cases", b =>
                 {
-                    b.HasOne("HCMS.Models.Patient", "patient")
+                    b.HasOne("HCMS.Models.MedicalRecord", "medicalRecord")
                         .WithMany("cases")
-                        .HasForeignKey("patientId")
+                        .HasForeignKey("medicalRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("patient");
+                    b.Navigation("medicalRecord");
                 });
 
             modelBuilder.Entity("HCMS.Models.MedicalRecord", b =>
@@ -553,17 +564,6 @@ namespace HCMS.Migrations
                         .IsRequired();
 
                     b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("HCMS.Models.Schedule", b =>
-                {
-                    b.HasOne("HCMS.Models.ApplicationUser", "User")
-                        .WithMany("schedules")
-                        .HasForeignKey("doctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -617,19 +617,19 @@ namespace HCMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HCMS.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("schedules");
-                });
-
             modelBuilder.Entity("HCMS.Models.Cases", b =>
                 {
                     b.Navigation("Appointments");
                 });
 
-            modelBuilder.Entity("HCMS.Models.Patient", b =>
+            modelBuilder.Entity("HCMS.Models.MedicalRecord", b =>
                 {
                     b.Navigation("cases");
+                });
+
+            modelBuilder.Entity("HCMS.Models.Patient", b =>
+                {
+                    b.Navigation("Appointments");
 
                     b.Navigation("medical")
                         .IsRequired();

@@ -1,4 +1,4 @@
-﻿@model List<ApplicationUser>
+﻿@model List<Schedule>
 
 <H1>Doctor List</H1>
 
@@ -7,18 +7,20 @@
     <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Admin Name</th>
-            <th scope="col">email</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Day</th>
+            <th scope="col">Time</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var p in Model)
+       @foreach (var p in Model)
         {
             <tr>
                 <th scope="row">@p.Id</th>
-                <td>@(p.firstName + " " + p.lastName)</td>
-                <td>@p.Email</td>
+                <td>@(p.User.firstName + " " + p.User.lastName)</td>
+                <td>@p.dayOfWeek</td> <td>
+                <td>@(p.startTime?.ToString("hh:mm tt") + " to " + p.endTime?.ToString("hh:mm tt"))</td>
                 <td>
                     <a asp-controller="Admin" asp-action="Details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
                         Launch Modal

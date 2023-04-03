@@ -15,7 +15,6 @@ namespace HCMS.Models
         public string? surgery { get; set; }
         public string? vacinated { get; set; }
 
-        public List<Cases> cases { get; set; }
 
     }
 }

@@ -22,11 +22,11 @@
                 <td>@p.Email</td>
                 <td>@p.speciality.SpecialityName</td>
                 <td>
-                    <a asp-controller="Doctor" asp-action="details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
+                    <a asp-controller="Account" asp-action="Details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
                         Launch Modal
                     </a>
-                    <a asp-controller="Doctor " asp-action="edit" asp-route-Id="@p.Id">Edit</a>
-                    <a asp-controller="Doctor" asp-action="Delete" asp-route-Id="@p.Id">Delete</a>
+                    <a asp-controller="Account" asp-action="Update" asp-route-Id="@p.Id">Edit</a>
+                    <a asp-controller="Account" asp-action="Delete" asp-route-Id="@p.Id">Delete</a>
                 </td>
             </tr>
         }

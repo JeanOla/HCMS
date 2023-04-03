@@ -1,0 +1,55 @@
+﻿@model Schedule
+
+
+
+<h1>Create</h1>
+
+<h4>Patient</h4>
+<hr />
+
+<div class="row" style="border:solid;">
+    <h2>Add Doctor Schedule</h2>
+    <form asp-action="addDoctorSchedule" method="post" asp-controller="DoctorSchedule">
+    <div class="col-md-4" style="border:solid;">
+        <div class="form-group">
+            <label asp-for="doctorId" class="control-label">Doctor</label>
+            @Html.DropDownList("doctorId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+        </div>
+        <div class="form-group">
+            <label asp-for="dayOfWeek" class="control-label"></label>
+            <select asp-for="dayOfWeek" class="form-control">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="startTime">Select a start time:</label>
+            <input type="time" asp-for="startTime">
+        </div>
+        <div class="form-group">
+            <label asp-for="endTime">Select a End Time:</label>
+            <input type="time" asp-for="endTime">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

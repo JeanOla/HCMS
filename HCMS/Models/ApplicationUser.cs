@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 
 namespace HCMS.Models
@@ -16,5 +17,8 @@ namespace HCMS.Models
         public Speciality speciality { get; set; }
         public string Gender { get; set; }
         
+        public List<Schedule> schedules { get; set; }
+        [NotMapped]
+        public string FullName => $"{firstName} {lastName}";
     }
 }

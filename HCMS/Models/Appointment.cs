@@ -5,13 +5,12 @@ namespace HCMS.Models
     public class Appointment
     {
         public int Id { get; set; }
-        public int DoctorId { get; set; }
+        public string DoctorId { get; set; }
         [ValidateNever]
-        public ApplicationUser User { get; set; }
-        public int PatientId { get; set; }
-        [ValidateNever]
-        public Patient Patient { get; set; }    
-        public DateTime appoinmentDate { get; set; }
+        public ApplicationUser User { get; set; }    
+        public string appointmentDay { get; set; }
+
+        public DateTime appointmentime { get; set; }
         public string Status { get;set; }
         public int caseId { get; set; }
         [ValidateNever]

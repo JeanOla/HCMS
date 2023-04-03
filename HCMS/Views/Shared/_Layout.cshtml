@@ -28,13 +28,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="index">Patient</a>
+                            <a class="nav-link text-primary" asp-area="" asp-controller="Patient" asp-action="index">Patient</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register"> Register doctor</a>
+                            <a class="nav-link text-success" asp-area="" asp-controller="Account" asp-action="Register"> Register doctor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">doctor List</a>
+                                <a class="nav-link text-success" asp-area="" asp-controller="Account" asp-action="Index">doctor List</a>
                         </li>
                     
                             <li class="nav-item">
@@ -45,11 +45,17 @@
                             </li>
                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminList">Admin List</a>
+                            <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="AdminList">Admin List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Create">Create Admin </a>
+                                <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Create">Create Admin </a>
                         </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" asp-area="" asp-controller="DoctorSchedule" asp-action="DoctorScheduleList">Doctor Schedule List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" asp-area="" asp-controller="DoctorSchedule" asp-action="addDoctorSchedule">Doctor Scheduling</a>
+                            </li>
                     </ul>
                 </div>
             </div>

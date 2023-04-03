@@ -10,10 +10,10 @@ namespace HCMS.data.ModeTableMapping
         public static void UserModel(this ModelBuilder modelBuilder)
         {
             
-            modelBuilder.Entity<Appointment>()
-               .HasOne(p => p.Patient)
-               .WithMany(a => a.Appointments)
-               .HasForeignKey(p => p.PatientId);
+            //modelBuilder.Entity<Appointment>()
+            //   .HasOne(p => p.Patient)
+            //   .WithMany(a => a.Appointments)
+            //   .HasForeignKey(p => p.PatientId);
 
             modelBuilder.Entity<MedicalRecord>()
              .HasOne(p => p.Patient)
@@ -21,13 +21,17 @@ namespace HCMS.data.ModeTableMapping
              .HasForeignKey<MedicalRecord>(p => p.patientId).OnDelete(DeleteBehavior.ClientCascade);
 
              modelBuilder.Entity<Cases>()
-             .HasOne(md => md.medicalRecord)
+             .HasOne(p => p.patient)
              .WithMany(c => c.cases)
-             .HasForeignKey(md => md.medicalRecordId);
-            /* modelBuilder.Entity<Appointment>()
+             .HasForeignKey(p => p.patientId);
+
+            modelBuilder.Entity<Appointment>()
                .HasOne(c => c.cases)
                .WithMany(a => a.Appointments)
-               .HasForeignKey(c => c.caseId);*/
+               .HasForeignKey(c => c.caseId);
+
+            modelBuilder.Entity<Schedule>().HasOne(d => d.User)
+                .WithMany(s => s.schedules).HasForeignKey(d => d.doctorId);
         }
         public static void SeedDafaultData(this ModelBuilder modelBuilder)
         {

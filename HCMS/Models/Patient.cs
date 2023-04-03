@@ -11,8 +11,7 @@
         public string phone { get; set; }
         public string gender { get; set; }
 
-        public List<Appointment> Appointments { get; set; }
-
+        public List<Cases> cases { get; set; }
         public MedicalRecord medical { get; set; }
         public Patient()
         {
@@ -28,7 +27,6 @@
             this.address = address;
             this.phone = phone;
             this.gender = gender;
-            Appointments = appointments;
             medical = medical;
         }
     }

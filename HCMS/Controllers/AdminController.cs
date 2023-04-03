@@ -88,33 +88,7 @@ namespace HCMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(EditAdminViewModel user)
         {
-            //var entityToUpdate = _userManager.FindByEmailAsync(user.Email);
-            //if (ModelState.IsValid)
-            //{
-            //    var userMode = new ApplicationUser
-            //    {
-            //        UserName = user.Email,
-            //        Email = user.Email,
-            //        firstName = user.firstName,
-            //        lastName = user.lastName,
-            //        middleName = user.middleName,
-            //        dob = user.dob,
-            //        address = user.address,
-            //        Gender = user.gender,
-            //        PhoneNumber = user.PhoneNumber,
-
-
-
-            //    };
-            //    //_userManager= crud opedration for user
-            //    //_signInManager=manages signins
-            //   /* var result = */await _userManager.UpdateAsync(userMode);
-            //    //if (result.Succeeded)
-            //    //{
-            //        return RedirectToAction("AdminList", "Admin");
-            //    //}
-            //}
-            //return View(user);
+            
             if (ModelState.IsValid)
             {
                 var entityToUpdate = await _userManager.FindByEmailAsync(user.Email);
@@ -149,6 +123,26 @@ namespace HCMS.Controllers
                 }
             }
             return View(user);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string Id)
+        {
+            var user = _userManager.Users.FirstOrDefault(u => u.Id == Id);
+            var roles = await _userManager.GetRolesAsync(user);
+            EditAdminViewModel userViewModel = new EditAdminViewModel()
+            {
+
+                Email = user.Email,
+                firstName = user.firstName,
+                lastName = user.lastName,
+                middleName = user.middleName,
+                dob = user.dob,
+                address = user.address,
+                gender = user.Gender,
+                PhoneNumber = user.PhoneNumber,
+            };
+            return View(userViewModel);
         }
     }
 }
