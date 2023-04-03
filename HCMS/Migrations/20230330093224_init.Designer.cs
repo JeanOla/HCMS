@@ -4,6 +4,7 @@ using HCMS.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    partial class HCMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230330093224_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +99,7 @@ namespace HCMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("specialityId")
+                    b.Property<int>("specialityId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -113,30 +115,6 @@ namespace HCMS.Migrations
                     b.HasIndex("specialityId");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "e19dda69-bcc7-4680-9d1f-9c2af8a74c91",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5b2746e2-ffb5-4a28-bd6b-59810efd7d3e",
-                            Email = "juandelacruz@gmail.com",
-                            EmailConfirmed = false,
-                            Gender = "Male",
-                            LockoutEnabled = false,
-                            PasswordHash = "juandelacruz123",
-                            PhoneNumber = "09191231231",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "10663999-52e8-42b2-8123-f7185473df63",
-                            TwoFactorEnabled = false,
-                            UserName = "juandc",
-                            address = "Sta. Rosa, Laguna",
-                            dob = new DateTime(2023, 4, 2, 23, 15, 52, 670, DateTimeKind.Local).AddTicks(1880),
-                            firstName = "Juan",
-                            lastName = "Cruz",
-                            middleName = "Dela",
-                            specialityId = 1
-                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Appointment", b =>
@@ -244,15 +222,6 @@ namespace HCMS.Migrations
                         .IsUnique();
 
                     b.ToTable("medicalRecords");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            bloodType = "A+",
-                            diabetic = false,
-                            patientId = 1
-                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Patient", b =>
@@ -294,19 +263,6 @@ namespace HCMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("patients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "ljolaguer@email.com",
-                            address = "Cabuyao, Laguna",
-                            firstName = "Lhener Jean",
-                            gender = "Male",
-                            lastName = "Olaguer",
-                            middleName = "Rareza",
-                            phone = "09504645926"
-                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Schedule", b =>
@@ -350,13 +306,6 @@ namespace HCMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("specialities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            SpecialityName = "Neurology"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -384,22 +333,6 @@ namespace HCMS.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c3d15f2c-2096-450c-a51a-fe6ffa14a2f6",
-                            ConcurrencyStamp = "cfb4ad5e-20ac-41d8-8de6-0f727b0ef08e",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "c54d9e67-7a8c-48f2-b4b6-fbda7da3b779",
-                            ConcurrencyStamp = "e5f8f501-c45d-4dde-9fbe-8348c9423e25",
-                            Name = "Doctor",
-                            NormalizedName = "DOCTOR"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -512,7 +445,9 @@ namespace HCMS.Migrations
                 {
                     b.HasOne("HCMS.Models.Speciality", "speciality")
                         .WithMany("applicationUsers")
-                        .HasForeignKey("specialityId");
+                        .HasForeignKey("specialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("speciality");
                 });

@@ -29,3 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }); // addEventListener
     }) // forEach
 });
+$(document).ready(function () {
+    $('#myModal').modal('show');
+});

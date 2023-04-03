@@ -11,7 +11,7 @@ namespace HCMS.Models
         public string lastName { get; set; }
         public DateTime? dob { get; set; }
         public string address { get; set; }
-        public int specialityId { get; set; }
+        public int? specialityId { get; set; }
         [ValidateNever]
         public Speciality speciality { get; set; }
         public string Gender { get; set; }

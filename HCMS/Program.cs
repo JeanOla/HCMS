@@ -1,5 +1,8 @@
 using HCMS.data;
 using HCMS.Models;
+using HCMS.Repository;
+using HCMS.Repository.mySQL;
+using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +15,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<HCMSDbContext>();
 
 builder.Services.AddScoped<HCMSDbContext, HCMSDbContext>();
-
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+builder.Services.AddScoped<IadminRepository, AdminRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,10 +29,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=login}/{id?}");
 
 app.Run();

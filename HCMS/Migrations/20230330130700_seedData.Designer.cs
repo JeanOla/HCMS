@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    [Migration("20230330085541_intial")]
-    partial class intial
+    [Migration("20230330130700_seedData")]
+    partial class seedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,13 +144,16 @@ namespace HCMS.Migrations
                     b.Property<int>("caseId")
                         .HasColumnType("int");
 
+                    b.Property<int>("casesId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PatientId");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("caseId");
+                    b.HasIndex("casesId");
 
                     b.ToTable("appointments");
                 });
@@ -219,6 +222,15 @@ namespace HCMS.Migrations
                         .IsUnique();
 
                     b.ToTable("medicalRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            bloodType = "A+",
+                            diabetic = false,
+                            patientId = 1
+                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Patient", b =>
@@ -260,6 +272,19 @@ namespace HCMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "ljolaguer@email.com",
+                            address = "Cabuyao, Laguna",
+                            firstName = "Lhener Jean",
+                            gender = "Male",
+                            lastName = "Olaguer",
+                            middleName = "Rareza",
+                            phone = "09504645926"
+                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Schedule", b =>
@@ -330,6 +355,22 @@ namespace HCMS.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "420163c5-b71a-4bfc-8175-12f8683a36f9",
+                            ConcurrencyStamp = "56717379-315d-417a-a287-56565d53bb21",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "de6c1bc7-6d58-4aa7-a216-8e6937260c60",
+                            ConcurrencyStamp = "63cfcba7-efcd-47f5-9d2b-7dde3d9ff529",
+                            Name = "Doctor",
+                            NormalizedName = "DOCTOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -463,7 +504,7 @@ namespace HCMS.Migrations
 
                     b.HasOne("HCMS.Models.Cases", "cases")
                         .WithMany("Appointments")
-                        .HasForeignKey("caseId")
+                        .HasForeignKey("casesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -490,7 +531,7 @@ namespace HCMS.Migrations
                     b.HasOne("HCMS.Models.Patient", "Patient")
                         .WithOne("medical")
                         .HasForeignKey("HCMS.Models.MedicalRecord", "patientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Patient");

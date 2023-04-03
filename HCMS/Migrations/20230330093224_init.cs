@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HCMS.Migrations
 {
-    public partial class intial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -113,8 +113,7 @@ namespace HCMS.Migrations
                         name: "FK_medicalRecords_patients_patientId",
                         column: x => x.patientId,
                         principalTable: "patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -273,7 +272,8 @@ namespace HCMS.Migrations
                     PatientId = table.Column<int>(type: "int", nullable: false),
                     appoinmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    caseId = table.Column<int>(type: "int", nullable: false)
+                    caseId = table.Column<int>(type: "int", nullable: false),
+                    casesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,8 +284,8 @@ namespace HCMS.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_appointments_cases_caseId",
-                        column: x => x.caseId,
+                        name: "FK_appointments_cases_casesId",
+                        column: x => x.casesId,
                         principalTable: "cases",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -298,9 +298,9 @@ namespace HCMS.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_appointments_caseId",
+                name: "IX_appointments_casesId",
                 table: "appointments",
-                column: "caseId");
+                column: "casesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_appointments_PatientId",

@@ -1,0 +1,40 @@
+﻿@model List<Patient>
+
+@{
+    
+}
+<H1>Patient List</H1>
+
+<a type="button" class="btn btn-primary" asp-action="Create" asp-controller="Patient">Add Patient</a>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Patient Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <th scope="row">@p.Id</th>
+                <td>@(p.firstName + " " + p.lastName)</td>
+                <td>@p.address</td>
+                <td>@p.phone</td>
+                <td>
+                    @*<a asp-controller="Patient" asp-action="details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Open Modal
+                    </a>*@
+                    <a asp-controller="Patient" asp-action="details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
+                        Launch Modal
+                    </a>
+                    <a asp-controller="Patient" asp-action="edit" asp-route-Id="@p.Id">Edit</a>
+                   <a asp-controller="Patient" asp-action="Delete" asp-route-Id="@p.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

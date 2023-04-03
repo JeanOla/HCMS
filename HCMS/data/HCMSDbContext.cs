@@ -1,5 +1,6 @@
 ﻿using HCMS.data.ModeTableMapping;
 using HCMS.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -20,6 +21,7 @@ namespace HCMS.data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.UserModel();
+            builder.SeedDafaultData();
             base.OnModelCreating(builder);
         }
        public DbSet<Appointment> appointments { get; set; }
@@ -28,5 +30,10 @@ namespace HCMS.data
         public DbSet<Patient> patients { get; set; }
         public DbSet<Schedule> schedules { get; set; }
         public DbSet<Speciality> specialities { get; set; }
+        public DbSet<IdentityRole> Roles { get; set; }
+
+     
+        public DbSet<ApplicationUser> users { get; set; }
+       
     }
 }

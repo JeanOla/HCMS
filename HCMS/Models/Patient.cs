@@ -14,5 +14,22 @@
         public List<Appointment> Appointments { get; set; }
 
         public MedicalRecord medical { get; set; }
+        public Patient()
+        {
+
+        }
+        public Patient(int id, string firstName, string lastName, string middleName, string email, string address, string phone, string gender, List<Appointment> appointments, MedicalRecord medical)
+        {
+            Id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.middleName = middleName;
+            Email = email;
+            this.address = address;
+            this.phone = phone;
+            this.gender = gender;
+            Appointments = appointments;
+            medical = medical;
+        }
     }
 }

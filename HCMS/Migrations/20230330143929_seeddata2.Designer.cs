@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    [Migration("20230330090921_initial")]
-    partial class initial
+    [Migration("20230330143929_seeddata2")]
+    partial class seeddata2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,6 +115,30 @@ namespace HCMS.Migrations
                     b.HasIndex("specialityId");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3fb37b25-a10e-49db-b2d8-e680d497dd98",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d8f61600-2675-4987-9937-5b86dd3b4c90",
+                            Email = "juandelacruz@gmail.com",
+                            EmailConfirmed = false,
+                            Gender = "Male",
+                            LockoutEnabled = false,
+                            PasswordHash = "juandelacruz123",
+                            PhoneNumber = "09191231231",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "25429dfe-82c6-4d50-a023-489ab5ff904d",
+                            TwoFactorEnabled = false,
+                            UserName = "juandc",
+                            address = "Sta. Rosa, Laguna",
+                            dob = new DateTime(2023, 3, 30, 22, 39, 29, 356, DateTimeKind.Local).AddTicks(9413),
+                            firstName = "Juan",
+                            lastName = "Cruz",
+                            middleName = "Dela",
+                            specialityId = 1
+                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Appointment", b =>
@@ -222,6 +246,15 @@ namespace HCMS.Migrations
                         .IsUnique();
 
                     b.ToTable("medicalRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            bloodType = "A+",
+                            diabetic = false,
+                            patientId = 1
+                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Patient", b =>
@@ -263,6 +296,19 @@ namespace HCMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "ljolaguer@email.com",
+                            address = "Cabuyao, Laguna",
+                            firstName = "Lhener Jean",
+                            gender = "Male",
+                            lastName = "Olaguer",
+                            middleName = "Rareza",
+                            phone = "09504645926"
+                        });
                 });
 
             modelBuilder.Entity("HCMS.Models.Schedule", b =>
@@ -306,6 +352,13 @@ namespace HCMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("specialities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            SpecialityName = "Neurology"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -333,6 +386,22 @@ namespace HCMS.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e40e1d53-9343-4bc6-b50a-608047f4b693",
+                            ConcurrencyStamp = "e2abc354-db63-4ad7-92aa-644954897f7f",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "1e1bebdc-253f-4cc4-8610-622073bf6df6",
+                            ConcurrencyStamp = "d93a2257-f0f7-4c4b-9206-ce9b07b719e9",
+                            Name = "Doctor",
+                            NormalizedName = "DOCTOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -493,7 +562,7 @@ namespace HCMS.Migrations
                     b.HasOne("HCMS.Models.Patient", "Patient")
                         .WithOne("medical")
                         .HasForeignKey("HCMS.Models.MedicalRecord", "patientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Patient");
