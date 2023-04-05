@@ -9,11 +9,11 @@ namespace HCMS.data.ModeTableMapping
         
         public static void UserModel(this ModelBuilder modelBuilder)
         {
-            
-            //modelBuilder.Entity<Appointment>()
-            //   .HasOne(p => p.Patient)
-            //   .WithMany(a => a.Appointments)
-            //   .HasForeignKey(p => p.PatientId);
+
+            modelBuilder.Entity<Appointment>()
+               .HasOne(p => p.User)
+               .WithMany(a => a.appointments)
+               .HasForeignKey(p => p.DoctorId);
 
             modelBuilder.Entity<MedicalRecord>()
              .HasOne(p => p.Patient)

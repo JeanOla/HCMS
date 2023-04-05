@@ -4,11 +4,11 @@
 
 <h1>Create</h1>
 
-<h4>Patient</h4>
+<h4>Doctor</h4>
 <hr />
 
 <div class="row" style="border:solid;">
-    <h2>Patient Information</h2>
+    <h2>Doctor Information</h2>
     <form asp-action="Register" method="post" asp-controller="Account">
         <div class="col-md-4" style="border:solid;">
             <div class="form-group">
@@ -50,7 +50,6 @@
                 @Html.RadioButtonFor(model => model.gender, "Female")
             </div>
         </div>
-        <h2>Patient Medical Record</h2>
         <div class="col-md-4" style="border:solid;">
             <label asp-for="specialityId" class="control-label">Speciality</label>
             @Html.DropDownList("SpecialityId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})

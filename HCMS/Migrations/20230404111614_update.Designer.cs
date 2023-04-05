@@ -4,6 +4,7 @@ using HCMS.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    partial class HCMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230404111614_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,9 +119,9 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fd469dba-8451-48e3-b600-03d0e839e45e",
+                            Id = "8239db4f-2e32-4c1f-97b2-21ae8c5bb0b6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3af1cb88-0d73-4b8d-856c-7380ed7a2b88",
+                            ConcurrencyStamp = "a8fcc8ef-454d-4553-af21-342cd7a1ffa4",
                             Email = "juandelacruz@gmail.com",
                             EmailConfirmed = false,
                             Gender = "Male",
@@ -127,11 +129,11 @@ namespace HCMS.Migrations
                             PasswordHash = "juandelacruz123",
                             PhoneNumber = "09191231231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "61a0284e-20f6-4a28-b24c-da01f98e7f35",
+                            SecurityStamp = "a9381670-2275-470f-a8d8-9f8e8e46328a",
                             TwoFactorEnabled = false,
                             UserName = "juandc",
                             address = "Sta. Rosa, Laguna",
-                            dob = new DateTime(2023, 4, 4, 19, 32, 51, 965, DateTimeKind.Local).AddTicks(3410),
+                            dob = new DateTime(2023, 4, 4, 19, 16, 13, 612, DateTimeKind.Local).AddTicks(8910),
                             firstName = "Juan",
                             lastName = "Cruz",
                             middleName = "Dela",
@@ -148,11 +150,15 @@ namespace HCMS.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("appointmentDay")
                         .IsRequired()
@@ -166,7 +172,7 @@ namespace HCMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("caseId");
 
@@ -383,15 +389,15 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25b76fb6-7ac0-4364-bb5d-9763a2903f29",
-                            ConcurrencyStamp = "9551cb6c-e10b-4bc2-b686-13ae5d6eee51",
+                            Id = "711d5285-1fba-4002-9535-a8a642f1a0fa",
+                            ConcurrencyStamp = "e7666c0b-e3e6-4c39-b778-97d2c77a45cf",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "33074dfc-6822-42d7-85c4-d05ea72aa7ab",
-                            ConcurrencyStamp = "561c7e93-b96f-42b5-af8e-32087dd89e58",
+                            Id = "4057c472-bb54-4a22-841c-9973068154f3",
+                            ConcurrencyStamp = "740689a1-29a8-434a-95a4-76020b43f6ad",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         });
@@ -515,8 +521,8 @@ namespace HCMS.Migrations
             modelBuilder.Entity("HCMS.Models.Appointment", b =>
                 {
                     b.HasOne("HCMS.Models.ApplicationUser", "User")
-                        .WithMany("appointments")
-                        .HasForeignKey("DoctorId");
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.HasOne("HCMS.Models.Cases", "cases")
                         .WithMany("Appointments")
@@ -615,8 +621,6 @@ namespace HCMS.Migrations
 
             modelBuilder.Entity("HCMS.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("appointments");
-
                     b.Navigation("schedules");
                 });
 

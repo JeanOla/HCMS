@@ -1,6 +1,6 @@
 ﻿@model List<ApplicationUser>
 
-<H1>Doctor List</H1>
+<H1>Admin List</H1>
 
 @*<a type="button" class="btn btn-primary" asp-action="Create" asp-controller="Patient">Add Patient</a>*@
 <table class="table">
@@ -21,7 +21,7 @@
                 <td>@p.Email</td>
                 <td>
                     <a asp-controller="Admin" asp-action="Details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
-                        Launch Modal
+                        Details
                     </a>
                     <a asp-controller="Admin" asp-action="Update" asp-route-Id="@p.Id">Edit</a>
                     <a asp-controller="Admin" asp-action="Delete" asp-route-Id="@p.Id">Delete</a>

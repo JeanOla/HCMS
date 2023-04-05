@@ -1,4 +1,6 @@
-﻿namespace HCMS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HCMS.Models
 {
     public class Patient
     {
@@ -13,6 +15,9 @@
 
         public List<Cases> cases { get; set; }
         public MedicalRecord medical { get; set; }
+        [NotMapped]
+
+        public string FullName => $"{firstName} {lastName}";
         public Patient()
         {
 

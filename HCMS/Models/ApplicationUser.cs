@@ -20,5 +20,6 @@ namespace HCMS.Models
         public List<Schedule> schedules { get; set; }
         [NotMapped]
         public string FullName => $"{firstName} {lastName}";
+        public List<Appointment> appointments { get; set; }
     }
 }

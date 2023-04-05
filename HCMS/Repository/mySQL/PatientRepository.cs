@@ -34,8 +34,6 @@ namespace HCMS.Repository.mySQL
             {
                 try
                 {
-
-
                     _dbContext.patients.Add(newPatient);
                     _dbContext.SaveChanges();
                     medred = new MedicalRecord

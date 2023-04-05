@@ -1,0 +1,48 @@
+﻿@model Cases
+
+
+
+<h1>Create</h1>
+
+<h4>Case</h4>
+<hr />
+
+<div class="row" style="border:solid;">
+    <h2>Case Information</h2>
+    <form asp-action="Create" method="post" asp-controller="Case">
+        <div class="col-md-4" style="border:solid;">
+            <div class="form-group">
+            <label asp-for="patientId" class="control-label">Speciality</label>
+            @Html.DropDownList("PatientId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+        </div>
+        <div class="form-group">
+            <label asp-for="reason" class="control-label"></label>
+                <input type="datetime" asp-for="reason" class="form-control" />
+                <span asp-validation-for="reason" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="diagnosis" class="control-label"></label>
+                <input type="text" asp-for="diagnosis" class="form-control" />
+                <span asp-validation-for="diagnosis" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="treatmentPlan" class="control-label"></label>
+                <input type="text" asp-for="treatmentPlan" class="form-control" />
+            <span asp-validation-for="treatmentPlan" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

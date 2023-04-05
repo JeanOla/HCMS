@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HCMS.Models
 {
@@ -14,7 +15,9 @@ namespace HCMS.Models
         public string reason { get; set; }
 
         public List<Appointment> Appointments { get; set; }
-
+        [NotMapped]
+        [ValidateNever]
+        public string fullcase => $"{Id} {patient.firstName} {patient.lastName} {reason}";
 
     }
 }

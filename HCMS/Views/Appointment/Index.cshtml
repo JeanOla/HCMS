@@ -1,6 +1,6 @@
-﻿    @model List<ApplicationUser>
+﻿@model List<Appointment>
 
-<H1>Doctor List</H1>
+<H1>Appointment List</H1>
 
 @*<a type="button" class="btn btn-primary" asp-action="Create" asp-controller="Patient">Add Patient</a>*@
 <table class="table">
@@ -8,8 +8,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Doctor Name</th>
-            <th scope="col">email</th>
-            <th scope="col">Speciality</th>
+            <th scope="col">Case</th>
+            <th scope="col">Day</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -18,12 +18,12 @@
         {
             <tr>
                 <th scope="row">@p.Id</th>
-                <td>@(p.firstName + " " + p.lastName)</td>
-                <td>@p.Email</td>
-                <td>@p.speciality.SpecialityName</td>
+                <td>@(p.User.firstName + " " + p.User.lastName)</td>
+                <td>@p.cases.fullcase</td>
+                <td>@(p.appointmentDay + ", " + p.appointmentime)</td>
                 <td>
                     <a asp-controller="Account" asp-action="Details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
-                            Details
+                        Details
                     </a>
                     <a asp-controller="Account" asp-action="Update" asp-route-Id="@p.Id">Edit</a>
                     <a asp-controller="Account" asp-action="Delete" asp-route-Id="@p.Id">Delete</a>

@@ -1,0 +1,58 @@
+﻿@model Appointment
+
+
+
+<h1>Create</h1>
+
+<h4>Appointment</h4>
+<hr />
+
+<div class="row" style="border:solid;">
+    <form asp-action="Create" method="post" asp-controller="Appointment">
+        <div class="col-md-4" style="border:solid;">
+            <div class="form-group">
+                <label asp-for="caseId" class="control-label">Case</label>
+                @Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorId" class="control-label">Doctor</label>
+                @Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+            </div>
+            <div class="form-group">
+                <label asp-for="appointmentDay" class="control-label"></label>
+                <select asp-for="appointmentDay" class="form-control">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="appointmentime" class="control-label"></label>
+                <input type="time" asp-for="appointmentime" class="form-control" />
+                <span asp-validation-for="appointmentime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input type="text" asp-for="Status" value="Ongoing" class="form-control" readonly/>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
