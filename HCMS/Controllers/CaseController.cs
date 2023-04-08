@@ -27,5 +27,11 @@ namespace HCMS.Controllers
             _repo.addCase(cases);
             return RedirectToAction("");
         }
+        public IActionResult Index()
+        {
+           var casee = _repo.getCases();
+            return View(casee);
+
+        }
     }
 }

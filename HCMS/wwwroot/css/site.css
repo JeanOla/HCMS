@@ -1,18 +1,87 @@
-html {
-  font-size: 14px;
+/*html {
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 100;
+    padding: 70px 0 0 10px;
+    border-right: 1px solid #d3d3d3;
+}
+
+.left-sidebar {
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 70px)
+}
+
+.sidebar-nav li .nav-link {
+    color: #333;
+    font-weight: 500;
+}
+
+.form-control-primary {
+    margin: 10px;
+    opacity: 0.2;
+    border-radius: 2px;
+}
+
+.sidebar li .submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+*/
+/* Set a fixed height for the sidebar */
+.navbar {
+    height: 3.5rem;
+}
+/* Set a fixed height for the sidebar */
+.sidebar {
+    height: calc(100vh - 3.5rem);
+    position: fixed;
+    top: 3.5rem;
+    z-index: 1;
+}
+/* Adjust the main content to account for the topbar and sidebar */
+.main-content {
+    margin-top: 3.5rem;
+    margin-left: 16.5rem;
+}
+/* Hide the sidebar on small screens */
+@media (max-width: 767px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-top: 0;
+        margin-left: 0;
+    }
+}
+body {
+    background-color: #edf1f4;
+}
+table{
+    cursor:pointer;
 }

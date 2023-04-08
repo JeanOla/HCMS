@@ -27,13 +27,13 @@ namespace HCMS.ViewModel
         public string gender { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
-        public string password { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm Password")]
-        [Compare("password", ErrorMessage = "The COnfirm Password Does not matched to the password")]
-        public string confirmPassword { get; set; }
+        //[Required]
+        //[DataType(DataType.Password)]
+        //public string password { get; set; }
+        //[Required]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirm Password")]
+        //[Compare("password", ErrorMessage = "The COnfirm Password Does not matched to the password")]
+        //public string confirmPassword { get; set; }
     }
 }

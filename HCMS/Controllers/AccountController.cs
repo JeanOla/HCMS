@@ -60,11 +60,18 @@ namespace HCMS.Controllers
                 if(result.Succeeded)
                 {
                    var role = _roleManager.Roles.FirstOrDefault(r=>r.Name == "Doctor");
-                    await _userManager.AddToRoleAsync(userMode,role.Name);
-                    return RedirectToAction("Index", "Home");
+                    if(role != null)
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(userMode, role.Name);
+                        if (!roleResult.Succeeded)
+                        {
+                            ModelState.AddModelError(String.Empty, "User Role cannot be assigned");
+                        }
+                    }
+                    //return RedirectToAction("Index", "Home");
                 }
             }
-            return View(userViewModel);
+           return RedirectToAction("Index");
         }
         [HttpGet]
         public async Task<IActionResult> Update(string Id)
@@ -106,7 +113,7 @@ namespace HCMS.Controllers
                     entityToUpdate.Gender = user.gender;
                     entityToUpdate.PhoneNumber = user.PhoneNumber;
                     entityToUpdate.specialityId = user.specialityId;
-                    entityToUpdate.PasswordHash = user.password;
+                   // entityToUpdate.PasswordHash = user.password;
 
 
                     var result = await _userManager.UpdateAsync(entityToUpdate);
@@ -140,6 +147,10 @@ namespace HCMS.Controllers
         [HttpGet]
         public IActionResult login()
         {
+            if(User?.Identity.IsAuthenticated == true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]
@@ -184,6 +195,12 @@ namespace HCMS.Controllers
                 specialityId = user.specialityId ?? 0,
             };
             return View(userViewModel);
+        }
+
+        public IActionResult Delete(string Id)
+        {
+            _repo.DeleteDoctor(Id);
+            return RedirectToAction(controllerName: "Account", actionName: "index");
         }
 
 

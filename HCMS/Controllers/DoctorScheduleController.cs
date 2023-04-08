@@ -43,5 +43,18 @@ namespace HCMS.Controllers
            _repo.addSchedule(sched);
             return RedirectToAction("DoctorScheduleList");
         }
+        [HttpGet]
+        public IActionResult Update(int Id)
+        {
+            ViewBag.options = new SelectList(_repo.getDoctors(), "Id", "FullName");
+            var details = _repo.GetDoctorSchedById(Id);
+            return View(details);
+        }
+        [HttpPost]
+        public IActionResult Update(Schedule sched)
+        {
+            _repo.updateSchedule(sched);
+            return RedirectToAction("DoctorScheduleList");
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace HCMS.data.ModeTableMapping
                  allergy = null,
                  medication = null,
                  bloodType = "A+",
-                 diabetic = false,
+                 diabetic = "Yes",
                  surgery = null,
                  vacinated = null,
              }

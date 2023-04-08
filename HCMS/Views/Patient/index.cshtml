@@ -3,6 +3,78 @@
 @{
     
 }
+
+<div class="accordion mt-4">
+    <div class="accordion-item">
+        <h1 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Patient List
+            </button>
+        </h1>
+        <div class="container-fluid  py-2">
+            <div class="row">
+                <div class="col-md-12 bg-light rounded">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#" aria-current="page">Patient</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Patient List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
+            <div class="accordion-body">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-12 bg-light rounded">
+                            <table class="table table-hover table-responsive-lg rounded" id="doctorList">
+                                <thead class="thead-dark bg-primary">
+                                    <tr>
+                                        @*  <th scope="col">#</th>*@
+                                        <th scope="col" style="text-align: center" class="text-white">Patient Name</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Address</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Email</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Phone Number</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var p in Model)
+                                    {
+
+                                        <tr>
+                                            @* <th scope="row"> @number++</th>*@
+                                            <td style="text-align: center">@(p.firstName + " " + p.lastName)</td>
+                                            <td style="text-align: center">@p.address</td>
+                                            <td style="text-align: center">@p.Email</td>
+                                            <td style="text-align: center">@p.phone</td>
+                                            <td style="text-align: center">
+                                                <a class="btn btn-info" asp-controller="Patient" asp-action="details" title="Details" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
+                                                <a class="btn btn-secondary" asp-controller="Patient" title="Edit" asp-action="edit" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a class="btn btn-danger" asp-controller="Patient" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-user-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*
 <H1>Patient List</H1>
 
 <a type="button" class="btn btn-primary" asp-action="Create" asp-controller="Patient">Add Patient</a>
@@ -27,7 +99,7 @@
                 <td>
                     @*<a asp-controller="Patient" asp-action="details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Open Modal
-                    </a>*@
+                    </a>
                     <a asp-controller="Patient" asp-action="details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
                         Details
                     </a>
@@ -38,3 +110,4 @@
         }
     </tbody>
 </table>
+*@

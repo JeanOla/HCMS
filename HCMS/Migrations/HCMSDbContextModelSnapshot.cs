@@ -117,9 +117,9 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fd469dba-8451-48e3-b600-03d0e839e45e",
+                            Id = "9c9d7666-99f0-45e7-9b39-092b24878af2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3af1cb88-0d73-4b8d-856c-7380ed7a2b88",
+                            ConcurrencyStamp = "6babcc17-09d3-4ca6-9d27-408a7202434a",
                             Email = "juandelacruz@gmail.com",
                             EmailConfirmed = false,
                             Gender = "Male",
@@ -127,11 +127,11 @@ namespace HCMS.Migrations
                             PasswordHash = "juandelacruz123",
                             PhoneNumber = "09191231231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "61a0284e-20f6-4a28-b24c-da01f98e7f35",
+                            SecurityStamp = "ae80ee9b-c6b7-4c26-b846-3da78973343f",
                             TwoFactorEnabled = false,
                             UserName = "juandc",
                             address = "Sta. Rosa, Laguna",
-                            dob = new DateTime(2023, 4, 4, 19, 32, 51, 965, DateTimeKind.Local).AddTicks(3410),
+                            dob = new DateTime(2023, 4, 7, 21, 6, 33, 678, DateTimeKind.Local).AddTicks(857),
                             firstName = "Juan",
                             lastName = "Cruz",
                             middleName = "Dela",
@@ -215,8 +215,8 @@ namespace HCMS.Migrations
                     b.Property<string>("bloodType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("diabetic")
-                        .HasColumnType("bit");
+                    b.Property<string>("diabetic")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("medication")
                         .HasColumnType("nvarchar(max)");
@@ -242,7 +242,7 @@ namespace HCMS.Migrations
                         {
                             Id = 1,
                             bloodType = "A+",
-                            diabetic = false,
+                            diabetic = "Yes",
                             patientId = 1
                         });
                 });
@@ -262,6 +262,9 @@ namespace HCMS.Migrations
                     b.Property<string>("address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("dob")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("firstName")
                         .IsRequired()
@@ -383,15 +386,15 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25b76fb6-7ac0-4364-bb5d-9763a2903f29",
-                            ConcurrencyStamp = "9551cb6c-e10b-4bc2-b686-13ae5d6eee51",
+                            Id = "9d255e0d-796a-41e1-b1bf-4707e16b5a0e",
+                            ConcurrencyStamp = "87a17628-2819-46d5-9c25-a6357734d9eb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "33074dfc-6822-42d7-85c4-d05ea72aa7ab",
-                            ConcurrencyStamp = "561c7e93-b96f-42b5-af8e-32087dd89e58",
+                            Id = "2600e38e-f337-440a-972c-024104af8eef",
+                            ConcurrencyStamp = "132570ea-1a58-45ea-98d9-102bc51ead51",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         });

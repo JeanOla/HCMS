@@ -6,5 +6,7 @@ namespace HCMS.Repository
     {
         List<Patient> GetPatients();
         Cases addCase(Cases cases);
+
+        List<Cases> getCases();
     }
 }

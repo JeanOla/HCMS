@@ -120,6 +120,7 @@ namespace HCMS.Repository.mySQL
                     patient.address = newPatient.address;
                     patient.phone = newPatient.phone;
                     patient.gender = newPatient.gender;
+                    patient.dob = newPatient.dob;
                     _dbContext.patients.Attach(patient);
                     _dbContext.Update(patient);
                     _dbContext.SaveChanges();

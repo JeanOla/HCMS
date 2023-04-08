@@ -1,87 +1,117 @@
 ﻿@model RegisterDoctorViewModel
 
 
+<div class="accordion mt-4">
+    <div class="accordion-item">
+        <h1 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Doctor Registration
+            </button>
+        </h1>
+        <div class="container-fluid  py-2">
+            <div class="row">
+                <div class="col-md-12 bg-light rounded">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#" aria-current="page">Doctor</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Doctor Registration</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
+            <div class="accordion-body">
+                <div class="container-fluid">
 
-<h1>Create</h1>
+                    <form asp-action="Register" method="post" asp-controller="Account">
+                    <div class="row">
+                      <div class="col-md-6">
+                            @*<div class="col-md-4">*@
+                            <div class="form-group">
+                                <label asp-for="firstName" class="control-label">First Name</label>
+                                <input asp-for="firstName" class="form-control" />
+                                <span asp-validation-for="firstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="middleName" class="control-label">Middle Name</label>
+                                <input asp-for="middleName" class="form-control" />
+                                <span asp-validation-for="middleName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="lastName" class="control-label">Last Name</label>
+                                <input asp-for="lastName" class="form-control" />
+                                <span asp-validation-for="lastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label">Email</label>
+                                <input asp-for="Email" class="form-control" type="em" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="address" class="control-label"> Address</label>
+                                <input asp-for="address" class="form-control" />
+                                <span asp-validation-for="address" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber" class="control-label">Contact Number</label>
+                                <input asp-for="PhoneNumber" class="form-control" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="gender" class="control-label">Gender</label>
+                                <label>Male</label>
+                                @Html.RadioButtonFor(model => model.gender, "Male", new { @checked = "checked" })
 
-<h4>Doctor</h4>
-<hr />
+                                <label>Female</label>
+                                @Html.RadioButtonFor(model => model.gender, "Female")
+                            </div>
+                            @*</div>*@
+                      </div>
+                      <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label asp-for="specialityId" class="control-label">Speciality</label>
+                                @Html.DropDownList("SpecialityId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="dob" class="control-label">Date of Birth</label>
+                                <input type="datetime" asp-for="dob" class="form-control" />
+                                <span asp-validation-for="dob" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="password" class="control-label">Password</label>
+                                <input type="password" asp-for="password" class="form-control" />
+                                <span asp-validation-for="password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="confirmPassword" class="control-label">Confirm Password</label>
+                                <input type="password" asp-for="confirmPassword" class="form-control" />
+                                <span asp-validation-for="confirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                      </div>
+                    </div>
+                    </form>
 
-<div class="row" style="border:solid;">
-    <h2>Doctor Information</h2>
-    <form asp-action="Register" method="post" asp-controller="Account">
-        <div class="col-md-4" style="border:solid;">
-            <div class="form-group">
-                <label asp-for="firstName" class="control-label"></label>
-                <input asp-for="firstName" class="form-control" />
-                <span asp-validation-for="firstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="middleName" class="control-label"></label>
-                <input asp-for="middleName" class="form-control" />
-                <span asp-validation-for="middleName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="lastName" class="control-label"></label>
-                <input asp-for="lastName" class="form-control" />
-                <span asp-validation-for="lastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="address" class="control-label"></label>
-                <input asp-for="address" class="form-control" />
-                <span asp-validation-for="address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="gender" class="control-label"></label>
-                <label>Male</label>
-                @Html.RadioButtonFor(model => model.gender, "Male", new { @checked = "checked" })
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
 
-                <label>Female</label>
-                @Html.RadioButtonFor(model => model.gender, "Female")
+
+                </div>
             </div>
         </div>
-        <div class="col-md-4" style="border:solid;">
-            <label asp-for="specialityId" class="control-label">Speciality</label>
-            @Html.DropDownList("SpecialityId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
-        </div>
-        <div class="form-group">
-            <label asp-for="dob" class="control-label"></label>
-            <input type="datetime" asp-for="dob" class="form-control" />
-            <span asp-validation-for="dob" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="password" class="control-label"></label>
-            <input type="text" asp-for="password" class="form-control" />
-            <span asp-validation-for="password" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="confirmPassword" class="control-label"></label>
-            <input type="text" asp-for="confirmPassword" class="form-control" />
-            <span asp-validation-for="confirmPassword" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </div>
-    </form>
+    </div>
 </div>
 
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+   
+    

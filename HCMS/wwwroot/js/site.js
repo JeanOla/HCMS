@@ -32,3 +32,32 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function () {
     $('#myModal').modal('show');
 });
+
+$(document).ready(function () {
+    $('#doctorList').DataTable();
+});
+
+//change the option for appointment
+$(document).ready(function () {
+    $('#appointmentDay').on('change', function () {
+        var selectedValue = $(this).val();
+        $.ajax({
+            url: '/Appointment/changeDay',
+            type: 'POST',
+            data: { newDay: selectedValue },
+            success: function (data) {
+                var doctorIdDropdown = $('#doctor');
+                doctorIdDropdown.empty();
+                $.each(data, function ( option) {
+                    doctorIdDropdown.append($('<option>', {
+                        Value: option.Value,
+                        Text: option.Text
+                    }));
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("asda");
+            }
+        });
+    });
+});

@@ -7,5 +7,7 @@ namespace HCMS.Repository
         List<Speciality> populateSpeciality();
 
         List<ApplicationUser> getDoctors();
+
+        ApplicationUser DeleteDoctor(string Id);
     }
 }

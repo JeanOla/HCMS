@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace HCMS.Models
 {
@@ -9,11 +10,9 @@ namespace HCMS.Models
         //build relationship wit hdoctor
         public ApplicationUser User { get; set; }
         public string dayOfWeek { get; set; }
-        [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:hh:mm tt}", ApplyFormatInEditMode = true)]
+        [BindProperty, DataType(DataType.Time)]
         public DateTime? startTime { get; set; }
-        [DataType(DataType.Time)] // Only store time in the database
-        [DisplayFormat(DataFormatString = "{0:hh:mm tt}", ApplyFormatInEditMode = true)]
+        [BindProperty, DataType(DataType.Time)]
         public DateTime? endTime { get; set; }
     }
 }

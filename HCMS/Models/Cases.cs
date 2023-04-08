@@ -17,7 +17,7 @@ namespace HCMS.Models
         public List<Appointment> Appointments { get; set; }
         [NotMapped]
         [ValidateNever]
-        public string fullcase => $"{Id} {patient.firstName} {patient.lastName} {reason}";
+        public string fullcase => $" Patient Name: {patient.firstName} {patient.lastName} - Reason: {reason}";
 
     }
 }

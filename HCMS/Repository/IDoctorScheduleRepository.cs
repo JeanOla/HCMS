@@ -10,6 +10,9 @@ namespace HCMS.Repository
         Schedule addSchedule(Schedule sched);
 
         List<Schedule> ScheduleList();
-       
+
+        Schedule GetDoctorSchedById(int Id);
+
+        Schedule updateSchedule(Schedule sched);
     }
 }

@@ -11,7 +11,7 @@ namespace HCMS.Models
         public string? allergy { get; set; }
         public string? medication { get; set; }
         public string? bloodType { get; set; }
-        public bool diabetic { get; set; }
+        public string? diabetic { get; set; }
         public string? surgery { get; set; }
         public string? vacinated { get; set; }
 

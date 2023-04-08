@@ -23,16 +23,16 @@ namespace HCMS.Repository.mySQL
         public List<ApplicationUser> getDoctors()
         {
             var role = _roleManager.Roles.ToList();
-            //return _dbContext.Employees.Include(e => e.department).AsNoTracking().ToList();
-            //dbContext.Appointments.Where(a => a.Status == "Pending").ToList();
+           
            return _dbContext.users.Include(s=>s.speciality).Where(s=>s.speciality.SpecialityName != null).AsNoTracking().ToList();
         }
-        //public List<ApplicationUser> ScheduleList()
-        //{
-           
-        //    //return _dbContext.Employees.Include(e => e.department).AsNoTracking().ToList();
-        //    //dbContext.Appointments.Where(a => a.Status == "Pending").ToList();
-        //   return _dbContext.schedules.Include()
-        //}
+        public ApplicationUser DeleteDoctor(string Id)
+        {
+            var doctor = _dbContext.users.AsNoTracking().ToList().FirstOrDefault(d => d.Id == Id);
+            _dbContext.Remove(doctor);
+            _dbContext.SaveChanges();
+            return doctor;
+
+        }
     }
 }

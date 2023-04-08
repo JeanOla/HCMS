@@ -8,83 +8,125 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HCMS.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DataTable2/datatables.css" asp-append-version="true" />
+
 </head>
 <body>
-        @if(_signInManager.IsSignedIn(User)){
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    @if (_signInManager.IsSignedIn(User))
+    {
+        <!-- Topbar Menu -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top ">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HCMS</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand text-white" href="#">Health Care Management System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-white">Welcome @User.Identity.Name</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-white active" asp-area="" asp-controller="Account" asp-action="logout">logout</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" asp-area="" asp-controller="Patient" asp-action="index">Patient</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Account" asp-action="Register"> Register doctor</a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link text-success" asp-area="" asp-controller="Account" asp-action="Index">doctor List</a>
-                        </li>
-                    
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" >Welcome @User.Identity.Name</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
-                            </li>
-                       
-                        <li class="nav-item">
-                            <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="AdminList">Admin List</a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Create">Create Admin </a>
-                        </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-danger" asp-area="" asp-controller="DoctorSchedule" asp-action="DoctorScheduleList">Doctor Schedule List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-danger" asp-area="" asp-controller="DoctorSchedule" asp-action="addDoctorSchedule">Doctor Scheduling</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="" asp-controller="Appointment" asp-action="index">Appointment List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="" asp-controller="case" asp-action="create">Create Case</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="" asp-controller="Appointment" asp-action="Create">Create Appointment</a>
-                            </li>
                     </ul>
                 </div>
             </div>
         </nav>
-    </header>
+
+        <div class="container-fluid" >
+            <div class="row">
+            <!-- Sidebar Menu -->
+            <nav class="col-md-2 d-none d-md-block bg-white sidebar" style="font-family:monospace bold">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column" id="nav_accordion">
+                        <li class="nav-item active">
+                                <a class="nav-link text-secondary"  asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                        </li>
+                        <li class="nav-item has-submenu">
+                                <a class="nav-link text-secondary" style="cursor:pointer">
+                                    <i class="fas fa-user-md"></i>
+                                    <span>Doctor</span>
+                                </a>
+                            <ul class="submenu collapse">
+                                <li> <a class="nav-link text-secondary" asp-area="" asp-controller="Account" asp-action="Register"> Register doctor</a></li>
+                                <li><a class="nav-link text-secondary" asp-area="" asp-controller="Account" asp-action="Index">doctor List</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-secondary" asp-area="" asp-controller="DoctorSchedule" asp-action="DoctorScheduleList">Doctor Schedule List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-secondary" asp-area="" asp-controller="DoctorSchedule" asp-action="addDoctorSchedule">Doctor Scheduling</a>
+                                </li>
+                                    
+                            </ul>
+                        </li>
+                        <li class="nav-item has-submenu">
+                            <a class="nav-link text-secondary" href="#"> Patient  </a>
+                            <ul class="submenu collapse">
+                                <li> <a class="nav-link text-secondary" asp-area="" asp-controller="Patient" asp-action="index">Patient</a></li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-secondary" asp-area="" asp-controller="Patient" asp-action="Create">Create Patient</a>
+                                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-secondary" asp-area="" asp-controller="case" asp-action="create">Create Patient Case</a>
+                                </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-secondary" asp-area="" asp-controller="case" asp-action="Index">Patient Case List</a>
+                                    </li>
+                            </ul>
+                        </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item has-submenu">
+                                    <a class="nav-link text-secondary" href="#"> Admin  </a>
+                                    <ul class="submenu collapse">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-secondary" asp-area="" asp-controller="Admin" asp-action="AdminList">Admin List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-secondary" asp-area="" asp-controller="Admin" asp-action="Create">Create Admin </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item has-submenu">
+                                    <a class="nav-link text-secondary" href="#"> Appointment  </a>
+                            <ul class="submenu collapse">
+                                <li class="nav-item">
+                                    <a class="nav-link text-secondary" asp-area="" asp-controller="Appointment" asp-action="index">Appointment List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-secondary" asp-area="" asp-controller="Appointment" asp-action="Create">Create Appointment</a>
+                                </li>
+                            </ul>
+                        </li>}
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 main-content">
+               @RenderBody()
+            </main>
+        </div>
+        </div>
+
     }
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - HCMS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/DataTable2/datatables.min.js"></script>
     <script>
    
     </script>

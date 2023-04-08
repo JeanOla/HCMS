@@ -16,8 +16,13 @@ namespace HCMS.Repository.mySQL
 
         public List<Appointment> getAllAppointment()
         {
-           
+
             return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).AsNoTracking().ToList();
+        }
+
+        public Appointment GetAppointmentById(int id)
+        {
+            return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).AsNoTracking().ToList().FirstOrDefault(a => a.Id == id);
         }
 
         public List<Cases> getAllCases()
@@ -34,5 +39,27 @@ namespace HCMS.Repository.mySQL
             _dbContext.SaveChanges();
             return app;
         }
+        
+        public Appointment updateAppointment(Appointment app)
+        {
+            _dbContext.appointments.Attach(app);
+            _dbContext.Update(app);
+            _dbContext.SaveChanges();
+            return app;
+        }
+        public Appointment DeleteAppointment(int Id)
+        {
+            var app = GetAppointmentById(Id);
+            _dbContext.Remove(app);
+            _dbContext.SaveChanges();
+            return app;
+        }
+
+        public List<Schedule> getAllDoctorByDay(string newDay)
+        {
+            return _dbContext.schedules.Include(d => d.User).Where(d => d.dayOfWeek == newDay).AsNoTracking().ToList();
+        }
+        
     }
+
 }

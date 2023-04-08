@@ -23,11 +23,22 @@ namespace HCMS.Repository.mySQL
             return _dbContext.schedules.Include(s => s.User).AsNoTracking().ToList();
         }
         public Schedule addSchedule(Schedule sched)
-            {
+        {
             _dbContext.Add(sched);
             _dbContext.SaveChanges();
             return sched;
-            }
+        }
+        public Schedule GetDoctorSchedById(int Id)
+        {
+            return _dbContext.schedules.Include(s => s.User).AsNoTracking().ToList().FirstOrDefault(doc => doc.Id == Id);
 
         }
+        public Schedule updateSchedule(Schedule sched)
+        {
+            _dbContext.schedules.Attach(sched);
+            _dbContext.Update(sched);
+            _dbContext.SaveChanges();
+            return sched;
+        }
+    }
 }

@@ -8,5 +8,12 @@ namespace HCMS.Repository
         Appointment addAppointment(Appointment app);
         List<Cases> getAllCases();
         List<ApplicationUser> getAllDoctor();
+
+        Appointment GetAppointmentById(int id);
+
+        Appointment updateAppointment(Appointment app);
+        Appointment DeleteAppointment(int Id);
+
+        List<Schedule> getAllDoctorByDay(string newDay);
     }
 }

@@ -13,6 +13,7 @@ namespace HCMS.Models
         public string phone { get; set; }
         public string gender { get; set; }
 
+        public DateTime? dob { get; set; }
         public List<Cases> cases { get; set; }
         public MedicalRecord medical { get; set; }
         [NotMapped]

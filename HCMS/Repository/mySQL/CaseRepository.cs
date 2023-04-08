@@ -22,6 +22,10 @@ namespace HCMS.Repository.mySQL
             _dbContext.SaveChanges();
             return cases;
         }
+        public List<Cases> getCases()
+        {
+            return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList();
+        }
         
     }
 }

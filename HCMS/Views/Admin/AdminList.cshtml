@@ -1,32 +1,69 @@
 ﻿@model List<ApplicationUser>
 
-<H1>Admin List</H1>
+<div class="accordion mt-4">
+    <div class="accordion-item">
+        <h1 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Admin List
+            </button>
+        </h1>
+        <div class="container-fluid  py-2">
+            <div class="row">
+                <div class="col-md-12 bg-light rounded">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#" aria-current="page">Admin</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Admin List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
+            <div class="accordion-body">
+                <div class="container-fluid">
 
-@*<a type="button" class="btn btn-primary" asp-action="Create" asp-controller="Patient">Add Patient</a>*@
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Admin Name</th>
-            <th scope="col">email</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in Model)
-        {
-            <tr>
-                <th scope="row">@p.Id</th>
-                <td>@(p.firstName + " " + p.lastName)</td>
-                <td>@p.Email</td>
-                <td>
-                    <a asp-controller="Admin" asp-action="Details" asp-route-Id="@p.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="">
-                        Details
-                    </a>
-                    <a asp-controller="Admin" asp-action="Update" asp-route-Id="@p.Id">Edit</a>
-                    <a asp-controller="Admin" asp-action="Delete" asp-route-Id="@p.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    <div class="row">
+                        <div class="col-md-12 bg-light rounded">
+                            <table class="table table-hover table-responsive-lg rounded" id="doctorList">
+                                <thead class="thead-dark bg-primary">
+                                    <tr>
+                                        @*  <th scope="col">#</th>*@
+                                        <th scope="col" style="text-align: center" class="text-white">Admin Name</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Email</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var p in Model)
+                                    {
+
+                                        <tr>
+                                            @* <th scope="row"> @number++</th>*@
+                                            <td style="text-align: center">@(p.firstName + " " + p.lastName)</td>
+                                            <td style="text-align: center">@p.Email</td>
+                                            <td style="text-align: center">
+                                                <a class="btn btn-info" asp-controller="Admin" asp-action="Details" title="Details" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
+                                                <a class="btn btn-secondary" asp-controller="Admin" title="Update" asp-action="Update" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a class="btn btn-danger" asp-controller="Admin" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-user-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

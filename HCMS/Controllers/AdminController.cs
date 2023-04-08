@@ -60,11 +60,17 @@ namespace HCMS.Controllers
                 if (result.Succeeded)
                 {
                     var role = _roleManager.Roles.FirstOrDefault(r => r.Name == "Admin");
-                    await _userManager.AddToRoleAsync(userMode, role.Name);
-                    return RedirectToAction("AdminList", "Admin");
+                    if (role != null)
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(userMode, role.Name);
+                        if (!roleResult.Succeeded)
+                        {
+                            ModelState.AddModelError(String.Empty, "User Role cannot be assigned");
+                        }
+                    }
                 }
             }
-            return View(userViewModel);
+            return RedirectToAction("AdminList");
         }
         [HttpGet]
         public async Task<IActionResult> Update(string Id)
