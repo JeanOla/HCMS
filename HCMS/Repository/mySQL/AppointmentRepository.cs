@@ -59,7 +59,13 @@ namespace HCMS.Repository.mySQL
         {
             return _dbContext.schedules.Include(d => d.User).Where(d => d.dayOfWeek == newDay).AsNoTracking().ToList();
         }
-        
+        ///doctor appointments
+        ///
+        public List<Appointment> getAllDoctorAppointment(string Id)
+        {
+
+            return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).Where(d => d.DoctorId == Id).AsNoTracking().ToList();
+        }
     }
 
 }

@@ -9,10 +9,13 @@ namespace HCMS.Repository.mySQL
     {
         HCMSDbContext _dbContext;
         private RoleManager<IdentityRole> _roleManager { get; }
-        public DoctorScheduleRepository(HCMSDbContext dbContext, RoleManager<IdentityRole> roleManager)
+        public UserManager<ApplicationUser> _userManager { get; }
+
+        public DoctorScheduleRepository(HCMSDbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
             _roleManager = roleManager;
+            _userManager = userManager;
         }
         public List<ApplicationUser> getDoctors()
         {
@@ -39,6 +42,21 @@ namespace HCMS.Repository.mySQL
             _dbContext.Update(sched);
             _dbContext.SaveChanges();
             return sched;
+        }
+
+        public Schedule DeleteSchedule(int Id)
+        {
+            var sched = GetDoctorSchedById(Id);
+            _dbContext.Remove(sched);
+            _dbContext.SaveChanges();
+            return sched;
+        }
+        ///////////////////////////////////////////////////
+        /////for doctor
+        public List<Schedule> DoctorScheduleList(string Id)
+        {
+            
+            return _dbContext.schedules.Include(s => s.User).Where(d => d.doctorId == Id).AsNoTracking().ToList();
         }
     }
 }

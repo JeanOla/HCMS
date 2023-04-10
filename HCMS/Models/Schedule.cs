@@ -7,12 +7,14 @@ namespace HCMS.Models
     {
         public int Id { get; set; } 
         public string doctorId { get; set; }
-        //build relationship wit hdoctor
         public ApplicationUser User { get; set; }
+        [Required]
         public string dayOfWeek { get; set; }
         [BindProperty, DataType(DataType.Time)]
+        [Required]
         public DateTime? startTime { get; set; }
         [BindProperty, DataType(DataType.Time)]
+        [Required]
         public DateTime? endTime { get; set; }
     }
 }

@@ -26,6 +26,12 @@ namespace HCMS.Repository.mySQL
            
            return _dbContext.users.Include(s=>s.speciality).Where(s=>s.speciality.SpecialityName != null).AsNoTracking().ToList();
         }
+        public List<ApplicationUser> getDoctorsInfo(string Id)
+        {
+            var role = _roleManager.Roles.ToList();
+            return _dbContext.users.Include(s => s.speciality).Where(d => d.Id == Id).AsNoTracking().ToList();
+            //return _dbContext.users.Include(s => s.speciality).Where(s => s.speciality.SpecialityName != null).AsNoTracking().ToList();
+        }
         public ApplicationUser DeleteDoctor(string Id)
         {
             var doctor = _dbContext.users.AsNoTracking().ToList().FirstOrDefault(d => d.Id == Id);

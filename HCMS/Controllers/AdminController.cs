@@ -150,5 +150,10 @@ namespace HCMS.Controllers
             };
             return View(userViewModel);
         }
+        public IActionResult Delete(string Id)
+        {
+            _repo.DeleteAdmin(Id);
+            return RedirectToAction("AdminList", "Admin");
+        }
     }
 }

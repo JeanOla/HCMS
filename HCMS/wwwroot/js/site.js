@@ -37,7 +37,9 @@ $(document).ready(function () {
     $('#doctorList').DataTable();
 });
 
-//change the option for appointment
+//appointment JS code
+//start
+//change the option for appointment for UPDATE AND CREATE
 $(document).ready(function () {
     $('#appointmentDay').on('change', function () {
         var selectedValue = $(this).val();
@@ -48,10 +50,10 @@ $(document).ready(function () {
             success: function (data) {
                 var doctorIdDropdown = $('#doctor');
                 doctorIdDropdown.empty();
-                $.each(data, function ( option) {
+                $.each(data, function (index, option) {
                     doctorIdDropdown.append($('<option>', {
-                        Value: option.Value,
-                        Text: option.Text
+                        value: option.value,
+                        text: option.text
                     }));
                 });
             },
@@ -61,3 +63,6 @@ $(document).ready(function () {
         });
     });
 });
+
+//end
+//appointment JS code

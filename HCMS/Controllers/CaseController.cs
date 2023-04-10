@@ -25,13 +25,37 @@ namespace HCMS.Controllers
         public IActionResult Create(Cases cases)
         {
             _repo.addCase(cases);
-            return RedirectToAction("");
+            return RedirectToAction("Index");
         }
         public IActionResult Index()
         {
            var casee = _repo.getCases();
             return View(casee);
-
+        }
+        [HttpGet]
+        public IActionResult Details(int Id)
+        {
+            ViewBag.options = new SelectList(_repo.GetPatients(), "Id", "FullName");
+            var casee = _repo.GetCaseById(Id);
+            return View(casee);
+        }
+        [HttpGet]
+        public IActionResult Update(int Id)
+        {
+            ViewBag.options = new SelectList(_repo.GetPatients(), "Id", "FullName");
+            var casee = _repo.GetCaseById(Id);
+            return View(casee);
+        }
+        [HttpPost]
+        public IActionResult Update(Cases cases)
+        {
+            _repo.updateCase(cases);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int Id)
+        {
+           _repo.DeleteCase(Id);
+            return RedirectToAction("Index");
         }
     }
 }

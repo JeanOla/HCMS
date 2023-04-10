@@ -1,4 +1,5 @@
-﻿@model Schedule
+﻿
+@model Schedule
 
 <div class="accordion mt-4">
     <div class="accordion-item">
@@ -23,11 +24,19 @@
             <div class="accordion-body">
                 <div class="container-fluid">
                     <form asp-action="addDoctorSchedule" method="post" asp-controller="DoctorSchedule">
-                        <div class="row">
+                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label asp-for="doctorId" class="control-label">Doctor</label>
-                                    @Html.DropDownList("doctorId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+                                    @if(User.IsInRole("Admin")){
+                                       @* var UserId = _userManager.GetUserId(User);*@
+                                        @Html.DropDownList("doctorId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+                                    }
+                                    else
+                                    {
+                                        <input type="text" asp-for="doctorId" class="form-control" value="@ViewBag.MyValue" />
+                                    }
+
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="dayOfWeek" class="control-label">Select Day of Schedule</label>

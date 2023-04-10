@@ -139,10 +139,16 @@ namespace HCMS.Controllers
         }
         public async Task<ActionResult> Index()//display doctor list
         {
+            if (User.IsInRole("Doctor"))
+            {
+                var UserId = _userManager.GetUserId(User);
+                var doctor = _repo.getDoctorsInfo(UserId);
+                return View(doctor);
+            }
             var doc = _repo.getDoctors();
-             return View(doc);
+            return View(doc);
 
-       
+
         }
         [HttpGet]
         public IActionResult login()

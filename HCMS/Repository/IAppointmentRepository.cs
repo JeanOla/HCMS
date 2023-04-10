@@ -15,5 +15,6 @@ namespace HCMS.Repository
         Appointment DeleteAppointment(int Id);
 
         List<Schedule> getAllDoctorByDay(string newDay);
+        List<Appointment> getAllDoctorAppointment(string Id);
     }
 }

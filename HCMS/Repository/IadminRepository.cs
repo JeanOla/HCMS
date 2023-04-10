@@ -7,6 +7,7 @@ namespace HCMS.Repository
     public interface IadminRepository
     {
         List<ApplicationUser> getUserList();
+        ApplicationUser DeleteAdmin(string Id);
 
     }
 }

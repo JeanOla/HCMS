@@ -31,11 +31,11 @@
                                 @*<div class="col-md-4">*@
                                 <div class="form-group">
                                     <label asp-for="caseId" class="control-label">Select Case</label>
-                                    @Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+                                    @Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList , new {@class ="form-control"})
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="DoctorId" class="control-label">Select Doctor</label>
-                                    @Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList ,ViewBag.option?[0], new {@class ="form-control", id = "doctor"})
+                                    @Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList , new {@class ="form-control", id = "doctor"})
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="appointmentDay" class="control-label">Select Appointment Day</label>

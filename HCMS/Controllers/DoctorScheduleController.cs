@@ -26,13 +26,23 @@ namespace HCMS.Controllers
         }
         public IActionResult DoctorScheduleList()
         {
+            if (User.IsInRole("Doctor"))
+            {
+                var UserId = _userManager.GetUserId(User);
+                var schedule = _repo.DoctorScheduleList(UserId);
+                return View(schedule);
+            }
             var sched = _repo.ScheduleList();
             return View(sched);
         }
         [HttpGet]
         public IActionResult addDoctorSchedule()
         {
-            
+            if (User.IsInRole("Doctor"))
+            {
+                ViewBag.MyValue = _userManager.GetUserId(User); 
+                return View();
+            }
             ViewBag.options = new SelectList(_repo.getDoctors(), "Id", "FullName");
             Schedule schedule = new Schedule();
             return View(schedule);
@@ -54,6 +64,12 @@ namespace HCMS.Controllers
         public IActionResult Update(Schedule sched)
         {
             _repo.updateSchedule(sched);
+            return RedirectToAction("DoctorScheduleList");
+        }
+
+        public IActionResult Delete(int Id)
+        {
+            _repo.DeleteSchedule(Id);
             return RedirectToAction("DoctorScheduleList");
         }
     }

@@ -1,0 +1,114 @@
+﻿@model Cases
+
+<div class="accordion mt-4">
+    <div class="accordion-item">
+        <h1 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Create Patient Case
+            </button>
+        </h1>
+        <div class="container-fluid  py-2">
+            <div class="row">
+                <div class="col-md-12 bg-light rounded">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#" aria-current="page">Patient</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Create Patient Case</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
+            <div class="accordion-body">
+                <div class="container-fluid">
+                    <form asp-action="Update" method="post" asp-controller="Case">
+                        <div class="row">
+                            <div class="alert alert-info" role="alert">
+                                Note: The case represents the Patient's Name and Reason for consultation.
+                            </div>
+                            <div class="col-md-12">
+                                @*<div class="col-md-4">*@
+                                <div class="form-group">
+                                    <label asp-for="patientId" class="control-label">Select Patient</label>
+                                    @Html.DropDownListFor( m => m.patientId ,ViewBag.options as SelectList, new {@class ="form-control", type ="select"})
+                                    @*@Html.DropDownList("PatientId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})*@
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="reason" class="control-label">Reason</label>
+                                    <input  type="text" asp-for="reason" class="form-control" />
+                                    <span asp-validation-for="reason" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="diagnosis" class="control-label">Diagnosis</label>
+                                    <input  type="text" asp-for="diagnosis" class="form-control" />
+                                    <span asp-validation-for="diagnosis" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="treatmentPlan" class="control-label">treatment Plan</label>
+                                    <input  type="text" asp-for="treatmentPlan" class="form-control" />
+                                    <span asp-validation-for="treatmentPlan" class="text-danger"></span>
+                                </div>
+                                @*</div>*@
+                            </div>
+                        </div>
+                         <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*
+<h1>Create</h1>
+
+<h4>Case</h4>
+<hr />
+
+<div class="row" style="border:solid;">
+    <h2>Case Information</h2>
+    <form asp-action="Create" method="post" asp-controller="Case">
+        <div class="col-md-4" style="border:solid;">
+            <div class="form-group">
+            <label asp-for="patientId" class="control-label">Patient</label>
+            @Html.DropDownList("PatientId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+        </div>
+        <div class="form-group">
+            <label asp-for="reason" class="control-label"></label>
+                <input type="text" asp-for="reason" class="form-control" />
+                <span asp-validation-for="reason" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="diagnosis" class="control-label"></label>
+                <input type="text" asp-for="diagnosis" class="form-control" />
+                <span asp-validation-for="diagnosis" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="treatmentPlan" class="control-label"></label>
+                <input type="text" asp-for="treatmentPlan" class="form-control" />
+            <span asp-validation-for="treatmentPlan" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

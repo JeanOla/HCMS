@@ -37,8 +37,6 @@
                                         <th scope="col" style="text-align: center" class="text-white">Patient Case</th>
                                         <th scope="col" style="text-align: center" class="text-white">Patient Name</th>
                                         <th scope="col" style="text-align: center" class="text-white">Reason</th>
-                                        <th scope="col" style="text-align: center" class="text-white">Diagnosis</th>
-                                        <th scope="col" style="text-align: center" class="text-white">Treatment Plan</th>
                                         <th scope="col" style="text-align: center" class="text-white">Actions</th>
                                     </tr>
                                 </thead>
@@ -51,17 +49,15 @@
                                             <td style="text-align: center">@p.fullcase</td>
                                             <td style="text-align: center">@p.patient.FullName</td>
                                             <td style="text-align: center">@p.reason</td>
-                                            <td style="text-align: center">@p.diagnosis</td>
-                                            <td style="text-align: center">@p.treatmentPlan</td>
                                             <td style="text-align: center">
                                                 @*no functionalities pa*@
-                                               @* <a class="btn btn-info" asp-controller="Appointment" asp-action="details" title="Details" asp-route-Id="@p.Id">
+                                               <a class="btn btn-info" asp-controller="Case" asp-action="Details" title="Details" asp-route-Id="@p.Id">
                                                     <i class="fas fa-info-circle"></i>
-                                                </a>*@
-                                                <a class="btn btn-secondary" asp-controller="Appointment" title="Edit" asp-action="edit" asp-route-Id="@p.Id">
+                                                </a>
+                                                <a class="btn btn-secondary" asp-controller="Case" title="Update" asp-action="Update" asp-route-Id="@p.Id">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-danger" asp-controller="Appointment" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                <a class="btn btn-danger" asp-controller="Case" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
                                                     <i class="fas fa-user-times"></i>
                                                 </a>
                                             </td>

@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="DoctorId" class="control-label">Select Doctor</label>
-                                    @Html.DropDownListFor( m => m.DoctorId ,ViewBag.optionsForDoctor as SelectList, new {@class ="form-control", type ="select"})
+                                    @Html.DropDownListFor( m => m.DoctorId ,ViewBag.optionsForDoctor as SelectList, new {@class ="form-control", type ="select", id ="doctor"} )
                                     @*@Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList ,ViewBag.option?[0], new {@class ="form-control"})*@
                                 </div>
                                 <div class="form-group">

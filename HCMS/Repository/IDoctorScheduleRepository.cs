@@ -14,5 +14,10 @@ namespace HCMS.Repository
         Schedule GetDoctorSchedById(int Id);
 
         Schedule updateSchedule(Schedule sched);
+
+        Schedule DeleteSchedule(int Id);
+
+        ////doctor user
+        List<Schedule> DoctorScheduleList(string Id);
     }
 }

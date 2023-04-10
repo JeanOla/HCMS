@@ -10,12 +10,22 @@ namespace HCMS.Controllers
     public class AppointmentController : Controller
     {
         IAppointmentRepository _repo;
-        public AppointmentController(IAppointmentRepository repo)
+
+        private UserManager<ApplicationUser> _userManager { get; }
+
+        public AppointmentController(IAppointmentRepository repo,UserManager<ApplicationUser>userManager)
         {
             _repo = repo;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
+            if (User.IsInRole("Doctor"))
+            {
+                var UserId = _userManager.GetUserId(User);
+                var appoint = _repo.getAllDoctorAppointment(UserId);
+                return View(appoint);
+            }
             var appointment = _repo.getAllAppointment();
             return View(appointment);
         }
@@ -72,11 +82,12 @@ namespace HCMS.Controllers
             {
                 options.Add(new SelectListItem
                 {
-                    Value = doctor.Id.ToString(),
+                    Value = doctor.doctorId.ToString(),
                     Text = doctor.User.FullName
                 });
             }
             return Json(options);
         }
+
     }
 }

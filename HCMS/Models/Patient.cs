@@ -1,16 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HCMS.Models
 {
     public class Patient
     {
         public int Id { get; set; }
+        [Required]
         public string firstName { get; set; }
+        [Required]
         public string lastName { get; set; }
         public string middleName { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string address { get; set; }
+        [Required]
+
         public string phone { get; set; }
+        [Required]
         public string gender { get; set; }
 
         public DateTime? dob { get; set; }

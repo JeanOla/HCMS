@@ -26,6 +26,24 @@ namespace HCMS.Repository.mySQL
         {
             return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList();
         }
-        
+        public Cases GetCaseById(int id)
+        {
+            return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList().FirstOrDefault(c => c.Id == id);
+        }
+        public Cases updateCase(Cases casee)
+        {
+            _dbContext.cases.Attach(casee);
+            _dbContext.Update(casee);
+            _dbContext.SaveChanges();
+            return casee;
+        }
+        public Cases DeleteCase(int Id)
+        {
+            var Case = GetCaseById(Id);
+            _dbContext.Remove(Case);
+            _dbContext.SaveChanges();
+            return Case;
+        }
+
     }
 }

@@ -55,9 +55,14 @@
                                                 <a class="btn btn-secondary" asp-controller="Account" title="Edit" asp-action="Update" asp-route-Id="@p.Id">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-danger" asp-controller="Account" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
-                                                    <i class="fas fa-user-times"></i>
-                                                </a>
+
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    <a class="btn btn-danger" asp-controller="Account" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                        <i class="fas fa-user-times"></i>
+                                                    </a>
+                                                }
+                                                
                                             </td>
                                         </tr>
                                     }
