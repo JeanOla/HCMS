@@ -29,7 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
-
+app.Automigrate();
 app.UseRouting();
 
 //app.UseAuthorization();
@@ -38,5 +38,4 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=login}/{id?}");
-
 app.Run();

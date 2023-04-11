@@ -9,10 +9,42 @@ namespace HCMS.data
 {
     public class HCMSDbContext : IdentityDbContext<ApplicationUser>
     {
+        public IConfiguration _appConfig { get; }
+        public ILogger _logger { get; }
+        public IWebHostEnvironment _env { get; }
+
+        public HCMSDbContext(IConfiguration appConfig, ILogger<HCMSDbContext> logger, IWebHostEnvironment env)
+        {
+            _appConfig = appConfig;
+            _logger = logger;
+            _env = env;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            string connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=HMSDB;Integrated Security=True;";
+            var server = _appConfig.GetConnectionString("Server");
+            var db = _appConfig.GetConnectionString("DB");
+
+
+            string connectionString;
+            if (_env.IsDevelopment())
+            {
+                 connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=HMSDB;Integrated Security=True;";
+                //connectionString = $"Server={server};Database={db};MultipleActiveResultSets=true;Integrated Security=false;TrustServerCertificate=true";
+            }
+            else
+            {
+                var userName = _appConfig.GetConnectionString("UserName");
+                var password = _appConfig.GetConnectionString("Password");
+                connectionString = $"Server={server};Database={db};User Id={userName};Password={password};MultipleActiveResultSets=true;Integrated Security=false;TrustServerCertificate=true";
+            }
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentException("Connection string is not configured");
+            }
+
+            //_logger.LogInformation("Db Connection string: " + connectionString);
+            //string connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=HMSDB;Integrated Security=True;";
             optionsBuilder.UseSqlServer(connectionString)
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 

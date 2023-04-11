@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["HCMS/HCMS.csproj", "HCMS/"]
 RUN dotnet restore "HCMS/HCMS.csproj"
-COPY . "./HCMS/"
+COPY . .
 WORKDIR "/src/HCMS"
 RUN dotnet build "HCMS.csproj" -c Release -o /app/build
 

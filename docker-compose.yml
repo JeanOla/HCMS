@@ -1,0 +1,21 @@
+version: '3.4'
+services:
+  hcms:
+    image: hcms
+    build:
+      context: .
+      dockerfile: hcms/Dockerfile
+    ports:
+      - 5001:80
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=hcmssql;Database=HCMSDB;User Id=sa;Password=Pa$$w0rd!;Integrated Security=false;TrustServerCertificate=true;
+    depends_on:
+      - hcmssql
+    restart: on-failure
+  hcmssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 6001:6001
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Pa$$w0rd!
