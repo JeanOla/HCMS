@@ -11,12 +11,14 @@ namespace HCMS.Controllers
     {
         IAppointmentRepository _repo;
 
+        IDoctorScheduleRepository _schedule;
         private UserManager<ApplicationUser> _userManager { get; }
 
-        public AppointmentController(IAppointmentRepository repo,UserManager<ApplicationUser>userManager)
+        public AppointmentController(IAppointmentRepository repo,UserManager<ApplicationUser> userManager, IDoctorScheduleRepository schedule)
         {
             _repo = repo;
             _userManager = userManager;
+            _schedule = schedule;
         }
         public IActionResult Index()
         {
@@ -40,6 +42,30 @@ namespace HCMS.Controllers
         [HttpPost]
         public IActionResult Create(Appointment appoint)
         {
+            ViewBag.optionsForCases = new SelectList(_repo.getAllCases(), "Id", "fullcase");
+            ViewBag.optionsForDoctor = new SelectList(_repo.getAllDoctor(), "Id", "FullName");
+            if (appoint.DoctorId == null || appoint.DoctorId == "")
+            {
+                ModelState.AddModelError("DoctorId", "Doctor is required to set an appointment.");
+                return View(appoint);
+            }
+            var doctorSchedule = _schedule.GetDoctorSchedDayById(appoint.DoctorId, appoint.appointmentDay).FirstOrDefault();
+            
+            var startTime = DateTime.Parse(doctorSchedule.startTime.ToString());
+            var endTime = DateTime.Parse(doctorSchedule.endTime.ToString());
+            var appointmentTime = appoint.appointmentime;
+
+            if (appointmentTime < startTime || appointmentTime > endTime)
+            {
+                ModelState.AddModelError("appointmentime", "Appointment time is outside the doctor's schedule.");
+                return View(appoint);
+            }
+            if (appoint.appointmentDay == "")
+            {
+                ModelState.AddModelError("appointmentDay", "Appointment day is required.");
+                return View(appoint);
+            }
+
             _repo.addAppointment(appoint);
             return RedirectToAction("Index");
 
@@ -57,13 +83,39 @@ namespace HCMS.Controllers
         {
             ViewBag.optionsForCases = new SelectList(_repo.getAllCases(), "Id", "fullcase");
             ViewBag.optionsForDoctor = new SelectList(_repo.getAllDoctor(), "Id", "FullName");
+
+
             var details = _repo.GetAppointmentById(Id);
             return View(details);
         }
         [HttpPost]
         public async Task<IActionResult> Update(Appointment app)
         {
-            var employee = _repo.updateAppointment(app);
+            ViewBag.optionsForCases = new SelectList(_repo.getAllCases(), "Id", "fullcase");
+            ViewBag.optionsForDoctor = new SelectList(_repo.getAllDoctor(), "Id", "FullName");
+            if (app.DoctorId == null || app.DoctorId == "")
+            {
+                ModelState.AddModelError("DoctorId", "Doctor is required to set an appointment.");
+                return View(app);
+            }
+            var doctorSchedule = _schedule.GetDoctorSchedDayById(app.DoctorId, app.appointmentDay).FirstOrDefault();
+
+            var startTime = DateTime.Parse(doctorSchedule.startTime.ToString());
+            var endTime = DateTime.Parse(doctorSchedule.endTime.ToString());
+            var appointmentTime = app.appointmentime;
+
+            if (appointmentTime < startTime || appointmentTime > endTime)
+            {
+                ModelState.AddModelError("appointmentime", "Appointment time is outside the doctor's schedule.");
+                return View(app);
+            }
+            if (app.appointmentDay == "")
+            {
+                ModelState.AddModelError("appointmentDay", "Appointment day is required.");
+                return View(app);
+            }
+
+            _repo.updateAppointment(app);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(int Id)

@@ -50,8 +50,24 @@ namespace HCMS.Controllers
         [HttpPost]
         public IActionResult addDoctorSchedule(Schedule sched)
         {
-           _repo.addSchedule(sched);
-            return RedirectToAction("DoctorScheduleList");
+            ViewBag.options = new SelectList(_repo.getDoctors(), "Id", "FullName");
+            var doctorsched = _repo.DoctorScheduleList(sched.doctorId);
+
+                if (doctorsched.Any(s => s.dayOfWeek == sched.dayOfWeek))
+                {
+                    ModelState.AddModelError("dayOfWeek", "There is already a schedule for this day.");
+                    return View(sched);
+                }
+
+                if (sched.startTime.HasValue && sched.endTime.HasValue && sched.startTime.Value >= sched.endTime.Value)
+                {
+                    ModelState.AddModelError("startTime", "Start time must be before the end time.");
+                return View(sched);
+                }
+
+            _repo.addSchedule(sched);
+             return RedirectToAction("DoctorScheduleList");
+         
         }
         [HttpGet]
         public IActionResult Update(int Id)
@@ -63,6 +79,16 @@ namespace HCMS.Controllers
         [HttpPost]
         public IActionResult Update(Schedule sched)
         {
+            ViewBag.options = new SelectList(_repo.getDoctors(), "Id", "FullName");
+          //  var doctorsched = _repo.DoctorScheduleList(sched.doctorId);
+
+
+            if (sched.startTime.HasValue && sched.endTime.HasValue && sched.startTime.Value >= sched.endTime.Value)
+            {
+                ModelState.AddModelError("startTime", "Start time must be before the end time.");
+                return View(sched);
+            }
+
             _repo.updateSchedule(sched);
             return RedirectToAction("DoctorScheduleList");
         }

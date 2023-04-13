@@ -25,10 +25,10 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-white">Welcome @User.Identity.Name</a>
+                            <a class="nav-link text-white"> @User.Identity.Name</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white active" asp-area="" asp-controller="Account" asp-action="logout">logout</a>
+                            <a class="btn text-white" asp-area="" data-bs-toggle="tooltip" data-bs-original-title="logout" asp-controller="Account" asp-action="logout"><i class="fas fa-sign-out-alt"></i></a>
                         </li>
                     </ul>
                 </div>

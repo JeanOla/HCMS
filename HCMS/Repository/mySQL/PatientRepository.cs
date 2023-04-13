@@ -30,25 +30,54 @@ namespace HCMS.Repository.mySQL
         }
         public PatientAndMedicalRecord AddPatientAndMedicalRecord(Patient newPatient, MedicalRecord medred)
         {
-            using (var transaction = _dbContext.Database.BeginTransaction())
+              using (var transaction = _dbContext.Database.BeginTransaction())
+              {
+                  try
+                  {
+                      _dbContext.patients.Add(newPatient);
+                      _dbContext.SaveChanges();
+                      medred = new MedicalRecord
+                      {
+                          patientId = newPatient.Id,
+                          allergy = newPatient.medical.allergy,
+                          medication = newPatient.medical.medication,
+                          bloodType = newPatient.medical.bloodType,
+                          diabetic = newPatient.medical.diabetic,
+                          surgery = newPatient.medical.surgery,
+                          vacinated = newPatient.medical.vacinated,
+                      };
+                      //medred.patientId = newPatient.Id; 
+                      //_dbContext.medicalRecords.Add(medred);
+                      _dbContext.SaveChanges();
+                      transaction.Commit();
+
+                      return new PatientAndMedicalRecord
+                      {
+                          Patient = newPatient,
+                          MedicalRecord = medred
+                      };
+
+                  }
+                  catch (Exception ex)
+                  {
+                      transaction.Rollback();
+
+                  }
+              }
+
+              return null;
+            /*API code
+             * using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
                     _dbContext.patients.Add(newPatient);
                     _dbContext.SaveChanges();
-                    medred = new MedicalRecord
-                    {
-                        patientId = newPatient.Id,
-                        allergy = newPatient.medical.allergy,
-                        medication = newPatient.medical.medication,
-                        bloodType = newPatient.medical.bloodType,
-                        diabetic = newPatient.medical.diabetic,
-                        surgery = newPatient.medical.surgery,
-                        vacinated = newPatient.medical.vacinated,
-                    };
-                    //medred.patientId = newPatient.Id; 
-                    //_dbContext.medicalRecords.Add(medred);
+
+                    medred.patientId = newPatient.Id;
+                    _dbContext.medicalRecords.Add(medred);
                     _dbContext.SaveChanges();
+
                     transaction.Commit();
 
                     return new PatientAndMedicalRecord
@@ -56,16 +85,15 @@ namespace HCMS.Repository.mySQL
                         Patient = newPatient,
                         MedicalRecord = medred
                     };
-
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-
+                    // Log the exception here if necessary
                 }
             }
 
-            return null;
+            return null;*/
         }
 
         public PatientAndMedicalRecord editPatient(Patient newPatient, MedicalRecord medred)

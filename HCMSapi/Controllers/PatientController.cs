@@ -35,7 +35,7 @@ namespace HCMSapi.Controllers
             return Ok(_repo.getPatients());
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("Get Patient By {Id}")]
         public IActionResult GetPatienById([FromRoute] int Id)
         {
             if (Id == 0)
@@ -61,7 +61,7 @@ namespace HCMSapi.Controllers
 
             return Ok(json);
         }
-        [HttpPost]
+        [HttpPost("add Patient")]
         public IActionResult AddPatientAndMedicalRecord([FromBody] PatientAndMedicalRecordDto viewModel)
         {
             if (ModelState.IsValid)
@@ -95,16 +95,91 @@ namespace HCMSapi.Controllers
 
                 if (result != null)
                 {
-                    // Return a 201 Created response with the newly created patient and medical record
-                    return CreatedAtAction(nameof(GetHashCode), new { id = result.Patient.Id }, result);
+                   
+                    return CreatedAtAction("GetPatienById", new { Id = result.Patient.Id }, viewModel);
                 }
             }
 
-            // Return a 400 Bad Request response if the model state is invalid
             return BadRequest(ModelState);
         }
+        [HttpDelete("{Id}Delete Patient")]
+        public IActionResult Delete([FromRoute] int Id) // model binding 
+        {
+            if (Id == 0)
+                return BadRequest();
+            var todo = _repo.GetPatienById(Id);
+            if (todo == null)
+                return NotFound("No resource found");
+           _repo.DeletePatient(Id); 
+            return Ok(_repo.getPatients());
+        }
+        /* [HttpPut("{Id} Update Patient Information")]
+         public IActionResult UpdatePatient([FromBody] PatientAndMedicalRecordDto patientAndMedicalRecord, [FromRoute] int Id) // model binding // validation
+
+         {
 
 
+             if (patientAndMedicalRecord == null)
+                 return BadRequest("No data provided");
+             if (ModelState.IsValid)
+             {
+                 var updatePatient = _repo.editPatient(Id, todo);
+                 return AcceptedAtAction("GetById", new { todoId = updatedTodo.Id }, updatedTodo); // json or xml
+             }
+             return BadRequest(ModelState);
+         }*/
+
+        [HttpPut("patients/{id}")]
+        public ActionResult<PatientAndMedicalRecordDto> UpdatePatient([FromRoute]int id, [FromBody] PatientAndMedicalRecordDto dto)
+        {
+            var patient = _repo.GetPatienById(id);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            // Update patient details
+            patient.firstName = dto.FirstName;
+            patient.lastName = dto.LastName;
+            patient.middleName = dto.MiddleName;
+            patient.Email = dto.Email;
+            patient.address = dto.Address;
+            patient.phone = dto.Phone;
+            patient.gender = dto.Gender;
+            patient.dob = dto.Dob;
+
+            // Update medical record details
+            var medicalRecord = patient.medical;
+            medicalRecord.allergy = dto.Allergy;
+            medicalRecord.medication = dto.Medication;
+            medicalRecord.bloodType = dto.BloodType;
+            medicalRecord.diabetic = dto.Diabetic;
+            medicalRecord.surgery = dto.Surgery;
+            medicalRecord.vacinated = dto.Vacinated;
+
+            var updatedPatientAndMedicalRecord = _repo.editPatient(patient, medicalRecord);
+
+            var updatedDto = new PatientAndMedicalRecordDto
+            {
+                FirstName = updatedPatientAndMedicalRecord.Patient.firstName,
+                LastName = updatedPatientAndMedicalRecord.Patient.lastName,
+                MiddleName = updatedPatientAndMedicalRecord.Patient.middleName,
+                Email = updatedPatientAndMedicalRecord.Patient.Email,
+                Address = updatedPatientAndMedicalRecord.Patient.address,
+                Phone = updatedPatientAndMedicalRecord.Patient.phone,
+                Gender = updatedPatientAndMedicalRecord.Patient.gender,
+                Dob = updatedPatientAndMedicalRecord.Patient.dob,
+                Allergy = updatedPatientAndMedicalRecord.MedicalRecord.allergy,
+                Medication = updatedPatientAndMedicalRecord.MedicalRecord.medication,
+                BloodType = updatedPatientAndMedicalRecord.MedicalRecord.bloodType,
+                Diabetic = updatedPatientAndMedicalRecord.MedicalRecord.diabetic,
+                Surgery = updatedPatientAndMedicalRecord.MedicalRecord.surgery,
+                Vacinated = updatedPatientAndMedicalRecord.MedicalRecord.vacinated
+            };
+
+            return Ok(updatedDto);
+        }
     }
 
 }

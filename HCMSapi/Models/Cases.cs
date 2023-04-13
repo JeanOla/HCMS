@@ -18,9 +18,8 @@ namespace HCMSapi.Models
         public string reason { get; set; }
 
         public List<Appointment> Appointments { get; set; }
-        [NotMapped]
-        [ValidateNever]
-        public string fullcase => $" Patient Name: {patient.firstName} {patient.lastName} - Reason: {reason}";
+       
+       
 
     }
 }

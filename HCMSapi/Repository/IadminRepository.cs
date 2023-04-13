@@ -7,7 +7,7 @@ namespace HCMSapi.Repository
     public interface IadminRepository
     {
         List<ApplicationUser> getUserList();
-        ApplicationUser DeleteAdmin(string Id);
+        //ApplicationUser DeleteAdmin(string Id);
 
     }
 }

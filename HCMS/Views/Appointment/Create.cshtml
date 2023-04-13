@@ -34,12 +34,9 @@
                                     @Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList , new {@class ="form-control"})
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="DoctorId" class="control-label">Select Doctor</label>
-                                    @Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList , new {@class ="form-control", id = "doctor"})
-                                </div>
-                                <div class="form-group">
                                     <label asp-for="appointmentDay" class="control-label">Select Appointment Day</label>
                                     <select asp-for="appointmentDay" class="form-control">
+                                        <option value="" disabled selected hidden>Select day of appointment for next week</option>
                                         <option value="Monday">Monday</option>
                                         <option value="Tuesday">Tuesday</option>
                                         <option value="Wednesday">Wednesday</option>
@@ -48,15 +45,22 @@
                                         <option value="Saturday">Saturday</option>
                                         <option value="Sunday">Sunday</option>
                                     </select>
+                                    <span asp-validation-for="appointmentDay" class="text-danger"></span>
                                 </div>
+                                <div class="form-group">
+                                    <label asp-for="DoctorId" class="control-label">Select Doctor</label>
+                                    @Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList ,"Select a doctor", new {@class ="form-control", id = "doctor"})
+                                    <span asp-validation-for="DoctorId" class="text-danger"></span>
+                                </div>
+                                
                                 <div class="form-group">
                                     <label asp-for="appointmentime" class="control-label">Appointment Time</label>
                                     <input type="time" asp-for="appointmentime" class="form-control" />
                                     <span asp-validation-for="appointmentime" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Status" class="control-label">Status</label>
-                                    <input type="text" asp-for="Status" value="Ongoing" class="form-control" readonly />
+                                    <label hidden asp-for="Status" class="control-label">Status</label>
+                                    <input type="text" hidden asp-for="Status" value="Ongoing" class="form-control" readonly />
                                     <span asp-validation-for="Status" class="text-danger"></span>
                                 </div>
                                 @*</div>*@

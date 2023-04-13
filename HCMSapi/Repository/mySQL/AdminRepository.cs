@@ -21,14 +21,14 @@ namespace HCMSapi.Repository.mySQL
             //dbContext.Appointments.Where(a => a.Status == "Pending").ToList();
             return _dbContext.users.Include(s => s.speciality).Where(s => s.specialityId == null || s.specialityId == 0).AsNoTracking().ToList();
         }
-        public ApplicationUser DeleteAdmin(string Id)
-        {
-            var admin = _dbContext.users.AsNoTracking().ToList().FirstOrDefault(d => d.Id == Id);
-            _dbContext.Remove(admin);
-            _dbContext.SaveChanges();
-            return admin;
+        //public ApplicationUser DeleteAdmin(string Id)
+        //{
+        //    var admin = _dbContext.users.AsNoTracking().ToList().FirstOrDefault(d => d.Id == Id);
+        //    _dbContext.Remove(admin);
+        //    _dbContext.SaveChanges();
+        //    return admin;
 
-        }
+        //}
     }
 
 }

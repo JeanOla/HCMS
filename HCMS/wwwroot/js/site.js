@@ -64,5 +64,57 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('#appointmentDay').on('change', function () {
+        var selectedValue = $(this).val();
+        $.ajax({
+            url: '/Appointment/changeDay',
+            type: 'POST',
+            data: { newDay: selectedValue },
+            success: function (data) {
+                var doctorIdDropdown = $('#doctor');
+                doctorIdDropdown.empty();
+                $.each(data, function (index, option) {
+                    doctorIdDropdown.append($('<option>', {
+                        value: option.value,
+                        text: option.text
+                    }));
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("asda");
+            }
+        });
+    });
+});
+
+//$(document).ready(function () {
+    
+//        var selectedValue = $(this).val();
+//        $.ajax({
+//            url: '/Appointment/changeDay',
+//            type: 'POST',
+//            data: { newDay: selectedValue },
+//            success: function (data) {
+//                var doctorIdDropdown = $('#doctor');
+//                doctorIdDropdown.empty();
+//                $.each(data, function (index, option) {
+//                    doctorIdDropdown.append($('<option>', {
+//                        value: option.value,
+//                        text: option.text
+//                    }));
+//                });
+//            },
+//            error: function (xhr, status, error) {
+//                alert("asda");
+//            }
+//        });
+  
+//});
+
 //end
 //appointment JS code
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})

@@ -10,6 +10,11 @@ namespace HCMSapi.Repository
         Task<ApplicationUser> SignUpUserAsync(ApplicationUser user, string password);
         Task<SignInResult> SignInUserAsync(LoginDTO loginDTO);
         Task<ApplicationUser> FindUserByEmailAsync(string email);
+        ApplicationUser DeleteUser(string email);
+        List<ApplicationUser> getAllUser();
+        ApplicationUser getUserByEmail(string email);
+
+
     }
 }
 

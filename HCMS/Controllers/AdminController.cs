@@ -97,7 +97,7 @@ namespace HCMS.Controllers
             
             if (ModelState.IsValid)
             {
-                var entityToUpdate = await _userManager.FindByEmailAsync(user.Email);
+                var entityToUpdate = await _userManager.FindByIdAsync(user.Id);
 
                 if (entityToUpdate != null)
                 {
@@ -108,6 +108,7 @@ namespace HCMS.Controllers
                     entityToUpdate.address = user.address;
                     entityToUpdate.Gender = user.gender;
                     entityToUpdate.PhoneNumber = user.PhoneNumber;
+                    entityToUpdate.Email = user.Email;
 
                     var result = await _userManager.UpdateAsync(entityToUpdate);
 

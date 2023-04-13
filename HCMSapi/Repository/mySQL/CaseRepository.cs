@@ -18,9 +18,15 @@ namespace HCMSapi.Repository.mySQL
         }
         public Cases addCase(Cases cases)
         {
+            if (cases.Id == 0 || cases.Id == null)
+            {
+                return cases;
+                
+            }
             _dbContext.Add(cases);
             _dbContext.SaveChanges();
             return cases;
+
         }
         public List<Cases> getCases()
         {

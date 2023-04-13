@@ -30,7 +30,9 @@
                                     <label asp-for="doctorId" class="control-label">Doctor</label>
                                     @if(User.IsInRole("Admin")){
                                        @* var UserId = _userManager.GetUserId(User);*@
-                                        @Html.DropDownList("doctorId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+                                        //@Html.DropDownList("doctorId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+                                        @Html.DropDownListFor( m => m.doctorId ,ViewBag.options as SelectList, new {@class ="form-control"})
+                                        <span asp-validation-for="doctorId" class="text-danger"></span>
                                     }
                                     else
                                     {
@@ -49,6 +51,7 @@
                                         <option value="Saturday">Saturday</option>
                                         <option value="Sunday">Sunday</option>
                                     </select>
+                                    <span asp-validation-for="dayOfWeek" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="startTime" class="control-label">Select a start time</label>

@@ -19,5 +19,6 @@ namespace HCMS.Repository
 
         ////doctor user
         List<Schedule> DoctorScheduleList(string Id);
+        List<Schedule> GetDoctorSchedDayById(string Id, string day);
     }
 }

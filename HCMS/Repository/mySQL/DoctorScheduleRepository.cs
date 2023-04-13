@@ -27,6 +27,7 @@ namespace HCMS.Repository.mySQL
         }
         public Schedule addSchedule(Schedule sched)
         {
+            
             _dbContext.Add(sched);
             _dbContext.SaveChanges();
             return sched;
@@ -57,6 +58,14 @@ namespace HCMS.Repository.mySQL
         {
             
             return _dbContext.schedules.Include(s => s.User).Where(d => d.doctorId == Id).AsNoTracking().ToList();
+        }
+
+
+            public List<Schedule> GetDoctorSchedDayById(string Id, string day)
+        {
+
+           // return _dbContext.schedules.Include(s => s.User).Where(d => d.doctorId == Id).AsNoTracking().ToList();
+            return _dbContext.schedules.Include(s => s.User).Where(d => d.doctorId == Id && d.dayOfWeek == day).AsNoTracking().ToList();
         }
     }
 }

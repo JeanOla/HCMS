@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
-namespace HCMS.ViewModel
+namespace HCMSapi.DTO
 {
-    public class EditAdminViewModel
+    public class UserWithRolesDTO
     {
-
-        public string Id { get; set; }
+        public string UserId { get; set; }
         [Required]
         public string firstName { get; set; }
         [Required]
@@ -21,16 +19,13 @@ namespace HCMS.ViewModel
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        public int specialityId { get; set; }
+        [Required]
         public string gender { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        //[Required]
-        //[DataType(DataType.Password)]
-        //public string password { get; set; }
-        //[Required]
-        //[DataType(DataType.Password)]
-        //[Display(Name = "Confirm Password")]
-        //[Compare("password", ErrorMessage = "The COnfirm Password Does not matched to the password")]
-        //public string confirmPassword { get; set; }
+        //public string Roles { get; set; }
+        public List<string> Roles { get; set; }
     }
 }
+

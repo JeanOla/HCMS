@@ -29,7 +29,8 @@ namespace HCMSapi.Repository.mySQL
             return _dbContext.patients.Include(md => md.medical).AsNoTracking().ToList().FirstOrDefault(emp => emp.Id == Id);
         }
         public PatientAndMedicalRecord AddPatientAndMedicalRecord(Patient newPatient, MedicalRecord medred)
-        { using (var transaction = _dbContext.Database.BeginTransaction())
+        {
+            /*using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
@@ -61,6 +62,34 @@ namespace HCMSapi.Repository.mySQL
                 {
                     transaction.Rollback();
 
+                }
+            }
+
+            return null;*/
+
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    _dbContext.patients.Add(newPatient);
+                    _dbContext.SaveChanges();
+
+                    medred.patientId = newPatient.Id;
+                    _dbContext.medicalRecords.Add(medred);
+                    _dbContext.SaveChanges();
+
+                    transaction.Commit();
+
+                    return new PatientAndMedicalRecord
+                    {
+                        Patient = newPatient,
+                        MedicalRecord = medred
+                    };
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    // Log the exception here if necessary
                 }
             }
 
