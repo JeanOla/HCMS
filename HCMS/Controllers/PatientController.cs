@@ -6,7 +6,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HCMS.Controllers
 {
-    
+    public class PatientViewModel
+    {
+        public Patient NewPatient { get; set; }
+        public MedicalRecord Medred { get; set; }
+    }
+
     public class PatientController : Controller
     {
         IPatientRepository _repo;
@@ -44,8 +49,14 @@ namespace HCMS.Controllers
         [HttpPost]
         public IActionResult Create(Patient newPatient, MedicalRecord medred)
         {
+            var patient = _repo.getPatients();
+            if (patient.Any(a => a.Name == newPatient.Name))
+            {//check if there is already ongoing appointment for this case
+                ModelState.AddModelError("Name", "Patient Already Exist.");
+                return View(newPatient);
+            }
 
-            var p = _repo.AddPatientAndMedicalRecord(newPatient, medred);
+            _repo.AddPatientAndMedicalRecord(newPatient, medred);
             return RedirectToAction("index");
 
         }

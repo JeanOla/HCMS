@@ -27,6 +27,8 @@ namespace HCMS.Models
         [NotMapped]
 
         public string FullName => $"{firstName} {lastName}";
+        [NotMapped]
+        public string Name => $"{firstName} {middleName} {lastName} ";
         public Patient()
         {
 

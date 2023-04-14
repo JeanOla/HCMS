@@ -32,6 +32,7 @@
                                         <th scope="col" style="text-align: center" class="text-white">Doctor Name</th>
                                         <th scope="col" style="text-align: center" class="text-white">Case</th>
                                         <th scope="col" style="text-align: center" class="text-white">Appointment Schedule</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Status</th>
                                         <th scope="col" style="text-align: center" class="text-white">Actions</th>
                                     </tr>
                                 </thead>
@@ -43,7 +44,8 @@
                                             @* <th scope="row"> @number++</th>*@
                                             <td style="text-align: center">@(p.User.firstName + " " + p.User.lastName)</td>
                                             <td style="text-align: center">@p.cases.fullcase</td>
-                                            <td style="text-align: center">@(p.appointmentDay + ", " + p.appointmentime)</td>
+                                            <td style="text-align: center">@(p.appointmentDay.ToString("MM-dd-yyyy") + " - " + p.appointmentime.ToString("hh:mm tt"))</td>
+                                            <td style="text-align: center">@p.Status</td>
                                             <td style="text-align: center">
                                                 @*no functionalities pa*@
                                                 <a class="btn btn-info" asp-controller="Appointment" asp-action="Details" title="Details" asp-route-Id="@p.Id">

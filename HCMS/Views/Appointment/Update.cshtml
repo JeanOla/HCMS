@@ -31,20 +31,22 @@
                                 @*<div class="col-md-4">*@
                                 <div class="form-group">
                                     <label asp-for="caseId" class="control-label">Select Case</label>
-                                    @Html.DropDownListFor( m => m.caseId ,ViewBag.optionsForCases as SelectList, new {@class ="form-control", type ="select"})
+                                    @Html.DropDownListFor( m => m.caseId ,ViewBag.optionsForCases as SelectList, new {@class ="form-control", disabled ="disabled", type ="select"})
+                                    <input type="text" asp-for="caseId" hidden class="form-control" />
                                     @* @Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList ,ViewBag.option?[0], new {@class ="form-control"})*@
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="appointmentDay" class="control-label">Select Appointment Day</label>
+                                    <input type="date" id="appointmentDay" asp-for="appointmentDay" class="datepicker form-control">
+                                    @* <label asp-for="appointmentDay" class="control-label">Select Appointment Day</label>
                                     <select asp-for="appointmentDay" class="form-control">
-                                        <option value="Monday">Monday</option>
-                                        <option value="Tuesday">Tuesday</option>
-                                        <option value="Wednesday">Wednesday</option>
-                                        <option value="Thursday">Thursday</option>
-                                        <option value="Friday">Friday</option>
-                                        <option value="Saturday">Saturday</option>
-                                        <option value="Sunday">Sunday</option>
-                                    </select>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                    </select>*@
                                     <span asp-validation-for="appointmentDay" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
@@ -55,13 +57,31 @@
                                 
                                 <div class="form-group">
                                     <label asp-for="appointmentime" class="control-label">Appointment Time</label>
-                                    <input  type="time" asp-for="appointmentime" class="form-control" />
+                                    <select class="form-control" asp-for="appointmentime">
+                                        <option value="@Model.appointmentime.ToString("hh:mm tt")">@Model.appointmentime.ToString("hh:mm tt")</option>
+                                        @for (int i = 0; i < 24; i++)
+                                        {
+                                            for (int j = 0; j < 60; j += 20)
+                                            {
+                                                var time = new DateTime(1900, 1, 1, i, j, 0);
+                                                <option value="@time.ToShortTimeString()">@time.ToString("h:mm tt")</option>
+                                            }
+                                        }
+                                    </select>
+                                   @* <label asp-for="appointmentime" class="control-label">Appointment Time</label>
+                                    <input  type="time" asp-for="appointmentime" class="form-control" />*@
                                     <span asp-validation-for="appointmentime" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Status" class="control-label">Status</label>
-                                    <input type="text" asp-for="Status" class="form-control"  />
+                                    <label asp-for="Status" class="control-label">Appointment Status</label>
+                                    <select asp-for="Status" class="form-control">
+                                        <option value="Ongoing">Ongoing</option>
+                                        <option value="Done">Done</option>
+                                    </select>
                                     <span asp-validation-for="Status" class="text-danger"></span>
+                                  @*  <label asp-for="Status" class="control-label">Status</label>
+                                    <input type="text" asp-for="Status" class="form-control"  />
+                                    <span asp-validation-for="Status" class="text-danger"></span>*@
                                 </div>
                                 @*</div>*@
                             </div>

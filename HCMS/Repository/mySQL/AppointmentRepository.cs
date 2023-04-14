@@ -57,6 +57,7 @@ namespace HCMS.Repository.mySQL
 
         public List<Schedule> getAllDoctorByDay(string newDay)
         {
+
             return _dbContext.schedules.Include(d => d.User).Where(d => d.dayOfWeek == newDay).AsNoTracking().ToList();
         }
         ///doctor appointments

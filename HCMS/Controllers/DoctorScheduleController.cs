@@ -80,7 +80,8 @@ namespace HCMS.Controllers
         public IActionResult Update(Schedule sched)
         {
             ViewBag.options = new SelectList(_repo.getDoctors(), "Id", "FullName");
-          //  var doctorsched = _repo.DoctorScheduleList(sched.doctorId);
+            //  var doctorsched = _repo.DoctorScheduleList(sched.doctorId);
+            var doctorsched = _repo.DoctorScheduleList(sched.doctorId);
 
 
             if (sched.startTime.HasValue && sched.endTime.HasValue && sched.startTime.Value >= sched.endTime.Value)

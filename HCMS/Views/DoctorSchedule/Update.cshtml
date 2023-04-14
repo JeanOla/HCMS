@@ -26,14 +26,15 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label asp-for="doctorId" class="control-label">Doctor</label>
-                                    @Html.DropDownListFor( m => m.doctorId ,ViewBag.options as SelectList, new {@class ="form-control"})
+                                    <label asp-for="doctorId" class="control-label">Doctor: </label>
+                                    @Html.DropDownListFor( m => m.doctorId ,ViewBag.options as SelectList, new {@class ="form-control", disabled = "disabled"})
+                                    <input type="text" asp-for="doctorId" hidden class="form-control" />
                                     <span asp-validation-for="doctorId" class="text-danger"></span>
                                     @*@Html.DropDownList("doctorId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})*@
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="dayOfWeek" class="control-label">Select Day of Schedule</label>
-                                    <select asp-for="dayOfWeek" class="form-control">
+                                    <label asp-for="dayOfWeek" class="control-label"  >Select Day of Schedule</label>
+                                    <select asp-for="dayOfWeek" disabled class="form-control">
                                         <option value="Monday">Monday</option>
                                         <option value="Tuesday">Tuesday</option>
                                         <option value="Wednesday">Wednesday</option>
@@ -43,6 +44,7 @@
                                         <option value="Sunday">Sunday</option>
                                     </select>
                                     <span asp-validation-for="dayOfWeek" class="text-danger"></span>
+                                    <input type="text" asp-for="dayOfWeek" hidden class="form-control" />
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="startTime" class="control-label">Select a start time</label>

@@ -32,10 +32,12 @@
                                 <div class="form-group">
                                     <label asp-for="caseId" class="control-label">Select Case</label>
                                     @Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList , new {@class ="form-control"})
+                                    <span asp-validation-for="caseId" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="appointmentDay" class="control-label">Select Appointment Day</label>
-                                    <select asp-for="appointmentDay" class="form-control">
+                                    <input type="date" id="appointmentDay" asp-for="appointmentDay" class="datepicker form-control">
+                                   @*<select asp-for="appointmentDay" class="form-control">
                                         <option value="" disabled selected hidden>Select day of appointment for next week</option>
                                         <option value="Monday">Monday</option>
                                         <option value="Tuesday">Tuesday</option>
@@ -44,7 +46,7 @@
                                         <option value="Friday">Friday</option>
                                         <option value="Saturday">Saturday</option>
                                         <option value="Sunday">Sunday</option>
-                                    </select>
+                                    </select>*@
                                     <span asp-validation-for="appointmentDay" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
@@ -55,8 +57,21 @@
                                 
                                 <div class="form-group">
                                     <label asp-for="appointmentime" class="control-label">Appointment Time</label>
-                                    <input type="time" asp-for="appointmentime" class="form-control" />
+                                    <select class="form-control" asp-for="appointmentime">
+                                        <option value="">Select Time</option>
+                                        @for (int i = 0; i < 24; i++)
+                                        {
+                                            for (int j = 0; j < 60; j += 20)
+                                            {
+                                                var time = new DateTime(1900, 1, 1, i, j, 0);
+                                                <option value="@time.ToShortTimeString()">@time.ToString("h:mm tt")</option>
+                                            }
+                                        }
+                                    </select>
                                     <span asp-validation-for="appointmentime" class="text-danger"></span>
+                                    @*<label asp-for="appointmentime" class="control-label">Appointment Time</label>
+                                    <input type="time" asp-for="appointmentime" class="form-control" />
+                                    *@
                                 </div>
                                 <div class="form-group">
                                     <label hidden asp-for="Status" class="control-label">Status</label>
@@ -72,7 +87,7 @@
                     </form>
 
                     <div>
-                        <a asp-action="Index">Back to List</a>
+                        <a asp-controller="DoctorSchedule" target="_blank" asp-action="DoctorScheduleList">check doctor schedule</a>
                     </div>
 
 

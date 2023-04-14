@@ -1,7 +1,7 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
+// sidebar menu.
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.sidebar .nav-link').forEach(function (element) {
 
@@ -40,53 +40,53 @@ $(document).ready(function () {
 //appointment JS code
 //start
 //change the option for appointment for UPDATE AND CREATE
-$(document).ready(function () {
-    $('#appointmentDay').on('change', function () {
-        var selectedValue = $(this).val();
-        $.ajax({
-            url: '/Appointment/changeDay',
-            type: 'POST',
-            data: { newDay: selectedValue },
-            success: function (data) {
-                var doctorIdDropdown = $('#doctor');
-                doctorIdDropdown.empty();
-                $.each(data, function (index, option) {
-                    doctorIdDropdown.append($('<option>', {
-                        value: option.value,
-                        text: option.text
-                    }));
-                });
-            },
-            error: function (xhr, status, error) {
-                alert("asda");
-            }
-        });
-    });
-});
+//$(document).ready(function () { // working
+//    $('#appointmentDay').on('change', function () {
+//        var selectedValue = $(this).val();
+//        $.ajax({
+//            url: '/Appointment/changeDay',
+//            type: 'POST',
+//            data: { newDay: selectedValue },
+//            success: function (data) {
+//                var doctorIdDropdown = $('#doctor');
+//                doctorIdDropdown.empty();
+//                $.each(data, function (index, option) {
+//                    doctorIdDropdown.append($('<option>', {
+//                        value: option.value,
+//                        text: option.text
+//                    }));
+//                });
+//            },
+//            error: function (xhr, status, error) {
+//                alert("asda");
+//            }
+//        });
+//    });
+//});
 
-$(document).ready(function () {
-    $('#appointmentDay').on('change', function () {
-        var selectedValue = $(this).val();
-        $.ajax({
-            url: '/Appointment/changeDay',
-            type: 'POST',
-            data: { newDay: selectedValue },
-            success: function (data) {
-                var doctorIdDropdown = $('#doctor');
-                doctorIdDropdown.empty();
-                $.each(data, function (index, option) {
-                    doctorIdDropdown.append($('<option>', {
-                        value: option.value,
-                        text: option.text
-                    }));
-                });
-            },
-            error: function (xhr, status, error) {
-                alert("asda");
-            }
-        });
-    });
-});
+//$(document).ready(function () { //working
+//    $('#appointmentDay').on('onload', function () {
+//        var selectedValue = $(this).val();
+//        $.ajax({
+//            url: '/Appointment/changeDay',
+//            type: 'POST',
+//            data: { newDay: selectedValue },
+//            success: function (data) {
+//                var doctorIdDropdown = $('#doctor');
+//                doctorIdDropdown.empty();
+//                $.each(data, function (index, option) {
+//                    doctorIdDropdown.append($('<option>', {
+//                        value: option.value,
+//                        text: option.text
+//                    }));
+//                });
+//            },
+//            error: function (xhr, status, error) {
+//                alert("asda");
+//            }
+//        });
+//    });
+//});
 
 //$(document).ready(function () {
     
@@ -112,9 +112,33 @@ $(document).ready(function () {
   
 //});
 
+
 //end
 //appointment JS code
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
 })
+//real  change the option for appointment for UPDATE AND CREATE
+$(document).ready(function () {
+    $('#appointmentDay').on('change', function () {
+        $.ajax({
+            url: '/Appointment/changeDay',
+            type: 'POST',
+            data: { newDay: $(this).val() },
+            success: function (data) {
+                var doctorIdDropdown = $('#doctor');
+                doctorIdDropdown.empty();
+                $.each(data, function (index, option) {
+                    doctorIdDropdown.append($('<option>', {
+                        value: option.value,
+                        text: option.text
+                    }));
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("asda");
+            }
+        });
+    });
+});

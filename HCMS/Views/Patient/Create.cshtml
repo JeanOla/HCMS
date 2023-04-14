@@ -1,5 +1,10 @@
 ﻿@model Patient
-
+@if (ViewData.ModelState.ContainsKey("Name"))
+{
+    <div class="alert alert-danger" role="alert">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+}
 <form asp-action="Create" method="post" asp-controller="Patient">
 <div class="accordion mt-4">
     <div class="accordion-item">
@@ -74,16 +79,8 @@
 
                                     <label>Female</label>
                                     @Html.RadioButtonFor(model => model.gender, "Female")
+                                    <span asp-validation-for="gender" class="text-danger"></span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <p>Medical Record</p>
-                            <div class="col-md-6">
-                               
-                            </div>
-                            <div class="col-md-6">
-                                
                             </div>
                         </div>
                         </div>
@@ -98,22 +95,10 @@
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Patient Registration
+                Patient Medical record
             </button>
         </h1>
         <div class="container-fluid  py-2">
-            <div class="row">
-                <div class="col-md-12 bg-light rounded">
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#" aria-current="page">Patient</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Patient Registration</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-
 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
     <div class="accordion-body">
         <div class="container-fluid">
@@ -130,6 +115,7 @@
                                     <option value="O-">O-</option>
                                     <option value="AB+">AB+</option>
                                     <option value="AB-">AB-</option>
+                                            <span asp-validation-for="@Model.medical.bloodType" class="text-danger"></span>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -153,6 +139,7 @@
                                 @Html.RadioButtonFor(model => model.medical.diabetic, "No", new { @checked = "checked" })
                                 <label>No</label>
                                 @Html.RadioButtonFor(model => model.medical.diabetic, "Yes")
+                                        <span asp-validation-for="@Model.medical.diabetic" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="@Model.medical.surgery" class="control-label">Does the Patient Undergo any Surgery or an Operation? if not, type "No"</label>

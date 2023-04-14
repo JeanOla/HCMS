@@ -44,25 +44,39 @@ namespace HCMS.Controllers
         {
             ViewBag.optionsForCases = new SelectList(_repo.getAllCases(), "Id", "fullcase");
             ViewBag.optionsForDoctor = new SelectList(_repo.getAllDoctor(), "Id", "FullName");
-            if (appoint.DoctorId == null || appoint.DoctorId == "")
+            if (appoint.DoctorId == null || appoint.DoctorId == "")// check if doctor is valid
             {
                 ModelState.AddModelError("DoctorId", "Doctor is required to set an appointment.");
                 return View(appoint);
             }
-            var doctorSchedule = _schedule.GetDoctorSchedDayById(appoint.DoctorId, appoint.appointmentDay).FirstOrDefault();
-            
-            var startTime = DateTime.Parse(doctorSchedule.startTime.ToString());
-            var endTime = DateTime.Parse(doctorSchedule.endTime.ToString());
-            var appointmentTime = appoint.appointmentime;
+            var selectedAppointmentDay = appoint.appointmentDay;
+            var appointmentDayOfWeek = selectedAppointmentDay.DayOfWeek.ToString(); // Get day of week as string
+            var doctorSchedule = _schedule.GetDoctorSchedDayById(appoint.DoctorId, appointmentDayOfWeek).FirstOrDefault();
+
+            var startTime = DateTime.Parse(doctorSchedule.startTime.ToString()).TimeOfDay;
+            var endTime = DateTime.Parse(doctorSchedule.endTime.ToString()).TimeOfDay;
+            var appointmentTime = appoint.appointmentime.TimeOfDay;
+
+            if (selectedAppointmentDay < DateTime.Today)
+            {
+                ModelState.AddModelError("appointmentDay", "Selected appointment day has already passed.");
+                return View(appoint);
+            }
 
             if (appointmentTime < startTime || appointmentTime > endTime)
-            {
+            {//check if selected of appointment time is valid based on doctor schedule
                 ModelState.AddModelError("appointmentime", "Appointment time is outside the doctor's schedule.");
                 return View(appoint);
             }
-            if (appoint.appointmentDay == "")
-            {
-                ModelState.AddModelError("appointmentDay", "Appointment day is required.");
+            var appointments = _repo.getAllAppointment();
+            if (appointments.Any(a => a.caseId == appoint.caseId && a.Status == "Ongoing"))
+            {//check if there is already ongoing appointment for this case
+                ModelState.AddModelError("caseId", "This is case already have an appointment");
+                return View(appoint);
+            }
+            if (appointments.Any(a => a.DoctorId == appoint.DoctorId && a.appointmentime == appoint.appointmentime && a.appointmentDay == appoint.appointmentDay && a.Status == appoint.Status))
+            {//check if there is already ongoing appointment for this case
+                ModelState.AddModelError("appointmentime", "There is already an appointment set in this time for the selected doctor. ");
                 return View(appoint);
             }
 
@@ -86,6 +100,7 @@ namespace HCMS.Controllers
 
 
             var details = _repo.GetAppointmentById(Id);
+            
             return View(details);
         }
         [HttpPost]
@@ -93,28 +108,47 @@ namespace HCMS.Controllers
         {
             ViewBag.optionsForCases = new SelectList(_repo.getAllCases(), "Id", "fullcase");
             ViewBag.optionsForDoctor = new SelectList(_repo.getAllDoctor(), "Id", "FullName");
+            if (app.Status == "Done")
+            {
+                _repo.updateAppointment(app);
+                return RedirectToAction("Index");
+            }
             if (app.DoctorId == null || app.DoctorId == "")
             {
                 ModelState.AddModelError("DoctorId", "Doctor is required to set an appointment.");
                 return View(app);
             }
-            var doctorSchedule = _schedule.GetDoctorSchedDayById(app.DoctorId, app.appointmentDay).FirstOrDefault();
+            var selectedAppointmentDay = app.appointmentDay;
+            var appointmentDayOfWeek = selectedAppointmentDay.DayOfWeek.ToString(); // Get day of week as string
+            var doctorSchedule = _schedule.GetDoctorSchedDayById(app.DoctorId, appointmentDayOfWeek).FirstOrDefault();
 
-            var startTime = DateTime.Parse(doctorSchedule.startTime.ToString());
-            var endTime = DateTime.Parse(doctorSchedule.endTime.ToString());
-            var appointmentTime = app.appointmentime;
+            var startTime = DateTime.Parse(doctorSchedule.startTime.ToString()).TimeOfDay;
+            var endTime = DateTime.Parse(doctorSchedule.endTime.ToString()).TimeOfDay;
+            var appointmentTime = app.appointmentime.TimeOfDay;
 
             if (appointmentTime < startTime || appointmentTime > endTime)
             {
                 ModelState.AddModelError("appointmentime", "Appointment time is outside the doctor's schedule.");
                 return View(app);
             }
-            if (app.appointmentDay == "")
+            var appointments = _repo.getAllAppointment();
+            //if (appointments.Any(a => a.caseId == app.caseId && a.Status == "Ongoing"))
+            //{//check if there is already ongoing appointment for this case
+            //    ModelState.AddModelError("caseId", "This is case already have an appointment");
+            //    return View(app);
+            //}
+
+            if (selectedAppointmentDay < DateTime.Today)
             {
-                ModelState.AddModelError("appointmentDay", "Appointment day is required.");
+                ModelState.AddModelError("appointmentDay", "Selected appointment day has already passed.");
                 return View(app);
             }
-
+            if (appointments.Any(a => a.DoctorId == app.DoctorId && a.appointmentime == app.appointmentime && a.appointmentDay == app.appointmentDay && a.Status == app.Status))
+            {//check if there is already ongoing appointment for this case
+                ModelState.AddModelError("appointmentime", "There is already an appointment set in this time for the selected doctor. ");
+                return View(app);
+            }
+           
             _repo.updateAppointment(app);
             return RedirectToAction("Index");
         }
@@ -125,9 +159,9 @@ namespace HCMS.Controllers
         }
 
         [HttpPost]
-        public IActionResult changeDay(string newDay)
+        public IActionResult changeDay(DateTime newDay)
         {
-            var doctors = _repo.getAllDoctorByDay(newDay);
+            var doctors = _repo.getAllDoctorByDay(newDay.DayOfWeek.ToString());
             var options = new List<SelectListItem>();
 
             foreach (var doctor in doctors)
@@ -139,6 +173,18 @@ namespace HCMS.Controllers
                 });
             }
             return Json(options);
+            //var doctors = _repo.getAllDoctorByDay(newDay);
+            //var options = new List<SelectListItem>();
+
+            //foreach (var doctor in doctors)
+            //{
+            //    options.Add(new SelectListItem
+            //    {
+            //        Value = doctor.doctorId.ToString(),
+            //        Text = doctor.User.FullName
+            //    });
+            //}
+            //return Json(options);
         }
 
     }
