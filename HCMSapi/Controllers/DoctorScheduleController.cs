@@ -6,9 +6,11 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using HCMSapi.Models;
 using HCMSapi.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HCMSapi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DoctorScheduleController : ControllerBase

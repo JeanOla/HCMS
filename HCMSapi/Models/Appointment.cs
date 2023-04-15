@@ -10,7 +10,7 @@ namespace HCMSapi.Models
         [ValidateNever]
         public ApplicationUser User { get; set; }
         [Required]
-        public string appointmentDay { get; set; }
+        public DateTime appointmentDay { get; set; }
         [Required]
         public DateTime appointmentime { get; set; }
         [Required]

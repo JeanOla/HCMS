@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HCMSapi.Controllers
 {
@@ -66,7 +67,7 @@ namespace HCMSapi.Controllers
             }
             return BadRequest();
         }
-
+        [Authorize]
         [HttpPost("Add {roles} Doctor/Admin")]
         public async Task<IActionResult> Register(AddDoctorDTO userViewModel, [FromRoute] string roles)
         {
@@ -86,8 +87,6 @@ namespace HCMSapi.Controllers
                         specialityId = userViewModel.specialityId,
                         Gender = userViewModel.gender,
                         PhoneNumber = userViewModel.PhoneNumber,
-
-
                     };
                     //_userManager= crud opedration for user
                     //_signInManager=manages signins
@@ -148,11 +147,41 @@ namespace HCMSapi.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [Authorize]
+        [HttpGet("Get all User")]
         public IActionResult GetAll()
         {
-            return Ok(_repo.getAllUser());
+            try
+            {
+                var user = _repo.getAllUser().Select(s => new
+                {
+                     Id = s.Id,
+                     FullName = s.FullName,
+                     Email = s.Email,
+                     dob = s.dob,
+                     address = s.address,
+                     specialityId = s.specialityId,
+                     gender = s.Gender, PhoneNumber = s.PhoneNumber,
+
+                    
+                }).ToList();
+
+                if (user.Count == 0)
+                {
+                    return NoContent();
+                }
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+           // return Ok(_repo.getAllUser());
         }
+
+        [Authorize]
         [HttpGet("Get user via {email}")]
         public IActionResult GetUserByEmail([FromRoute] string email) 
         {
@@ -163,7 +192,22 @@ namespace HCMSapi.Controllers
             {
                 user = _repo.getUserByEmail(email);
                 if (user == null)
-                    return NoContent(); 
+                {
+                    return NoContent();
+                }
+                var userDto = new
+                {
+                    Id = user.Id,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    dob = user.dob,
+                    address = user.address,
+                    specialityId = user.specialityId,
+                    gender = user.Gender,
+                    PhoneNumber = user.PhoneNumber
+                };
+
+                return Ok(userDto);
             }
             catch (Exception ex)
             {
@@ -171,6 +215,8 @@ namespace HCMSapi.Controllers
             }
             return Ok(user); 
         }
+
+        [Authorize]
         [HttpDelete("{email}Delete User")]
         public IActionResult Delete([FromRoute] string email) 
         {
@@ -183,9 +229,4 @@ namespace HCMSapi.Controllers
             return Ok(_repo.getAllUser());
         }
     }
-
-
-
-
-
 }

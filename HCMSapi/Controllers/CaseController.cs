@@ -7,9 +7,11 @@ using HCMSapi.Models;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using HCMSapi.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HCMSapi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CaseController : ControllerBase

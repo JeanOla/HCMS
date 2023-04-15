@@ -78,6 +78,11 @@ namespace HCMS.Controllers
                         }
                     }
                 }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("FullNameWithMiddle", error.Description);
+                    return View(userViewModel);
+                }
             }
             return RedirectToAction("AdminList");
         }
@@ -164,6 +169,51 @@ namespace HCMS.Controllers
         {
             _repo.DeleteAdmin(Id);
             return RedirectToAction("AdminList", "Admin");
+        }
+
+
+        [HttpGet]
+        public IActionResult ChangePassword(string Id)
+        {
+            var user = _userManager.Users.FirstOrDefault(u => u.Id == Id);
+            ChangePasswordViewModel userViewModel = new ChangePasswordViewModel()
+            {
+                Id = user.Id
+            };
+            return View(userViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var user = _repo.getAdminById(model.Id);
+            var passwordIsValid = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+            if (!passwordIsValid)
+            {
+                ModelState.AddModelError("CurrentPassword", "The current password is incorrect.");
+                return View(model);
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

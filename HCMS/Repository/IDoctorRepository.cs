@@ -10,5 +10,6 @@ namespace HCMS.Repository
 
         ApplicationUser DeleteDoctor(string Id);
         List<ApplicationUser> getDoctorsInfo(string Id);
+        ApplicationUser getDoctorById(string Id);
     }
 }

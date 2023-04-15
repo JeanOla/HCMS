@@ -19,7 +19,7 @@ namespace HCMSapi.Models
         
         public List<Schedule> schedules { get; set; }
         [NotMapped]
-        public string FullName => $"{firstName} {lastName}";
+        public string FullName => $"{firstName} {middleName} {lastName}";
         public List<Appointment> appointments { get; set; }
     }
 }

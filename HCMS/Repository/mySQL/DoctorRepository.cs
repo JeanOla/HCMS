@@ -3,6 +3,7 @@ using HCMS.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Plugins;
+using System.Runtime.ExceptionServices;
 
 namespace HCMS.Repository.mySQL
 {
@@ -39,6 +40,10 @@ namespace HCMS.Repository.mySQL
             _dbContext.SaveChanges();
             return doctor;
 
+        }
+        public ApplicationUser getDoctorById(string Id)
+        {
+            return _dbContext.users.AsNoTracking().ToList().FirstOrDefault(d => d.Id == Id);
         }
     }
 }

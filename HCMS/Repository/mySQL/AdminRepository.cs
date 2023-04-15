@@ -29,6 +29,10 @@ namespace HCMS.Repository.mySQL
             return admin;
 
         }
+        public ApplicationUser getAdminById(string Id)
+        {
+            return _dbContext.users.AsNoTracking().ToList().FirstOrDefault(d => d.Id == Id);
+        }
     }
 
 }

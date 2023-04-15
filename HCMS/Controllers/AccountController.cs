@@ -60,7 +60,7 @@ namespace HCMS.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(model.Id);
+            var user = _repo.getDoctorById(model.Id) ;
             var passwordIsValid = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
             if (!passwordIsValid)
             {
@@ -143,6 +143,12 @@ namespace HCMS.Controllers
                     }
                     //return RedirectToAction("Index", "Home");
                 }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("FullNameWithMiddle", error.Description);
+                    return View(userViewModel);
+                }
+
             }
            return RedirectToAction("Index");
         }
