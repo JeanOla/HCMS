@@ -1,5 +1,11 @@
 ﻿@model RegisterAdminViewModel
 
+@if (ViewData.ModelState.ContainsKey("FullNameWithMiddle"))
+{
+    <div class="alert alert-danger mt-3" role="alert">
+        <span asp-validation-for="FullNameWithMiddle" class="text-danger"></span>
+    </div>
+}
 <div class="accordion mt-4">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">

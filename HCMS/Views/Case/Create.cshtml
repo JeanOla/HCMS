@@ -1,4 +1,11 @@
-﻿@model Cases
+﻿@model Cases 
+
+@if (ViewData.ModelState.ContainsKey("rawcase"))
+{
+    <div class="alert alert-danger mt-3" role="alert">
+        <span asp-validation-for="rawcase" class="text-danger"></span>
+    </div>
+}
 
 <div class="accordion mt-4">
     <div class="accordion-item">

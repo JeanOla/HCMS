@@ -1,7 +1,7 @@
 ﻿@model Patient
 @if (ViewData.ModelState.ContainsKey("Name"))
 {
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger mt-3" role="alert">
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 }

@@ -50,7 +50,7 @@ namespace HCMS.Controllers
         public IActionResult Create(Patient newPatient, MedicalRecord medred)
         {
             var patient = _repo.getPatients();
-            if (patient.Any(a => a.Name == newPatient.Name))
+            if (patient.Any(a => a.Name.Equals(newPatient.Name, StringComparison.OrdinalIgnoreCase)))
             {//check if there is already ongoing appointment for this case
                 ModelState.AddModelError("Name", "Patient Already Exist.");
                 return View(newPatient);

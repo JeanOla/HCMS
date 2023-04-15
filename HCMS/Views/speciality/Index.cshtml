@@ -1,14 +1,15 @@
-﻿    @model List<ApplicationUser>
-    @{
-    int number = 1;
-    }
-
+﻿@model List<Speciality>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
 
 <div class="accordion mt-4">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Doctor List
+                Doctor Specialization List
             </button>
         </h1>
         <div class="container-fluid  py-2">
@@ -16,8 +17,8 @@
                 <div class="col-md-12 bg-light rounded">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#" aria-current="page">Doctor</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Doctor List</li>
+                            <li class="breadcrumb-item"><a href="#" aria-current="page">Doctor Specialization</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Doctor Specialization List</li>
                         </ol>
                     </nav>
                 </div>
@@ -33,9 +34,7 @@
                                 <thead class="thead-dark bg-primary">
                                     <tr>
                                         @*  <th scope="col">#</th>*@
-                                        <th scope="col" style="text-align: center" class="text-white">Doctor Name</th>
-                                        <th scope="col" style="text-align: center" class="text-white">Email</th>
-                                        <th scope="col" style="text-align: center" class="text-white">Speciality</th>
+                                        <th scope="col" style="text-align: center" class="text-white">Specialization</th>
                                         <th scope="col" style="text-align: center" class="text-white">Actions</th>
                                     </tr>
                                 </thead>
@@ -45,26 +44,14 @@
 
                                         <tr>
                                             @* <th scope="row"> @number++</th>*@
-                                            <td style="text-align: center">@(p.firstName + " " + p.lastName)</td>
-                                            <td style="text-align: center">@p.Email</td>
-                                            <td style="text-align: center">@p.speciality.SpecialityName</td>
+                                            <td style="text-align: center">@p.SpecialityName</td>
                                             <td style="text-align: center">
-                                                <a class="btn btn-info" asp-controller="Account" asp-action="Details" title="Details" asp-route-Id="@p.Id">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </a>
-                                                <a class="btn btn-secondary" asp-controller="Account" title="Edit" asp-action="Update" asp-route-Id="@p.Id">
+                                                <a class="btn btn-secondary" asp-controller="Speciality" title="Update" asp-action="Update" asp-route-Id="@p.Id">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-secondary" asp-controller="Account" title="Change Password" asp-action="ChangePassword" asp-route-Id="@p.Id">
-                                                    <i class="fas fa-edit"></i>
+                                                <a class="btn btn-danger" asp-controller="Speciality" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-user-times"></i>
                                                 </a>
-                                                @if (User.IsInRole("Admin"))
-                                                {
-                                                    <a class="btn btn-danger" asp-controller="Account" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
-                                                        <i class="fas fa-user-times"></i>
-                                                    </a>
-                                                }
-                                                
                                             </td>
                                         </tr>
                                     }

@@ -31,5 +31,7 @@ namespace HCMS.ViewModel
         [Display(Name = "Confirm Password")]
         [Compare("password", ErrorMessage = "The COnfirm Password Does not matched to the password")]
         public string confirmPassword { get; set; }
+
+        public string FullNameWithMiddle => $"{firstName} {middleName} {lastName}";
     }
 }

@@ -51,6 +51,7 @@ namespace HCMS.Controllers
         public IActionResult addDoctorSchedule(Schedule sched)
         {
             ViewBag.options = new SelectList(_repo.getDoctors(), "Id", "FullName");
+            ViewBag.MyValue = _userManager.GetUserId(User);
             var doctorsched = _repo.DoctorScheduleList(sched.doctorId);
 
                 if (doctorsched.Any(s => s.dayOfWeek == sched.dayOfWeek))

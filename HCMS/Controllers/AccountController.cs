@@ -5,17 +5,29 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HCMS.Controllers
 {//doctorController
+   
     public class AccountController : Controller
     {
+        public static string HashPassword(string password)
+        {
+            using var sha256 = SHA256.Create();
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            return hash;
+        }
         IDoctorRepository _repo;
         private UserManager<ApplicationUser> _userManager { get; }
         // login user details 
         private SignInManager<ApplicationUser> _signInManager { get; }
 
         private RoleManager<IdentityRole> _roleManager { get; }
+
+        
         public AccountController(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager, IDoctorRepository repo,
         RoleManager<IdentityRole>RoleManager) 
@@ -34,9 +46,70 @@ namespace HCMS.Controllers
             RegisterDoctorViewModel model = new RegisterDoctorViewModel();
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult ChangePassword(string Id)
+        {
+            var user = _userManager.Users.FirstOrDefault(u => u.Id == Id);
+            ChangePasswordViewModel userViewModel = new ChangePasswordViewModel()
+            {
+                Id = user.Id
+            };
+            return View(userViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+            var passwordIsValid = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+            if (!passwordIsValid)
+            {
+                ModelState.AddModelError("CurrentPassword", "The current password is incorrect.");
+                return View(model);
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterDoctorViewModel userViewModel)
         {
+            ViewBag.options = new SelectList(_repo.populateSpeciality(), "Id", "SpecialityName");
+            var admin = _repo.getDoctors();
+            if (admin.Any(a => a.Email == userViewModel.Email))
+            {
+                ModelState.AddModelError("Email", "Email address you entered is already in used.");
+                return View(userViewModel);
+            }
+            if (admin.Any(a => a.FullNameWithMiddle.Equals(userViewModel.FullNameWithMiddle, StringComparison.OrdinalIgnoreCase)))
+            {
+                ModelState.AddModelError("FullNameWithMiddle", "the Doctor you entered is already existing.");
+                return View(userViewModel);
+            }
             if (ModelState.IsValid)
             {
                 var userMode = new ApplicationUser

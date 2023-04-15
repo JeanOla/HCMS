@@ -21,5 +21,6 @@ namespace HCMS.Models
         [NotMapped]
         public string FullName => $"{firstName} {lastName}";
         public List<Appointment> appointments { get; set; }
+        public string FullNameWithMiddle => $"{firstName} {middleName} {lastName}";
     }
 }

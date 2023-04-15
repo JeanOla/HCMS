@@ -38,6 +38,17 @@ namespace HCMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(RegisterAdminViewModel userViewModel)
         {
+            var admin = _repo.getUserList();
+            if (admin.Any(a => a.Email == userViewModel.Email))
+            {
+                ModelState.AddModelError("Email", "Email address you entered is already in used.");
+                return View(userViewModel);
+            }
+            if (admin.Any(a => a.FullNameWithMiddle.Equals(userViewModel.FullNameWithMiddle, StringComparison.OrdinalIgnoreCase)))
+            {
+                ModelState.AddModelError("FullNameWithMiddle", "Admin you entered is already existing.");
+                return View(userViewModel);
+            }
             if (ModelState.IsValid)
             {
                 var userMode = new ApplicationUser
@@ -54,8 +65,6 @@ namespace HCMS.Controllers
 
 
                 };
-                //_userManager= crud opedration for user
-                //_signInManager=manages signins
                 var result = await _userManager.CreateAsync(userMode, userViewModel.password);
                 if (result.Succeeded)
                 {

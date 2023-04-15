@@ -24,6 +24,13 @@ namespace HCMS.Controllers
         [HttpPost]
         public IActionResult Create(Cases cases)
         {
+            ViewBag.options = new SelectList(_repo.GetPatients(), "Id", "FullName");
+            var caseee = _repo.getCases();
+            if (caseee.Any(a => a.rawcase.Equals(cases.rawcase, StringComparison.OrdinalIgnoreCase)))
+            {//check if there is already ongoing appointment for this case
+                ModelState.AddModelError("rawcase", "Patient Case Already Exist.");
+                return View(cases);
+            }
             _repo.addCase(cases);
             return RedirectToAction("Index");
         }

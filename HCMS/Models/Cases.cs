@@ -21,6 +21,8 @@ namespace HCMS.Models
         [NotMapped]
         [ValidateNever]
         public string fullcase => $" Patient Name: {patient.firstName} {patient.lastName} - Reason: {reason}";
-
+        [NotMapped]
+        [ValidateNever]
+        public string rawcase => $" Patient Id: {patientId} - Reason: {reason}";
     }
 }
