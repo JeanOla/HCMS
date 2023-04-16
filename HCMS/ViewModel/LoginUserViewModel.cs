@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace HCMS.ViewModel
@@ -14,5 +15,7 @@ namespace HCMS.ViewModel
 
         [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
+        [ValidateNever]
+        public string validation { get; set; }
     }
 }

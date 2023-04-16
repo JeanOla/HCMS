@@ -45,5 +45,10 @@ namespace HCMS.Repository.mySQL
         {
             return _dbContext.users.AsNoTracking().ToList().FirstOrDefault(d => d.Id == Id);
         }
+        public List<ApplicationUser> getDoctorsExcept(string email)
+        {
+            return _dbContext.users.Include(s => s.speciality).Where(s => s.speciality.SpecialityName != null && s.Email != email).AsNoTracking().ToList();
+
+        }
     }
 }

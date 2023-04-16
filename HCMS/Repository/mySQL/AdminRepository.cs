@@ -17,8 +17,6 @@ namespace HCMS.Repository.mySQL
         public List<ApplicationUser> getUserList()
         {
             var role = _roleManager.Roles.ToList();
-            //return _dbContext.Employees.Include(e => e.department).AsNoTracking().ToList();
-            //dbContext.Appointments.Where(a => a.Status == "Pending").ToList();
             return _dbContext.users.Include(s => s.speciality).Where(s => s.specialityId == null || s.specialityId == 0).AsNoTracking().ToList();
         }
         public ApplicationUser DeleteAdmin(string Id)

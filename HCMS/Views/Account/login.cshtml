@@ -1,5 +1,11 @@
 ﻿@model LoginUserViewModel
 
+@if (ViewData.ModelState.ContainsKey("validation"))
+{
+    <div class="alert alert-danger mt-3" role="alert">
+        <span asp-validation-for="validation" class="text-danger"></span>
+    </div>
+}
 
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -9,15 +15,15 @@
                         <form asp-controller="Account" asp-action="Login" method="post">
                         <h3 class="mb-5">Log in</h3>
                         <div class="form-outline mb-4">
-                            <span asp-validation-for="UserName"></span>
-                            <input asp-for="UserName" type="email" id="typeEmailX-2" class="form-control form-control-lg" />
                             <label asp-for="UserName" class="form-label" for="typeEmailX-2">Email</label>
+                            <input asp-for="UserName" type="email" id="typeEmailX-2" class="form-control form-control-lg" />
+                            
                              <span asp-validation-for="UserName" class="text-danger"></span>
                         </div>
                         <div class="form-outline mb-4">
-                            <span asp-validation-for="Password"></span>
-                            <input asp-for="Password" type="password" id="typePasswordX-2" class="form-control form-control-lg" />
                             <label asp-for="Password" class="form-label" for="typePasswordX-2">Password</label>
+                            <input asp-for="Password" type="password" id="typePasswordX-2" class="form-control form-control-lg" />
+                           
                              <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>

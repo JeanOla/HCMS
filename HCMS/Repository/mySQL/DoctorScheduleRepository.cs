@@ -17,6 +17,12 @@ namespace HCMS.Repository.mySQL
             _roleManager = roleManager;
             _userManager = userManager;
         }
+        public int getDoctorsAvailableToday()
+        {
+            DateTime today = DateTime.Today;
+            string dayOfWeek = today.DayOfWeek.ToString();
+            return _dbContext.schedules.Count(s => s.dayOfWeek == dayOfWeek);
+        }
         public List<ApplicationUser> getDoctors()
         {
             return _dbContext.users.Include(s => s.speciality).Where( s => s.speciality.SpecialityName != null).AsNoTracking().ToList();

@@ -14,6 +14,30 @@ namespace HCMS.Repository.mySQL
             _dbContext = dbContext;
         }
 
+        public int[] GetMonthlyAppointmentCounts()
+        {
+            int currentYear = DateTime.Now.Year;
+            var counts = _dbContext.appointments
+                .Where(a => a.appointmentDay.Year == currentYear)
+                .GroupBy(a => a.appointmentDay.Month)
+                .Select(g => g.Count())
+                .ToArray();
+            return counts;
+        }
+
+        public int appointmentToday()
+        {
+            var today = DateTime.Today;
+            var count = _dbContext.appointments.Count(a => a.appointmentDay == today);
+            return count;
+        }
+        public int appointmentTodayById(string Id)
+        {
+            var today = DateTime.Today;
+            var count = _dbContext.appointments.Count(a => a.appointmentDay == today && a.DoctorId == Id);
+            return count;
+        }
+
         public List<Appointment> getAllAppointment()
         {
 

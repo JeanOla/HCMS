@@ -173,18 +173,6 @@ namespace HCMS.Controllers
                 });
             }
             return Json(options);
-            //var doctors = _repo.getAllDoctorByDay(newDay);
-            //var options = new List<SelectListItem>();
-
-            //foreach (var doctor in doctors)
-            //{
-            //    options.Add(new SelectListItem
-            //    {
-            //        Value = doctor.doctorId.ToString(),
-            //        Text = doctor.User.FullName
-            //    });
-            //}
-            //return Json(options);
         }
 
     }

@@ -20,6 +20,10 @@ namespace HCMS.Repository.mySQL
         {
             _dbContext = dbContext;
         }
+        public int countPatient()
+        {
+            return _dbContext.patients.Count();
+        }
         public List<Patient> getPatients()
         {
             return _dbContext.patients.AsNoTracking().ToList();

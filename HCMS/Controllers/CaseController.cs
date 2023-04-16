@@ -31,6 +31,11 @@ namespace HCMS.Controllers
                 ModelState.AddModelError("rawcase", "Patient Case Already Exist.");
                 return View(cases);
             }
+            if (cases.patientId == null || cases.patientId == 0)
+            {
+                ModelState.AddModelError("patientId", "Patient is required");
+                return View(cases);
+            }
             _repo.addCase(cases);
             return RedirectToAction("Index");
         }

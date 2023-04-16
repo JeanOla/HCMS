@@ -13,5 +13,6 @@ namespace HCMS.Repository
         PatientAndMedicalRecord editPatient(Patient newPatient, MedicalRecord medred);
 
         Patient DeletePatient(int Id);
+        int countPatient();
     }
 }

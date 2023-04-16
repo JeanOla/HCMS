@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/HCMS.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/fontawesome/css/all.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DataTable2/datatables.css" asp-append-version="true" />
+    <script src="~/js/chart.js" asp-append-version="true"></script>
 
 </head>
 <body>
@@ -84,12 +85,17 @@
                                 </a>
                             <ul class="submenu collapse">
                                 <li> <a class="nav-link text-secondary" asp-area="" asp-controller="Patient" asp-action="index">Patient</a></li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-secondary" asp-area="" asp-controller="Patient" asp-action="Create">Create Patient</a>
-                                    </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-secondary" asp-area="" asp-controller="case" asp-action="create">Create Patient Case</a>
-                                </li>
+
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-secondary" asp-area="" asp-controller="Patient" asp-action="Create">Create Patient</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-secondary" asp-area="" asp-controller="case" asp-action="create">Create Patient Case</a>
+                                        </li>
+                                    }
+
                                     <li class="nav-item">
                                         <a class="nav-link text-secondary" asp-area="" asp-controller="case" asp-action="Index">Patient Case List</a>
                                     </li>
@@ -168,9 +174,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     <script src="~/DataTable2/datatables.min.js"></script>
     <script>
-   
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

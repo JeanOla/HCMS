@@ -16,5 +16,8 @@ namespace HCMS.Repository
 
         List<Schedule> getAllDoctorByDay(string newDay);
         List<Appointment> getAllDoctorAppointment(string Id);
+        int appointmentToday();
+        int appointmentTodayById(string Id);
+
     }
 }

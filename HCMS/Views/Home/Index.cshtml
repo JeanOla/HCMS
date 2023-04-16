@@ -1,9 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@inject SignInManager<ApplicationUser> _signInManager
+@model DashboardViewModel
 
 <div class="container-fluid  mt-4">
+
     <div class="row">
         <div class="col-xl-12 col-md-12 mb-2">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -20,4 +21,75 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-4">
+        <div class="col-xl-4 col-md-6 mb-2">
+            <div class="card-header bg-primary">
+            </div>
+            <a asp-action="index" asp-controller="Patient" class="text-decoration-none text-secondary">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Patient Count
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold">@Model.totalPatient</div>
+                            </div>
+                            <div class="col-auto">
+                                <H1 class="display-6"><i class="fas fa-hospital-user fa-lg"></i></H1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-4 col-md-6 mb-2">
+            <div class="card-header bg-info">
+            </div>
+            <a asp-action="Index" asp-controller="Appointment" class="text-decoration-none text-secondary">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Appointment Today
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold">@Model.appointmentCountToday</div>
+                            </div>
+                            <div class="col-auto">
+                                <H1 class="display-6">  <i class="fas fa-calendar-check fa-lg"></i></H1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        @if(User.IsInRole("Admin")){
+            <div class="col-xl-4 col-md-6 mb-2">
+                <div class="card-header bg-danger">
+                </div>
+                <a asp-action="DoctorScheduleList" asp-controller="DoctorSchedule" class="text-decoration-none text-secondary">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Total available doctor Today
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold">@Model.doctorAvailableTodayCount</div>
+                                </div>
+                                <div class="col-auto">
+                                    <H1 class="display-6"> <i class="fas fa-user-md"></i></H1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+        
+
+    </div>
 </div>
+

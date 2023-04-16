@@ -1,5 +1,4 @@
-﻿@model List<ApplicationUser>
-
+﻿@inject SignInManager<ApplicationUser> _signInManager
 <div class="accordion mt-4">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
@@ -52,9 +51,12 @@
                                                 <a class="btn btn-secondary" asp-controller="Admin" title="ChangePassword" asp-action="ChangePassword" asp-route-Id="@p.Id">
                                                     <i class="fas fa-user-edit"></i>
                                                 </a>
-                                                <a class="btn btn-danger" asp-controller="Admin" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
-                                                    <i class="fas fa-user-times"></i>
-                                                </a>
+                                                @if(@User.Identity.Name != p.Email){
+                                                    <a class="btn btn-danger" asp-controller="Admin" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                        <i class="fas fa-user-times"></i>
+                                                    </a>
+                                                }
+                                               
                                             </td>
                                         </tr>
                                     }

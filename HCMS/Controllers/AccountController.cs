@@ -13,13 +13,6 @@ namespace HCMS.Controllers
    
     public class AccountController : Controller
     {
-        public static string HashPassword(string password)
-        {
-            using var sha256 = SHA256.Create();
-            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-            var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-            return hash;
-        }
         IDoctorRepository _repo;
         private UserManager<ApplicationUser> _userManager { get; }
         // login user details 
@@ -155,6 +148,7 @@ namespace HCMS.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(string Id)
         {
+            
             ViewBag.options = new SelectList(_repo.populateSpeciality(), "Id", "SpecialityName");
             var user = _userManager.Users.FirstOrDefault(u => u.Id == Id);
             var roles = await _userManager.GetRolesAsync(user);
@@ -177,6 +171,14 @@ namespace HCMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(EditDoctorViewModel user)
         {
+            var oldemail = _repo.getDoctorById(user.Id);
+            ViewBag.options = new SelectList(_repo.populateSpeciality(), "Id", "SpecialityName");
+            var admin = _repo.getDoctorsExcept(oldemail.Email);
+            if (admin.Any(a => a.Email == user.Email))
+            {
+                ModelState.AddModelError("Email", "Email address you entered is already in used.");
+                return View(user);
+            }
 
             if (ModelState.IsValid)
             {
@@ -232,10 +234,12 @@ namespace HCMS.Controllers
         [HttpGet]
         public IActionResult login()
         {
-            if(User?.Identity.IsAuthenticated == true)
+            if (User?.Identity.IsAuthenticated == true)
             {
                 return RedirectToAction("Index", "Home");
             }
+           
+              
             return View();
         }
         [HttpPost]
@@ -250,7 +254,7 @@ namespace HCMS.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(string.Empty, "invalid login credentials");
+                ModelState.AddModelError("validation", "invalid login credentials");
             }
             return View(userViewModel);
         }

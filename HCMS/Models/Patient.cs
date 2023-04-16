@@ -20,7 +20,7 @@ namespace HCMS.Models
         public string phone { get; set; }
         [Required]
         public string gender { get; set; }
-
+        [Required]
         public DateTime? dob { get; set; }
         public List<Cases> cases { get; set; }
         public MedicalRecord medical { get; set; }

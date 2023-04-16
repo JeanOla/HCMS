@@ -39,6 +39,7 @@
                                 <div class="form-group">
                                     <label asp-for="patientId" class="control-label">Select Patient</label>
                                     @Html.DropDownList("PatientId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
+                                    <span asp-validation-for="patientId" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="reason" class="control-label">Reason</label>

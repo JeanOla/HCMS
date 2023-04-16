@@ -45,7 +45,8 @@ namespace HCMS.data.ModeTableMapping
                   Email = "ljolaguer@email.com",
                   address ="Cabuyao, Laguna",
                   phone = "09504645926",
-                  gender = "Male"
+                  gender = "Male",
+                  dob = DateTime.Now,
                }
                );
             modelBuilder.Entity<MedicalRecord>().HasData(
