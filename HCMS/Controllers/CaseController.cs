@@ -1,5 +1,6 @@
 ﻿using HCMS.Models;
 using HCMS.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,7 @@ namespace HCMS.Controllers
             
             _repo = repo;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -21,6 +23,7 @@ namespace HCMS.Controllers
             Cases casess = new Cases();
             return View(casess);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Cases cases)
         {
@@ -34,6 +37,11 @@ namespace HCMS.Controllers
             if (cases.patientId == null || cases.patientId == 0)
             {
                 ModelState.AddModelError("patientId", "Patient is required");
+                return View(cases);
+            }
+            if (string.IsNullOrEmpty(cases.reason))
+            {
+                ModelState.AddModelError("reason", "reason for consultation is required");
                 return View(cases);
             }
             _repo.addCase(cases);
@@ -64,6 +72,7 @@ namespace HCMS.Controllers
             _repo.updateCase(cases);
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int Id)
         {
            _repo.DeleteCase(Id);

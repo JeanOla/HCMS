@@ -6,7 +6,7 @@
     </div>
 }
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -29,7 +29,7 @@
             <div class="accordion-body">
                 <div class="container-fluid">
 
-                    <form asp-action="Register" method="post" asp-controller="Account">
+                    <form asp-action="Register" id="form-spinner" method="post" asp-controller="Account">
                     <div class="row">
                       <div class="col-md-6">
                             @*<div class="col-md-4">*@
@@ -75,6 +75,11 @@
                             @*</div>*@
                       </div>
                       <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="medicalLicenseNumber" class="control-label">Medical License Number</label>
+                                    <input asp-for="medicalLicenseNumber" class="form-control" />
+                                    <span asp-validation-for="medicalLicenseNumber" class="text-danger"></span>
+                                </div>
                             <div class="col-md-4">
                                 <label asp-for="specialityId" class="control-label">Speciality</label>
                                 @Html.DropDownList("SpecialityId",ViewBag.options as SelectList ,ViewBag.option?[0], new {@class ="form-control"})
@@ -95,14 +100,14 @@
                                 <span asp-validation-for="confirmPassword" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
+                                    <input type="submit" value="Register" class="btn btn-primary mt-3" />
                             </div>
                       </div>
                     </div>
                     </form>
 
-                    <div>
-                        <a asp-action="Index">Back to List</a>
+                    <div class="mt-4">
+                        <a class="btn btn-primary" asp-action="Index" title="back"><i class="fas fa-caret-left"></i></a>
                     </div>
 
 

@@ -1,6 +1,8 @@
 ﻿using HCMS.Models;
 using HCMS.Repository;
 using HCMS.ViewModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -30,8 +32,6 @@ namespace HCMS.Controllers
             _roleManager = RoleManager;
             _repo = repo;
         }
-
-
         [HttpGet]
         public IActionResult Register()
         {
@@ -39,7 +39,7 @@ namespace HCMS.Controllers
             RegisterDoctorViewModel model = new RegisterDoctorViewModel();
             return View(model);
         }
-
+        [Authorize(Roles ="Admin, Doctor")]
         [HttpGet]
         public IActionResult ChangePassword(string Id)
         {
@@ -50,9 +50,14 @@ namespace HCMS.Controllers
             };
             return View(userViewModel);
         }
+        
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var user = _repo.getDoctorById(model.Id) ;
             var passwordIsValid = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
             if (!passwordIsValid)
@@ -60,10 +65,7 @@ namespace HCMS.Controllers
                 ModelState.AddModelError("CurrentPassword", "The current password is incorrect.");
                 return View(model);
             }
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            
             if (user == null)
             {
                 return NotFound();
@@ -84,10 +86,7 @@ namespace HCMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-
-
-
+        
         [HttpPost]
         public async Task<IActionResult> Register(RegisterDoctorViewModel userViewModel)
         {
@@ -117,6 +116,7 @@ namespace HCMS.Controllers
                     specialityId = userViewModel.specialityId,
                     Gender = userViewModel.gender,
                     PhoneNumber = userViewModel.PhoneNumber,
+                    medicalLicenseNumber = userViewModel.medicalLicenseNumber,
 
 
                 };
@@ -134,17 +134,18 @@ namespace HCMS.Controllers
                             ModelState.AddModelError(String.Empty, "User Role cannot be assigned");
                         }
                     }
-                    //return RedirectToAction("Index", "Home");
+                   
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("FullNameWithMiddle", error.Description);
                     return View(userViewModel);
                 }
-
+                return RedirectToAction("Index", "Account");
             }
-           return RedirectToAction("Index");
+           return View(userViewModel);
         }
+        
         [HttpGet]
         public async Task<IActionResult> Update(string Id)
         {
@@ -164,17 +165,18 @@ namespace HCMS.Controllers
                 gender = user.Gender,
                 PhoneNumber = user.PhoneNumber,
                 specialityId = user.specialityId ?? 0,
+                medicalLicenseNumber = user.medicalLicenseNumber,
             };
             return View(userViewModel);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Update(EditDoctorViewModel user)
         {
             var oldemail = _repo.getDoctorById(user.Id);
             ViewBag.options = new SelectList(_repo.populateSpeciality(), "Id", "SpecialityName");
-            var admin = _repo.getDoctorsExcept(oldemail.Email);
-            if (admin.Any(a => a.Email == user.Email))
+            var doctor = _repo.getDoctorsExcept(oldemail.Email);
+            if (doctor.Any(a => a.Email == user.Email))
             {
                 ModelState.AddModelError("Email", "Email address you entered is already in used.");
                 return View(user);
@@ -195,7 +197,7 @@ namespace HCMS.Controllers
                     entityToUpdate.PhoneNumber = user.PhoneNumber;
                     entityToUpdate.specialityId = user.specialityId;
                     entityToUpdate.Email = user.Email;
-
+                    entityToUpdate.medicalLicenseNumber = user.medicalLicenseNumber;
 
                     var result = await _userManager.UpdateAsync(entityToUpdate);
 
@@ -218,6 +220,7 @@ namespace HCMS.Controllers
             }
             return View(user);
         }
+       
         public async Task<ActionResult> Index()//display doctor list
         {
             if (User.IsInRole("Doctor"))
@@ -238,8 +241,6 @@ namespace HCMS.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-           
-              
             return View();
         }
         [HttpPost]
@@ -264,7 +265,9 @@ namespace HCMS.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+       
         [HttpGet]
+        
         public async Task<IActionResult> Details(string Id)
         {
             ViewBag.options = new SelectList(_repo.populateSpeciality(), "Id", "SpecialityName");
@@ -282,10 +285,11 @@ namespace HCMS.Controllers
                 gender = user.Gender,
                 PhoneNumber = user.PhoneNumber,
                 specialityId = user.specialityId ?? 0,
+                medicalLicenseNumber = user.medicalLicenseNumber
             };
             return View(userViewModel);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(string Id)
         {
             _repo.DeleteDoctor(Id);

@@ -1,6 +1,6 @@
 ﻿@model Schedule
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -22,7 +22,7 @@
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
             <div class="accordion-body">
                 <div class="container-fluid">
-                    <form asp-action="Update" method="post" asp-controller="DoctorSchedule">
+                    <form asp-action="Update" id="form-spinner" method="post" asp-controller="DoctorSchedule">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -63,8 +63,8 @@
                         </div>
                     </form>
 
-                    <div>
-                        <a asp-action="Index">Back to List</a>
+                    <div class="mt-3">
+                        <a class="btn btn-primary" asp-action="DoctorScheduleList" title="back"><i class="fas fa-caret-left"></i></a>
                     </div>
 
 

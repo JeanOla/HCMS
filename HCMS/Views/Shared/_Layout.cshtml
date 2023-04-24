@@ -13,7 +13,9 @@
     <script src="~/js/chart.js" asp-append-version="true"></script>
 
 </head>
+
 <body>
+    @Html.Partial("~/Views/modal/Spinner.cshtml")
     @if (_signInManager.IsSignedIn(User))
     {
         <!-- Topbar Menu -->
@@ -71,9 +73,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link text-secondary" asp-area="" asp-controller="DoctorSchedule" asp-action="DoctorScheduleList">My Schedule List</a>
                                         </li>
-                                        <li class="nav-item">
+                                       @* <li class="nav-item">
                                             <a class="nav-link text-secondary" asp-area="" asp-controller="DoctorSchedule" asp-action="addDoctorSchedule">Add Schedule</a>
-                                        </li>
+                                        </li>*@
                                     }
 
                                     
@@ -130,7 +132,7 @@
                                 </li>
 
                                 <li class="nav-item has-submenu mt-3">
-                                    <a class="nav-link text-secondary" href="#"><i class="fas fa-calendar-alt"></i><span> Doctor Specialization</span>   </a>
+                                    <a class="nav-link text-secondary" href="#"><i class="fas fa-book"></i><span> Doctor Specialization</span>   </a>
                                     <ul class="submenu collapse">
                                         <li class="nav-item">
                                             <a class="nav-link text-secondary" asp-area="" asp-controller="Speciality" asp-action="index">Specialization List</a>
@@ -164,7 +166,7 @@
         </div>
 
     }
-    <div class="container-fluid">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

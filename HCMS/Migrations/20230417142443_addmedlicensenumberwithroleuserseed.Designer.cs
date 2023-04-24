@@ -4,6 +4,7 @@ using HCMS.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    partial class HCMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230417142443_addmedlicensenumberwithroleuserseed")]
+    partial class addmedlicensenumberwithroleuserseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,19 +124,17 @@ namespace HCMS.Migrations
                         {
                             Id = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f8a7dac-ae70-44e6-8c39-4f6d72e07ea5",
-                            Email = "adminjuan@gmail.com",
+                            ConcurrencyStamp = "dcd6d016-a37d-455a-afbc-6233064d75c3",
+                            Email = "juandelacruz@gmail.com",
                             EmailConfirmed = false,
                             Gender = "Male",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMINJUAN@GMAIL.COM",
-                            NormalizedUserName = "ADMINJUAN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPpwMvr4Rchr3u6nA3vgieT6iabJQbfj2I+UDwykhB/TDVHadz+C3I81kJHAheHPGA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEABWpaHz2YzIcPLrxi0rL7+HtVUomMFXIzx4cG70nbeFaYmT/OlhCy7ERXY22QwDig==",
                             PhoneNumber = "09191231231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "16a1fe2b-7ae3-4405-b7b7-5733195de312",
+                            SecurityStamp = "e868c960-c918-4015-8d0f-b924e02d8076",
                             TwoFactorEnabled = false,
-                            UserName = "adminjuan@gmail.com",
+                            UserName = "juandelacruz@gmail.com",
                             address = "Sta. Rosa, Laguna",
                             firstName = "Juan",
                             lastName = "Cruz",
@@ -173,7 +173,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("caseId");
 
-                    b.ToTable("appointments", (string)null);
+                    b.ToTable("appointments");
                 });
 
             modelBuilder.Entity("HCMS.Models.Cases", b =>
@@ -201,7 +201,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("patientId");
 
-                    b.ToTable("cases", (string)null);
+                    b.ToTable("cases");
                 });
 
             modelBuilder.Entity("HCMS.Models.MedicalRecord", b =>
@@ -238,7 +238,7 @@ namespace HCMS.Migrations
                     b.HasIndex("patientId")
                         .IsUnique();
 
-                    b.ToTable("medicalRecords", (string)null);
+                    b.ToTable("medicalRecords");
 
                     b.HasData(
                         new
@@ -292,7 +292,7 @@ namespace HCMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("patients", (string)null);
+                    b.ToTable("patients");
 
                     b.HasData(
                         new
@@ -300,7 +300,7 @@ namespace HCMS.Migrations
                             Id = 1,
                             Email = "ljolaguer@email.com",
                             address = "Cabuyao, Laguna",
-                            dob = new DateTime(2023, 4, 17, 22, 31, 21, 574, DateTimeKind.Local).AddTicks(722),
+                            dob = new DateTime(2023, 4, 17, 22, 24, 42, 973, DateTimeKind.Local).AddTicks(3367),
                             firstName = "Lhener Jean",
                             gender = "Male",
                             lastName = "Olaguer",
@@ -337,7 +337,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("doctorId");
 
-                    b.ToTable("schedules", (string)null);
+                    b.ToTable("schedules");
                 });
 
             modelBuilder.Entity("HCMS.Models.Speciality", b =>
@@ -354,7 +354,7 @@ namespace HCMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("specialities", (string)null);
+                    b.ToTable("specialities");
 
                     b.HasData(
                         new
@@ -394,14 +394,14 @@ namespace HCMS.Migrations
                         new
                         {
                             Id = "fb63abec-98f5-448e-8f56-302fafd16df4",
-                            ConcurrencyStamp = "b2363851-ee5e-499e-9bae-6e37abaa2d87",
+                            ConcurrencyStamp = "82c20e6f-151d-4733-9507-e90569f1f0ce",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5c965850-234a-4d90-9c24-024ebfac6f20",
-                            ConcurrencyStamp = "e9feb22e-8264-4b76-b9ac-55a362d2b6de",
+                            ConcurrencyStamp = "542f2501-a04e-41a2-8030-285f9fb1eebf",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         });

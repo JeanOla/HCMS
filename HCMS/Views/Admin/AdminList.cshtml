@@ -1,5 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> _signInManager
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -42,23 +42,40 @@
                                             <td style="text-align: center">@(p.firstName + " " + p.lastName)</td>
                                             <td style="text-align: center">@p.Email</td>
                                             <td style="text-align: center">
-                                                <a class="btn btn-info" asp-controller="Admin" asp-action="Details" title="Details" asp-route-Id="@p.Id">
+                                                <a class="btn spin btn-info" asp-controller="Admin" asp-action="Details" title="Details" asp-route-Id="@p.Id">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
-                                                <a class="btn btn-secondary" asp-controller="Admin" title="Update" asp-action="Update" asp-route-Id="@p.Id">
+                                                <a class="btn btn-secondary spin" asp-controller="Admin" title="Update" asp-action="Update" asp-route-Id="@p.Id">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-secondary" asp-controller="Admin" title="ChangePassword" asp-action="ChangePassword" asp-route-Id="@p.Id">
+                                                <a class="btn btn-success spin" asp-controller="Admin" title="ChangePassword" asp-action="ChangePassword" asp-route-Id="@p.Id">
                                                     <i class="fas fa-user-edit"></i>
                                                 </a>
                                                 @if(@User.Identity.Name != p.Email){
-                                                    <a class="btn btn-danger" asp-controller="Admin" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAdminModal@(p.Id)">
                                                         <i class="fas fa-user-times"></i>
                                                     </a>
                                                 }
                                                
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="deleteAdminModal@(p.Id)" tabindex="-1" aria-labelledby="deleteModalLabel@(p.Id)" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel@(p.Id)">Delete @(p.lastName)</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete Admin @(p.lastName)?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Cancel</button>
+                                                        <a asp-controller="Admin" asp-action="Delete" asp-route-Id="@p.Id" class="btn btn-danger spin">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 </tbody>
                             </table>

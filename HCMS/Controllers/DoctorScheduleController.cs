@@ -1,9 +1,11 @@
 ﻿using HCMS.Models;
 using HCMS.Repository;
 using HCMS.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace HCMS.Controllers
 {
@@ -24,7 +26,7 @@ namespace HCMS.Controllers
             _roleManager = RoleManager;
             _repo = repo;
         }
-        public IActionResult DoctorScheduleList()
+        public IActionResult DoctorScheduleList(string? doctorId, string? dayOfWeek)
         {
             if (User.IsInRole("Doctor"))
             {
@@ -32,9 +34,37 @@ namespace HCMS.Controllers
                 var schedule = _repo.DoctorScheduleList(UserId);
                 return View(schedule);
             }
+
+
+            ViewBag.options = new SelectList(_repo.getDoctors(), "Id", "FullName");
             var sched = _repo.ScheduleList();
+
+            if (!String.IsNullOrEmpty(doctorId))
+            {
+                sched = sched.Where(a => a.doctorId == doctorId).ToList();
+            }
+            if (!String.IsNullOrEmpty(dayOfWeek))
+            {
+                sched = sched.Where(a => a.dayOfWeek == dayOfWeek).ToList();
+            }
+
+
             return View(sched);
         }
+       
+        [HttpGet]
+        public IActionResult DoctorScheduleListFromAppointment(string Id)
+        {
+            var doctor = _repo.DoctorScheduleList(Id);
+            if (doctor.Count == 0)
+            {
+                var sched = _repo.ScheduleList();
+                return View(sched);
+            }
+                var schedule = _repo.DoctorScheduleList(Id);
+                return View(schedule); 
+        }
+       
         [HttpGet]
         public IActionResult addDoctorSchedule()
         {
@@ -47,6 +77,7 @@ namespace HCMS.Controllers
             Schedule schedule = new Schedule();
             return View(schedule);
         }
+        
         [HttpPost]
         public IActionResult addDoctorSchedule(Schedule sched)
         {
@@ -94,9 +125,9 @@ namespace HCMS.Controllers
             _repo.updateSchedule(sched);
             return RedirectToAction("DoctorScheduleList");
         }
-
+            
         public IActionResult Delete(int Id)
-        {
+        {   
             _repo.DeleteSchedule(Id);
             return RedirectToAction("DoctorScheduleList");
         }

@@ -6,7 +6,7 @@
         <span asp-validation-for="FullNameWithMiddle" class="text-danger"></span>
     </div>
 }
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -29,7 +29,7 @@
             <div class="accordion-body">
                 <div class="container-fluid">
 
-                    <form asp-action="Create" method="post" asp-controller="Admin">
+                    <form asp-action="Create" id="form-spinner" method="post" asp-controller="Admin">
                         <div class="row">
                             <div class="col-md-6">
                                 @*<div class="col-md-4">*@
@@ -91,14 +91,14 @@
                                     <span asp-validation-for="confirmPassword" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                    <input type="submit" value="Register" class="btn btn-primary mt-3" />
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                    <div>
-                        <a asp-action="Index">Back to List</a>
+                    <div class="mt-4">
+                        <a class="btn btn-primary" asp-action="AdminList" title="back"><i class="fas fa-caret-left"></i></a>
                     </div>
 
 

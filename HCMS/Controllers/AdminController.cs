@@ -1,6 +1,7 @@
 ﻿using HCMS.Models;
 using HCMS.Repository;
 using HCMS.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System.Security.Cryptography;
 
 namespace HCMS.Controllers
 {
+    
     public class AdminController : Controller
     {
         IadminRepository _repo;
@@ -75,8 +77,10 @@ namespace HCMS.Controllers
                         if (!roleResult.Succeeded)
                         {
                             ModelState.AddModelError(String.Empty, "User Role cannot be assigned");
+                            return View(userViewModel);
                         }
                     }
+                    return RedirectToAction("AdminList");
                 }
                 foreach (var error in result.Errors)
                 {
@@ -84,7 +88,7 @@ namespace HCMS.Controllers
                     return View(userViewModel);
                 }
             }
-            return RedirectToAction("AdminList");
+            return View(userViewModel);
         }
         [HttpGet]
         public async Task<IActionResult> Update(string Id)
@@ -108,7 +112,13 @@ namespace HCMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(EditAdminViewModel user)
         {
-            
+            var oldemail = _repo.getAdminById(user.Id);
+            var doctor = _repo.getAdminsExcept(oldemail.Email);
+            if (doctor.Any(a => a.Email == user.Email))
+            {
+                ModelState.AddModelError("Email", "Email address you entered is already in used.");
+                return View(user);
+            }
             if (ModelState.IsValid)
             {
                 var entityToUpdate = await _userManager.FindByIdAsync(user.Id);
@@ -185,6 +195,10 @@ namespace HCMS.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var user = _repo.getAdminById(model.Id);
             var passwordIsValid = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
             if (!passwordIsValid)
@@ -192,10 +206,7 @@ namespace HCMS.Controllers
                 ModelState.AddModelError("CurrentPassword", "The current password is incorrect.");
                 return View(model);
             }
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            
             if (user == null)
             {
                 return NotFound();

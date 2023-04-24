@@ -28,28 +28,6 @@ namespace HCMSapi.Controllers
         [HttpGet("Get All Doctor Schedule")]
         public IActionResult getDoctorSchedules()
         {
-
-            /*List<Schedule> sched;
-            try
-            {
-                sched = _repo.ScheduleList();
-                if (sched == null)
-                    return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                MaxDepth = 32,
-                WriteIndented = true
-            };
-            var json = JsonSerializer.Serialize(sched, options);
-
-            return Ok(json);*/
-
             try
             {
                 var schedules = _repo.ScheduleList().Select(s => new
@@ -75,8 +53,18 @@ namespace HCMSapi.Controllers
         [HttpPost("Add Doctor Schedule")]
         public IActionResult AddSchedule([FromBody] AddDoctorScheduleDTO schedule)
         {
+            var doctorsched = _repo.DoctorScheduleList(schedule.doctorId);
             try
             {
+                if (doctorsched.Any(s => s.dayOfWeek == schedule.dayOfWeek))
+                {
+                    return BadRequest("There is already a schedule for this day.");
+                }
+                if (schedule.startTime.HasValue && schedule.endTime.HasValue && schedule.startTime.Value >= schedule.endTime.Value)
+                {
+                    return BadRequest("Start time must be before the end time.");
+                    
+                }
                 var sched = _mapper.Map<Schedule>(schedule);
                 var addedSchedule = _repo.addSchedule(sched);
                 return Ok(addedSchedule);

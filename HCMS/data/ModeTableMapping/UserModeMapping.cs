@@ -62,12 +62,12 @@ namespace HCMS.data.ModeTableMapping
                  vacinated = null,
              }
 
-             );
-            modelBuilder.Entity<IdentityRole>().ToTable("aspnetRoles")
-           .HasData(
-               new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
-               new IdentityRole {Name = "Doctor", NormalizedName = "DOCTOR" }
-           );
+            );
+           // modelBuilder.Entity<IdentityRole>().ToTable("aspnetRoles")
+           //.HasData(
+           //    new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
+           //    new IdentityRole {Name = "Doctor", NormalizedName = "DOCTOR" }
+           //);
             modelBuilder.Entity<Speciality>().HasData(
              new Speciality
              {
@@ -76,7 +76,7 @@ namespace HCMS.data.ModeTableMapping
              }
              );
 
-            modelBuilder.Entity<ApplicationUser>().HasData(
+            /*modelBuilder.Entity<ApplicationUser>().HasData(
              new ApplicationUser
              {
                  firstName = "Juan",
@@ -84,14 +84,15 @@ namespace HCMS.data.ModeTableMapping
                  lastName = "Cruz",
                  dob = DateTime.Now,
                  address = "Sta. Rosa, Laguna",
-                 specialityId = 1,
+                 specialityId = null,
                  Gender = "Male",
-                 UserName = "juandc",
+                 UserName = "juandelacruz@gmail.com",
                  Email = "juandelacruz@gmail.com",
                  PasswordHash = "juandelacruz123",
-                 PhoneNumber = "09191231231",
+                 PhoneNumber = "09191231231"
+                 
             }
-            );
+            );*/
         }
     }
 }

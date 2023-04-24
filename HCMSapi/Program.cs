@@ -21,7 +21,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 builder.Services.AddDbContext<HCMSDbContext>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<HCMSDbContext>().AddDefaultTokenProviders();
-
+builder.Services.AddScoped<IspecialityRepository, SpecialityRepository>();
 builder.Services.AddScoped<HCMSDbContext, HCMSDbContext>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();

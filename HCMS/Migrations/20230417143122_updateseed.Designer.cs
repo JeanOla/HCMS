@@ -4,6 +4,7 @@ using HCMS.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    partial class HCMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230417143122_updateseed")]
+    partial class updateseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,7 +175,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("caseId");
 
-                    b.ToTable("appointments", (string)null);
+                    b.ToTable("appointments");
                 });
 
             modelBuilder.Entity("HCMS.Models.Cases", b =>
@@ -201,7 +203,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("patientId");
 
-                    b.ToTable("cases", (string)null);
+                    b.ToTable("cases");
                 });
 
             modelBuilder.Entity("HCMS.Models.MedicalRecord", b =>
@@ -238,7 +240,7 @@ namespace HCMS.Migrations
                     b.HasIndex("patientId")
                         .IsUnique();
 
-                    b.ToTable("medicalRecords", (string)null);
+                    b.ToTable("medicalRecords");
 
                     b.HasData(
                         new
@@ -292,7 +294,7 @@ namespace HCMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("patients", (string)null);
+                    b.ToTable("patients");
 
                     b.HasData(
                         new
@@ -337,7 +339,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("doctorId");
 
-                    b.ToTable("schedules", (string)null);
+                    b.ToTable("schedules");
                 });
 
             modelBuilder.Entity("HCMS.Models.Speciality", b =>
@@ -354,7 +356,7 @@ namespace HCMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("specialities", (string)null);
+                    b.ToTable("specialities");
 
                     b.HasData(
                         new

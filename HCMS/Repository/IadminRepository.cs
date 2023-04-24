@@ -9,6 +9,7 @@ namespace HCMS.Repository
         List<ApplicationUser> getUserList();
         ApplicationUser DeleteAdmin(string Id);
         ApplicationUser getAdminById(string Id);
+        List<ApplicationUser> getAdminsExcept(string email);
 
     }
 }

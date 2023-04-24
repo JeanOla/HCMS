@@ -14,7 +14,8 @@ namespace HCMSapi.Repository
         List<ApplicationUser> getAllUser();
         ApplicationUser getUserByEmail(string email);
 
-
+        List<ApplicationUser> getDoctors();
+        List<ApplicationUser> getUserList();
     }
 }
 

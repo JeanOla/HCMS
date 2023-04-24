@@ -5,7 +5,7 @@
 @{
 }
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -51,17 +51,37 @@
                                             <td style="text-align: center">@p.reason</td>
                                             <td style="text-align: center">
                                                 @*no functionalities pa*@
-                                               <a class="btn btn-info" asp-controller="Case" asp-action="Details" title="Details" asp-route-Id="@p.Id">
+                                                <a class="btn btn-info spin" asp-controller="Case" asp-action="Details" title="Details" asp-route-Id="@p.Id">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
-                                                <a class="btn btn-secondary" asp-controller="Case" title="Update" asp-action="Update" asp-route-Id="@p.Id">
+                                                <a class="btn btn-secondary spin" asp-controller="Case" title="Update" asp-action="Update" asp-route-Id="@p.Id">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-danger" asp-controller="Case" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                <a type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#deleteCaseModal@(p.Id)">
                                                     <i class="fas fa-user-times"></i>
                                                 </a>
+                                               @* <a class="btn btn-danger" asp-controller="Case" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-user-times"></i>
+                                                </a>*@
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="deleteCaseModal@(p.Id)" tabindex="-1" aria-labelledby="deleteModalLabel@(p.Id)" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel@(p.Id)">Delete this case?</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this case?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary spin" data-bs-dismiss="modal">Cancel</button>
+                                                        <a asp-controller="Case" asp-action="Delete" asp-route-Id="@p.Id" class="btn btn-danger spin">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 </tbody>
                             </table>

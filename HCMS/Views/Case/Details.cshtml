@@ -1,6 +1,6 @@
 ﻿@model Cases
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -41,12 +41,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="diagnosis" class="control-label">Diagnosis</label>
-                                    <input readonly type="text" asp-for="diagnosis" class="form-control" />
+                                    <textarea readonly asp-for="diagnosis" class="form-control">    </textarea>
                                     <span asp-validation-for="diagnosis" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="treatmentPlan" class="control-label">treatment Plan</label>
-                                    <input readonly type="text" asp-for="treatmentPlan" class="form-control" />
+                                    <textarea readonly asp-for="treatmentPlan" class="form-control"></textarea>
                                     <span asp-validation-for="treatmentPlan" class="text-danger"></span>
                                 </div>
                                 @*</div>*@
@@ -57,8 +57,8 @@
                         </div>*@
                     </form>
 
-                    <div>
-                        <a asp-action="Index">Back to List</a>
+                    <div class="mt-3">
+                        <a class="btn btn-primary" asp-action="Index" title="back"><i class="fas fa-caret-left"></i></a>
                     </div>
 
 

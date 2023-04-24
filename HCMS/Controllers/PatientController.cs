@@ -15,11 +15,6 @@ namespace HCMS.Controllers
     public class PatientController : Controller
     {
         IPatientRepository _repo;
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-        
         public PatientController(IPatientRepository repo)
         {
             _repo = repo;
@@ -32,49 +27,55 @@ namespace HCMS.Controllers
             return View(emp);
 
         }
-        [Authorize]
+        
         public IActionResult Details(int Id)
         {
             var patient = _repo.GetPatienById(Id);
             return View(patient);
         }
-        [Authorize]
+       
         [HttpGet]
         public IActionResult Create()
         {
             return View();
 
         }
-        [Authorize]
+        
         [HttpPost]
         public IActionResult Create(Patient newPatient, MedicalRecord medred)
         {
-            var patient = _repo.getPatients();
-            if (patient.Any(a => a.Name.Equals(newPatient.Name, StringComparison.OrdinalIgnoreCase)))
-            {//check if there is already ongoing appointment for this case
-                ModelState.AddModelError("Name", "Patient Already Exist.");
-                return View(newPatient);
+            if (ModelState.IsValid)
+            {
+                var patient = _repo.getPatients();
+                if (patient.Any(a => a.Name.Equals(newPatient.Name, StringComparison.OrdinalIgnoreCase)))
+                {//check if there is already ongoing appointment for this case
+                    ModelState.AddModelError("Name", "Patient Already Exist.");
+                }
+                _repo.AddPatientAndMedicalRecord(newPatient, medred);
+                return RedirectToAction("index");
             }
 
-            _repo.AddPatientAndMedicalRecord(newPatient, medred);
-            return RedirectToAction("index");
+             return View(newPatient);
 
         }
-        [Authorize]
+        
         [HttpGet]
         public IActionResult edit(int Id)
         {
             var oldEmp = _repo.GetPatienById(Id);
             return View(oldEmp);
         }
-        [Authorize]
+        
         [HttpPost]
         public IActionResult edit(Patient newPatient, MedicalRecord medred)
         {
-          var p = _repo.editPatient(newPatient,medred);
-            return RedirectToAction("index");
+            if (ModelState.IsValid)
+            {
+                var p = _repo.editPatient(newPatient, medred);
+                return RedirectToAction("index");
+            }return View(newPatient);
+         
         }
-        [Authorize]
         public IActionResult delete(int Id)
         {
             _repo.DeletePatient(Id);

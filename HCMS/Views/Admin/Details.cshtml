@@ -1,7 +1,7 @@
 ﻿@model EditAdminViewModel
 
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -77,9 +77,8 @@
                             </div>
                         </div>
                     </form>
-
-                    <div>
-                        <a asp-action="Index">Back to List</a>
+                    <div class="mt-4">
+                        <a class="btn btn-primary" asp-action="AdminList" title="back"><i class="fas fa-caret-left"></i></a>
                     </div>
 
 

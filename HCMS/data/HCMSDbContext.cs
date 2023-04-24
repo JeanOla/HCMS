@@ -52,6 +52,9 @@ namespace HCMS.data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.RolesSeed();
+            builder.UserSeed();
+            builder.UserRoleSeed();
             builder.UserModel();
             builder.SeedDafaultData();
             base.OnModelCreating(builder);

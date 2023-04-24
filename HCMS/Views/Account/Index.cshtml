@@ -4,7 +4,7 @@
     }
 
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow h-100 py-2">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -49,24 +49,56 @@
                                             <td style="text-align: center">@p.Email</td>
                                             <td style="text-align: center">@p.speciality.SpecialityName</td>
                                             <td style="text-align: center">
-                                                <a class="btn btn-info" asp-controller="Account" asp-action="Details" title="Details" asp-route-Id="@p.Id">
+
+                                                <a class="btn spin btn-info details-btn" asp-controller="Account" asp-action="Details" title="Details" asp-route-Id="@p.Id" data-bs-toggle="modal" data-bs-target="#spinner-modal">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
-                                                <a class="btn btn-secondary" asp-controller="Account" title="Edit" asp-action="Update" asp-route-Id="@p.Id">
+                                                <a class="btn spin btn-secondary edit-btn" asp-controller="Account" title="Edit" asp-action="Update" data-bs-toggle="modal" data-bs-target="#spinner-modal" asp-route-Id="@p.Id">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-secondary" asp-controller="Account" title="Change Password" asp-action="ChangePassword" asp-route-Id="@p.Id">
+                                                <a class="btn spin btn-success change-password-btn" asp-controller="Account" title="Change Password" asp-action="ChangePassword" data-bs-toggle="modal" data-bs-target="#spinner-modal" asp-route-Id="@p.Id">
                                                     <i class="fas fa-user-edit"></i>
                                                 </a>
+
+                                               @* <a class="btn btn-info" asp-controller="Account" asp-action="Details" title="Details" asp-route-Id="@p.Id" data-bs-toggle="modal" data-bs-target="#spinner-modal">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
+                                                <a class="btn btn-secondary" asp-controller="Account" title="Edit" asp-action="Update" data-bs-toggle="modal" data-bs-target="#spinner-modal" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a class="btn btn-success" asp-controller="Account" title="Change Password" asp-action="ChangePassword" data-bs-toggle="modal" data-bs-target="#spinner-modal" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-user-edit"></i>
+                                                </a>*@
+                                                @*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    Launch demo modal
+                                                </button>*@
+
                                                 @if (User.IsInRole("Admin"))
                                                 {
-                                                    <a class="btn btn-danger" asp-controller="Account" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal@(p.Id)">
                                                         <i class="fas fa-user-times"></i>
                                                     </a>
                                                 }
                                                 
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="deleteModal@(p.Id)" tabindex="-1" aria-labelledby="deleteModalLabel@(p.Id)" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel@(p.Id)">Delete @(p.lastName)</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete Doctor @(p.lastName)?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <a asp-controller="Account" asp-action="Delete" asp-route-Id="@p.Id" class="btn btn-danger spin" data-bs-toggle="modal" data-bs-target="#spinner-modal">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 </tbody>
                             </table>

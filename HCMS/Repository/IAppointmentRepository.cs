@@ -18,6 +18,9 @@ namespace HCMS.Repository
         List<Appointment> getAllDoctorAppointment(string Id);
         int appointmentToday();
         int appointmentTodayById(string Id);
+        List<Cases> getAllAvailableCases();
+        List<Appointment> getAllAppointmentExcept(int Id);
+        Appointment getAllAppointmentById(int Id);
 
     }
 }

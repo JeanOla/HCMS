@@ -53,5 +53,15 @@ namespace HCMSapi.Repository.mySQL
         {
             return _dbContext.users.AsNoTracking().ToList().FirstOrDefault(e => e.Email == email);
         }
+        public List<ApplicationUser> getDoctors()
+        {
+            return _dbContext.users.Include(s => s.speciality).Where(s => s.speciality.SpecialityName != null).AsNoTracking().ToList();
+        }
+        public List<ApplicationUser> getUserList()
+        {
+            return _dbContext.users.Include(s => s.speciality).Where(s => s.specialityId == null || s.specialityId == 0).AsNoTracking().ToList();
+        }
+
+
     }
 }

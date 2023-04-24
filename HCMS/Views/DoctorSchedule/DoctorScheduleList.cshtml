@@ -1,6 +1,6 @@
 ﻿@model List<Schedule>
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -22,14 +22,50 @@
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
             <div class="accordion-body">
                 <div class="container-fluid">
+                    @if(User.IsInRole("Admin")){
+                        <form method="get" asp-action="DoctorScheduleList">
+                        <div class="row">
+  
+                                <div class="col-md-4">
+                                    <label class="control-label"> Doctor</label>
+                                    @*   @using (Html.BeginForm("DoctorScheduleList", "DoctorSchedule", FormMethod.Get))
+                                {*@
+                                    @Html.DropDownList("doctorId", ViewBag.options as SelectList,"All Doctor" ,new { @class = "form-select", id = "doctorFilter" })
+
+                                    @*}*@
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Select Day of Schedule</label>
+                                    <select class="form-select" name="dayOfWeek">
+                                        <option value="">All Days</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                        <option value="Sunday">Sunday</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="submit" value="Filter" class="btn btn-primary mt-4">
+                                </div>
+                                
+                           
+                        </div>
+                        </form>
+                    }
+                    
 
                     <div class="row">
                         <div class="col-md-12 bg-light rounded">
-                            <table class="table table-hover table-responsive-lg rounded" id="doctorList">
+                            <table class="table table-hover table-responsive-lg rounded" id="doctorScheduleList">
                                 <thead class="thead-dark bg-primary">
                                     <tr>
-                                        @*  <th scope="col">#</th>*@
-                                        <th scope="col" style="text-align: center" class="text-white">Doctor Name</th>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <th scope="col" style="text-align: center" class="text-white">Doctor Name</th>
+                                        }
                                         <th scope="col" style="text-align: center" class="text-white">Doctor Contact number</th>
                                         <th scope="col" style="text-align: center" class="text-white">Schedule Day</th>
                                         <th scope="col" style="text-align: center" class="text-white">Schedule time</th>
@@ -42,7 +78,10 @@
 
                                         <tr>
                                             @* <th scope="row"> @number++</th>*@
-                                            <td style="text-align: center">@(p.User.FullName)</td>
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <td style="text-align: center">@(p.User.FullName)</td>
+                                            }
                                             <td style="text-align: center">@p.User.PhoneNumber</td>
                                             <td style="text-align: center">@p.dayOfWeek</td>
                                             <td style="text-align: center">@(p.startTime?.ToString("hh:mm tt") + " to " + p.endTime?.ToString("hh:mm tt"))</td>
@@ -50,14 +89,34 @@
                                                 @*<a class="btn btn-info" asp-controller="DoctorSChedule" asp-action="details" title="Details" asp-route-Id="@p.Id">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>*@
-                                                <a class="btn btn-secondary" asp-controller="DoctorSChedule" title="Update" asp-action="Update" asp-route-Id="@p.Id">
+                                                <a class="btn btn-secondary spin" asp-controller="DoctorSChedule" title="Update" asp-action="Update" asp-route-Id="@p.Id">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-danger" asp-controller="DoctorSChedule" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal@(p.Id)">
                                                     <i class="fas fa-user-times"></i>
                                                 </a>
+                                               @* <a class="btn btn-danger" asp-controller="DoctorSChedule" title="Delete" asp-action="Delete" asp-route-Id="@p.Id">
+                                                    <i class="fas fa-user-times"></i>
+                                                </a>*@
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="deleteModal@(p.Id)" tabindex="-1" aria-labelledby="deleteModalLabel@(p.Id)" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel@(p.Id)">Delete </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this Schedule? @p.Id
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <a asp-controller="DoctorSchedule" asp-action="Delete" asp-route-Id="@p.Id" class="btn btn-danger spin">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     }
                                 </tbody>
                             </table>

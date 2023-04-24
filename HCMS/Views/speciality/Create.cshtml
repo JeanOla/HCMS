@@ -22,11 +22,11 @@
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
             <div class="accordion-body">
                 <div class="container-fluid">
-                    <form asp-action="Create" method="post" asp-controller="Speciality">
+                    <form asp-action="Create" id="form-spinner" method="post" asp-controller="Speciality">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label asp-for="SpecialityName" class="control-label">Doctor Specializatoion</label>
+                                    <label asp-for="SpecialityName" class="control-label">Doctor Specialization</label>
                                     <input type="text" asp-for="SpecialityName" class="form-control" />
                                     <span asp-validation-for="SpecialityName" class="text-danger"></span>
                                 </div>
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input type="submit" value="Create" class="btn btn-primary mt-3" />
                         </div>
                     </form>
 

@@ -43,7 +43,11 @@ namespace HCMS.Repository.mySQL
 
             return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).AsNoTracking().ToList();
         }
+        public Appointment getAllAppointmentById(int Id)
+        {
 
+            return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).AsNoTracking().ToList().FirstOrDefault(s => s.Id == Id);
+        }
         public Appointment GetAppointmentById(int id)
         {
             return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).AsNoTracking().ToList().FirstOrDefault(a => a.Id == id);
@@ -88,8 +92,15 @@ namespace HCMS.Repository.mySQL
         ///
         public List<Appointment> getAllDoctorAppointment(string Id)
         {
-
             return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).Where(d => d.DoctorId == Id).AsNoTracking().ToList();
+        }
+        public List<Cases> getAllAvailableCases()
+        {
+            return _dbContext.cases.Include(c => c.Appointments).Include(c => c.patient).Where(c => !c.Appointments.Any(a => a.Status == "Ongoing")).ToList();
+        }
+        public List<Appointment> getAllAppointmentExcept(int Id)
+        {
+            return _dbContext.appointments.Include(a => a.cases.patient).Include(a => a.User).Where(d => d.Id != Id).AsNoTracking().ToList();
         }
     }
 

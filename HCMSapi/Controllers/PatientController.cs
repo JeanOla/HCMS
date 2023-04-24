@@ -132,53 +132,60 @@ namespace HCMSapi.Controllers
         [HttpPut("patients/{id}")]
         public ActionResult<PatientAndMedicalRecordDto> UpdatePatient([FromRoute]int id, [FromBody] PatientAndMedicalRecordDto dto)
         {
-            var patient = _repo.GetPatienById(id);
-
-            if (patient == null)
+            try
             {
-                return NotFound();
+                var patient = _repo.GetPatienById(id);
+
+                if (patient == null)
+                {
+                    return NotFound();
+                }
+
+                // Update patient details
+                patient.firstName = dto.FirstName;
+                patient.lastName = dto.LastName;
+                patient.middleName = dto.MiddleName;
+                patient.Email = dto.Email;
+                patient.address = dto.Address;
+                patient.phone = dto.Phone;
+                patient.gender = dto.Gender;
+                patient.dob = dto.Dob;
+
+                // Update medical record details
+                var medicalRecord = patient.medical;
+                medicalRecord.allergy = dto.Allergy;
+                medicalRecord.medication = dto.Medication;
+                medicalRecord.bloodType = dto.BloodType;
+                medicalRecord.diabetic = dto.Diabetic;
+                medicalRecord.surgery = dto.Surgery;
+                medicalRecord.vacinated = dto.Vacinated;
+
+                var updatedPatientAndMedicalRecord = _repo.editPatient(patient, medicalRecord);
+
+                var updatedDto = new PatientAndMedicalRecordDto
+                {
+                    FirstName = updatedPatientAndMedicalRecord.Patient.firstName,
+                    LastName = updatedPatientAndMedicalRecord.Patient.lastName,
+                    MiddleName = updatedPatientAndMedicalRecord.Patient.middleName,
+                    Email = updatedPatientAndMedicalRecord.Patient.Email,
+                    Address = updatedPatientAndMedicalRecord.Patient.address,
+                    Phone = updatedPatientAndMedicalRecord.Patient.phone,
+                    Gender = updatedPatientAndMedicalRecord.Patient.gender,
+                    Dob = updatedPatientAndMedicalRecord.Patient.dob,
+                    Allergy = updatedPatientAndMedicalRecord.MedicalRecord.allergy,
+                    Medication = updatedPatientAndMedicalRecord.MedicalRecord.medication,
+                    BloodType = updatedPatientAndMedicalRecord.MedicalRecord.bloodType,
+                    Diabetic = updatedPatientAndMedicalRecord.MedicalRecord.diabetic,
+                    Surgery = updatedPatientAndMedicalRecord.MedicalRecord.surgery,
+                    Vacinated = updatedPatientAndMedicalRecord.MedicalRecord.vacinated
+                };
+
+                return Ok(updatedDto);
             }
-
-            // Update patient details
-            patient.firstName = dto.FirstName;
-            patient.lastName = dto.LastName;
-            patient.middleName = dto.MiddleName;
-            patient.Email = dto.Email;
-            patient.address = dto.Address;
-            patient.phone = dto.Phone;
-            patient.gender = dto.Gender;
-            patient.dob = dto.Dob;
-
-            // Update medical record details
-            var medicalRecord = patient.medical;
-            medicalRecord.allergy = dto.Allergy;
-            medicalRecord.medication = dto.Medication;
-            medicalRecord.bloodType = dto.BloodType;
-            medicalRecord.diabetic = dto.Diabetic;
-            medicalRecord.surgery = dto.Surgery;
-            medicalRecord.vacinated = dto.Vacinated;
-
-            var updatedPatientAndMedicalRecord = _repo.editPatient(patient, medicalRecord);
-
-            var updatedDto = new PatientAndMedicalRecordDto
+            catch (Exception ex)
             {
-                FirstName = updatedPatientAndMedicalRecord.Patient.firstName,
-                LastName = updatedPatientAndMedicalRecord.Patient.lastName,
-                MiddleName = updatedPatientAndMedicalRecord.Patient.middleName,
-                Email = updatedPatientAndMedicalRecord.Patient.Email,
-                Address = updatedPatientAndMedicalRecord.Patient.address,
-                Phone = updatedPatientAndMedicalRecord.Patient.phone,
-                Gender = updatedPatientAndMedicalRecord.Patient.gender,
-                Dob = updatedPatientAndMedicalRecord.Patient.dob,
-                Allergy = updatedPatientAndMedicalRecord.MedicalRecord.allergy,
-                Medication = updatedPatientAndMedicalRecord.MedicalRecord.medication,
-                BloodType = updatedPatientAndMedicalRecord.MedicalRecord.bloodType,
-                Diabetic = updatedPatientAndMedicalRecord.MedicalRecord.diabetic,
-                Surgery = updatedPatientAndMedicalRecord.MedicalRecord.surgery,
-                Vacinated = updatedPatientAndMedicalRecord.MedicalRecord.vacinated
-            };
-
-            return Ok(updatedDto);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 

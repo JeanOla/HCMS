@@ -5,31 +5,31 @@
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 }
-<form asp-action="Create" method="post" asp-controller="Patient">
-<div class="accordion mt-4">
-    <div class="accordion-item">
-        <h1 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Patient Registration
-            </button>
-        </h1>
-        <div class="container-fluid  py-2">
-            <div class="row">
-                <div class="col-md-12 bg-light rounded">
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#" aria-current="page">Patient</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Patient Registration</li>
-                        </ol>
-                    </nav>
+<form asp-action="Create" method="post" id="form-spinner" asp-controller="Patient">
+    <div class="accordion mt-4 shadow">
+        <div class="accordion-item">
+            <h1 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Patient Registration
+                </button>
+            </h1>
+            <div class="container-fluid  py-2">
+                <div class="row">
+                    <div class="col-md-12 bg-light rounded">
+                        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" aria-current="page">Patient</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Patient Registration</li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
-            <div class="accordion-body">
-                <div class="container-fluid">
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
+                <div class="accordion-body">
+                    <div class="container-fluid">
 
-                    
+
                         <div class="row">
                             <div class="col-md-6">
                                 @*<div class="col-md-4">*@
@@ -58,7 +58,7 @@
                                     <input asp-for="Email" class="form-control" type="em" />
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
-                                
+
                                 @*</div>*@
                             </div>
                             <div class="col-md-6">
@@ -83,88 +83,90 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
-            </div>
-        </div>
-       
-
-    </div>
-</div>
-
-<div class="accordion mt-4">
-    <div class="accordion-item">
-        <h1 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Patient Medical record
-            </button>
-        </h1>
-        <div class="container-fluid  py-2">
-<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
-    <div class="accordion-body">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="@Model.medical.bloodType" class="control-label"></label>
-                                <select asp-for="@Model.medical.bloodType" class="form-control">
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                            <span asp-validation-for="@Model.medical.bloodType" class="text-danger"></span>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label asp-for="@Model.medical.allergy" class="control-label">Does the patient have allergy? if not, type "No"</label>
-                                    <input asp-for="@Model.medical.allergy" class="form-control" />
-                                    <span asp-validation-for="@Model.medical.allergy" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="@Model.medical.medication" class="control-label">Does the patient take medication/s? if not, type "No"</label>
-                                    <input asp-for="@Model.medical.medication" class="form-control" />
-                                    <span asp-validation-for="@Model.medical.allergy" class="text-danger"></span>
-                                </div>
-
-                            </div>
+                    </div>
                 </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="@Model.medical.diabetic" class="control-label">Is the Patient Diabetic?</label>
-                                <label>Yes</label>
-                                @Html.RadioButtonFor(model => model.medical.diabetic, "No", new { @checked = "checked" })
-                                <label>No</label>
-                                @Html.RadioButtonFor(model => model.medical.diabetic, "Yes")
-                                        <span asp-validation-for="@Model.medical.diabetic" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model.medical.surgery" class="control-label">Does the Patient Undergo any Surgery or an Operation? if not, type "No"</label>
-                                <input asp-for="@Model.medical.surgery" class="form-control" />
-                                <span asp-validation-for="@Model.medical.surgery" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model.medical.vacinated" class="control-label">Is the Patient Vacinated? if not, type "No"</label>
-                                <input asp-for="@Model.medical.vacinated" class="form-control" />
-                                <span asp-validation-for="@Model.medical.vacinated" class="text-danger"></span>
-                            </div>
-                        </div>
             </div>
+
+
         </div>
     </div>
-</div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+    <div hidden class="accordion mt-4">
+        <div class="accordion-item">
+            <h1 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Patient Medical record
+                </button>
+            </h1>
+            <div class="container-fluid  py-2">
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
+                    <div class="accordion-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.medical.bloodType" class="control-label">Blood Type</label>
+                                        <select asp-for="@Model.medical.bloodType" class="form-control">
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                            <span asp-validation-for="@Model.medical.bloodType" class="text-danger"></span>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.medical.allergy" class="control-label">is the patient have any allergy? if yes, please type what allergy does the patient have. if None, type "No".</label>
+                                            <input asp-for="@Model.medical.allergy" class="form-control" />
+                                            <span asp-validation-for="@Model.medical.allergy" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.medical.medication" class="control-label">Does the patient take medication/s?if yes, please type the medication that the patient takes.if not, type "No"</label>
+                                            <input asp-for="@Model.medical.medication" class="form-control" />
+                                            <span asp-validation-for="@Model.medical.allergy" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.medical.diabetic" class="control-label">Is the Patient Diabetic?</label>
+                                        <label>Yes</label>
+                                        @Html.RadioButtonFor(model => model.medical.diabetic, "No", new { @checked = "checked" })
+                                        <label>No</label>
+                                        @Html.RadioButtonFor(model => model.medical.diabetic, "Yes")
+                                        <span asp-validation-for="@Model.medical.diabetic" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.medical.surgery" class="control-label">Does the Patient Undergo any Surgery or an Operation? if yes, please type the details. if not, type "No"</label>
+                                        <input asp-for="@Model.medical.surgery" class="form-control" />
+                                        <span asp-validation-for="@Model.medical.surgery" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.medical.vacinated" class="control-label">Is the Patient Vacinated? if yes, please type the details. if not, type "No"</label>
+                                        <input asp-for="@Model.medical.vacinated" class="form-control" />
+                                        <span asp-validation-for="@Model.medical.vacinated" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </div>
+      </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary mt-3" />
     </div>
-</div>
 </form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="mt-3">
+    <a class="btn btn-primary" asp-action="index" title="back"><i class="fas fa-caret-left"></i></a>
 </div>
 @*
 <h1>Create</h1>
@@ -263,7 +265,7 @@
         </div>
     </form>
  </div>
-   
+
 
 <div>
     <a asp-action="Index">Back to List</a>

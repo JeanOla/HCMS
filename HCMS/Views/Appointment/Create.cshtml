@@ -1,6 +1,7 @@
-﻿@model Appointment
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Appointment
 
-<div class="accordion mt-4">
+<div class="accordion mt-4 shadow">
     <div class="accordion-item">
         <h1 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -22,7 +23,7 @@
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionBasic">
             <div class="accordion-body">
                 <div class="container-fluid">
-                    <form asp-action="Create" method="post" asp-controller="Appointment">
+                    <form asp-action="Create" id="form-spinner" method="post" asp-controller="Appointment">
                         <div class="row">
                             <div class="alert alert-info" role="alert">
                                 Note: The case represents the Patient's Name and Reason for consultation.
@@ -31,27 +32,19 @@
                                 @*<div class="col-md-4">*@
                                 <div class="form-group">
                                     <label asp-for="caseId" class="control-label">Select Case</label>
-                                    @Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList , new {@class ="form-control"})
+                                    @*@Html.DropDownList("caseId",ViewBag.optionsForCases as SelectList , new {@class ="form-control"})*@
+                                    @Html.DropDownListFor( m => m.caseId ,ViewBag.optionsForCases as SelectList, new {@class ="form-control"})
                                     <span asp-validation-for="caseId" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="appointmentDay" class="control-label">Select Appointment Day</label>
                                     <input type="date" id="appointmentDay" asp-for="appointmentDay" class="datepicker form-control">
-                                   @*<select asp-for="appointmentDay" class="form-control">
-                                        <option value="" disabled selected hidden>Select day of appointment for next week</option>
-                                        <option value="Monday">Monday</option>
-                                        <option value="Tuesday">Tuesday</option>
-                                        <option value="Wednesday">Wednesday</option>
-                                        <option value="Thursday">Thursday</option>
-                                        <option value="Friday">Friday</option>
-                                        <option value="Saturday">Saturday</option>
-                                        <option value="Sunday">Sunday</option>
-                                    </select>*@
                                     <span asp-validation-for="appointmentDay" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="DoctorId" class="control-label">Select Doctor</label>
-                                    @Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList ,"Select a doctor", new {@class ="form-control", id = "doctor"})
+                                    @*@Html.DropDownList("DoctorId",ViewBag.optionsForDoctor as SelectList ,"Select a doctor", new {@class ="form-control", id = "doctor"})*@
+                                    @Html.DropDownListFor( m => m.DoctorId ,ViewBag.optionsForDoctor as SelectList, "Select a doctor",new {@class ="form-control", id = "doctor"})
                                     <span asp-validation-for="DoctorId" class="text-danger"></span>
                                 </div>
                                 
@@ -82,14 +75,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input type="submit" value="Create" class="btn btn-primary mt-3" />
                         </div>
                     </form>
 
                     <div>
-                        <a asp-controller="DoctorSchedule" target="_blank" asp-action="DoctorScheduleList">check doctor schedule</a>
+                        <form asp-controller="DoctorSchedule" method="get" target="_blank" id="myForm" asp-action="DoctorScheduleListFromAppointment">
+                            <input type="text" id="Id" name="Id" hidden />
+                            <a onclick="document.getElementById('myForm').submit()" class="btn btn-primary mt-3">check doctor schedule</a>
+                            @*<input type="submit" value="Check Doctor Schedule" class="btn btn-primary" />*@
+                        </form>
+                        @*<a target="_blank" asp-controller="DoctorSchedule" asp-action="DoctorScheduleListFromAppointment" asp-all-route-Id="@Model.DoctorId">check doctor schedule</a>*@
                     </div>
-
+                    <div class="mt-3">
+                        <a class="btn btn-primary" asp-action="Index" title="back"><i class="fas fa-caret-left"></i></a>
+                    </div>
 
                 </div>
             </div>
@@ -98,47 +98,3 @@
 </div>
 
 
-@*
-<h1>Create</h1>
-
-<h4>Appointment</h4>
-<hr />
-
-<div class="row" style="border:solid;">
-    <form asp-action="Create" method="post" asp-controller="Appointment">
-        <div class="col-md-4" style="border:solid;">
-            <div class="form-group">
-                
-            </div>
-            <div class="form-group">
-              
-            </div>
-            <div class="form-group">
-                
-            </div>
-            <div class="form-group">
-              
-            </div>
-            <div class="form-group">
-               
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-    </form>
-</div>
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-*@
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-
-    }
-}
-     
-
-   <script></script>
