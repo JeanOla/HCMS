@@ -27,12 +27,13 @@ namespace HCMS.data
 
 
             string connectionString;
-            if (_env.IsDevelopment())
+            if (_env.IsDevelopment()) //debug mode
             {
-                 connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=HMSDB;Integrated Security=True;";
-                //connectionString = $"Server={server};Database={db};MultipleActiveResultSets=true;Integrated Security=false;TrustServerCertificate=true";
+               
+                //connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=HMSDB;Integrated Security=True;";
+                connectionString = $"Server={server};Database={db};MultipleActiveResultSets=true;";
             }
-            else
+            else //release mdode
             {
                 var userName = _appConfig.GetConnectionString("UserName");
                 var password = _appConfig.GetConnectionString("Password");

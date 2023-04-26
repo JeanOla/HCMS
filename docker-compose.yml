@@ -1,21 +1,47 @@
-version: '3.4'
+version: '1.0'
 services:
-  hcms:
-    image: hcms
-    build:
-      context: .
-      dockerfile: hcms/Dockerfile
-    ports:
-      - 5001:80
-    environment:
-      - ConnectionStrings__DefaultConnection=Server=hcmssql;Database=HCMSDB;User Id=sa;Password=Pa$$w0rd!;Integrated Security=false;TrustServerCertificate=true;
-    depends_on:
-      - hcmssql
-    restart: on-failure
-  hcmssql:
+  hcmsdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
-      - 6001:6001
-    environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Pa$$w0rd!
+      - 1433:1433
+    environment: 
+    - ACCEPT_EULA=Y
+    - MSSQL_SA_PASSWORD=P@ssw0rd123
+  hcmswebapp:
+    image: hcmswebapp
+    build:
+      context: .
+      dockerfile: HCMS/Dockerfile
+    ports: 
+      - 5001:80
+    environment: 
+      - ConnectionStrings__Server=hcmsdb
+      - ConnectionStrings__DB=HCMSDB
+      - ConnectionStrings__Username=sa
+      - ConnectionStrings__Password=P@ssw0rd123
+    depends_on:
+      - hcmsdb
+    restart: on-failure
+  hrmsapi:
+    image: hcmsapi
+    build:
+      context: .
+      dockerfile: HCMSapi/Dockerfile
+    ports: 
+      - 6001:80
+    environment: 
+      - ConnectionStrings__Server=hcmsdb
+      - ConnectionStrings__DB=HCMSDB
+      - ConnectionStrings__Username=sa
+      - ConnectionStrings__Password=P@ssw0rd123
+    depends_on:
+      - hcmsdb
+    restart: on-failure
+    
+
+
+
+
+
+
+

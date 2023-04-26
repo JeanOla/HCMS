@@ -35,7 +35,7 @@ namespace HCMS.data
               firstName = "Juan",
               middleName = "Dela",
               lastName = "Cruz",
-              dob = null,
+              dob = DateTime.Now,
               address = "Sta. Rosa, Laguna",
               specialityId = null,
               Gender = "Male",

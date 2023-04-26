@@ -128,12 +128,12 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <label asp-for="@Model.medical.allergy" class="control-label">Does the patient have allergy? if not, type "No"</label>
+                                            <label asp-for="@Model.medical.allergy" class="control-label">is the patient have any allergy? if yes, please type what allergy does the patient have. if None, type "No".</label>
                                             <input asp-for="@Model.medical.allergy" class="form-control" />
                                             <span asp-validation-for="@Model.medical.allergy" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="@Model.medical.medication" class="control-label">Does the patient take medication/s? if not, type "No"</label>
+                                            <label asp-for="@Model.medical.medication" class="control-label">Does the patient take medication/s?if yes, please type the medication that the patient takes.if not, type "No"</label>
                                             <input asp-for="@Model.medical.medication" class="form-control" />
                                             <span asp-validation-for="@Model.medical.allergy" class="text-danger"></span>
                                         </div>
@@ -149,12 +149,12 @@
                                         @Html.RadioButtonFor(model => model.medical.diabetic, "Yes")
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="@Model.medical.surgery" class="control-label">Does the Patient Undergo any Surgery or an Operation? if not, type "No"</label>
+                                        <label asp-for="@Model.medical.surgery" class="control-label">Does the Patient Undergo any Surgery or an Operation? if yes, please type the details. if not, type "No"</label>
                                         <input asp-for="@Model.medical.surgery" class="form-control" />
                                         <span asp-validation-for="@Model.medical.surgery" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="@Model.medical.vacinated" class="control-label">Is the Patient Vacinated? if not, type "No"</label>
+                                        <label asp-for="@Model.medical.vacinated" class="control-label">Is the Patient Vacinated? if yes, please type the details. if not, type "No"</label>
                                         <input asp-for="@Model.medical.vacinated" class="form-control" />
                                         <span asp-validation-for="@Model.medical.vacinated" class="text-danger"></span>
                                     </div>

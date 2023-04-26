@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    [Migration("20230414131148_changeAppointmentDaytoDateTime")]
-    partial class changeAppointmentDaytoDateTime
+    [Migration("20230424104516_fixdb")]
+    partial class fixdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,6 +95,9 @@ namespace HCMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("medicalLicenseNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("middleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -119,25 +122,26 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39ebbe9f-7d1e-454b-b30e-9eaa3ca03bdf",
+                            Id = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "afa6d500-a274-426d-a196-1f6194f20c5e",
-                            Email = "juandelacruz@gmail.com",
+                            ConcurrencyStamp = "766d002d-abf5-4139-8ed9-2d95ce07ac8a",
+                            Email = "adminjuan@gmail.com",
                             EmailConfirmed = false,
                             Gender = "Male",
                             LockoutEnabled = false,
-                            PasswordHash = "juandelacruz123",
+                            NormalizedEmail = "ADMINJUAN@GMAIL.COM",
+                            NormalizedUserName = "ADMINJUAN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOGwxNiS16aj5gtKMaYUr/+fmF7utY7a1q+cCwfNOOoyORGRend6ecL1uDiAQth+6A==",
                             PhoneNumber = "09191231231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "247385b0-178f-4dd7-98a5-3a7a6e5a8f1b",
+                            SecurityStamp = "03e9225a-3cd7-442f-93f0-3c01f727c166",
                             TwoFactorEnabled = false,
-                            UserName = "juandc",
+                            UserName = "adminjuan@gmail.com",
                             address = "Sta. Rosa, Laguna",
-                            dob = new DateTime(2023, 4, 14, 21, 11, 47, 552, DateTimeKind.Local).AddTicks(7922),
+                            dob = new DateTime(2023, 4, 24, 18, 45, 15, 982, DateTimeKind.Local).AddTicks(8067),
                             firstName = "Juan",
                             lastName = "Cruz",
-                            middleName = "Dela",
-                            specialityId = 1
+                            middleName = "Dela"
                         });
                 });
 
@@ -266,6 +270,7 @@ namespace HCMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("dob")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("firstName")
@@ -298,6 +303,7 @@ namespace HCMS.Migrations
                             Id = 1,
                             Email = "ljolaguer@email.com",
                             address = "Cabuyao, Laguna",
+                            dob = new DateTime(2023, 4, 24, 18, 45, 15, 984, DateTimeKind.Local).AddTicks(9832),
                             firstName = "Lhener Jean",
                             gender = "Male",
                             lastName = "Olaguer",
@@ -390,15 +396,15 @@ namespace HCMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fb3d0817-3476-4eaf-a27e-2e11c1ec2464",
-                            ConcurrencyStamp = "ac057691-e998-49e3-b211-d199107ce09f",
+                            Id = "fb63abec-98f5-448e-8f56-302fafd16df4",
+                            ConcurrencyStamp = "a9bf343b-fbe6-4caa-93e0-65019cf22dfe",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ed5765ab-8ac8-420a-b933-2ce2aee02e87",
-                            ConcurrencyStamp = "d18436d4-8f26-4c50-bb8b-aa4c6372c02d",
+                            Id = "5c965850-234a-4d90-9c24-024ebfac6f20",
+                            ConcurrencyStamp = "acb97ac7-1443-4744-8a54-b7a0ad5167cf",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         });
@@ -489,6 +495,13 @@ namespace HCMS.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
+                            RoleId = "fb63abec-98f5-448e-8f56-302fafd16df4"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

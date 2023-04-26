@@ -1,0 +1,146 @@
+#Namespace
+apiVersion: v1
+kind: Namespace
+metadata: 
+  name: hcms
+
+#SQL Server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hcmsdb
+  namespace: hcms
+spec:
+  selector:
+    matchLabels:
+      app: hcmsdb
+  template:
+    metadata:
+      labels:
+        app: hcmsdb
+    spec:
+      containers:
+      - name: hcmsdb
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+        - containerPort: 1433
+        env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: MSSQL_SA_PASSWORD
+            value: P@ssw0rd123
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hcmsdb
+  namespace: hcms
+  labels: 
+    app: hcmsdb
+spec:
+  selector:
+    app: hcmsdb
+  ports:
+  - name: tcp
+    port: 1433
+    targetPort: 1433
+  type: NodePort
+
+#Web App
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hcmsweb
+  namespace: hcms
+spec:
+  selector:
+    matchLabels:
+      app: hcmsweb
+  template:
+    metadata:
+      labels:
+        app: hcmsweb
+    spec:
+      containers:
+      - name: hcmsweb
+        image: ljola/hcms_web:1.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: ConnectionStrings__Server
+          value: hcmsdb
+        - name: ConnectionStrings__DB
+          value: HCMSDB
+        - name: ConnectionStrings__Username
+          value: sa
+        - name: ConnectionStrings__Password
+          value: P@ssw0rd123
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hcmsweb
+  namespace: hcms
+  labels: 
+    app: hcmsweb
+spec:
+  selector:
+    app: hcmsweb
+  ports:
+  - name: tcp
+    port: 5001
+    targetPort: 80
+  type: NodePort
+#WebAPI
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hcmsapi
+  namespace: hcms
+spec:
+  selector:
+    matchLabels:
+      app: hcmsapi
+  template:
+    metadata:
+      labels:
+        app: hcmsapi
+    spec:
+      containers:
+      - name: hcmsapi
+        image: ljola/hcms_api:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: ConnectionStrings__Server
+          value: hcmsdb
+        - name: ConnectionStrings__DB
+          value: HCMSDB
+        - name: ConnectionStrings__Username
+          value: sa
+        - name: ConnectionStrings__Password
+          value: P@ssw0rd123
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hcmsapi
+  namespace: hcms
+  labels: 
+    app: hcmsapi
+spec:
+  selector:
+    app: hcmsapi
+  ports:
+  - name: tcp
+    port: 6001
+    targetPort: 80
+  type: NodePort
+
+
+

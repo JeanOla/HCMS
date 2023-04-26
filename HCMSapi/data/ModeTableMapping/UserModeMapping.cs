@@ -35,62 +35,62 @@ namespace HCMSapi.data.ModeTableMapping
         }
         public static void SeedDafaultData(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Patient>().HasData(
-               new Patient
-               {
-                   Id = 1,
-                   firstName = "Lhener Jean",
-                  middleName = "Rareza",
-                  lastName = "Olaguer",
-                  Email = "ljolaguer@email.com",
-                  address ="Cabuyao, Laguna",
-                  phone = "09504645926",
-                  gender = "Male"
-               }
-               );
-            modelBuilder.Entity<MedicalRecord>().HasData(
-             new MedicalRecord
-             {
-                 Id = 1,
-                 patientId = 1,
-                 allergy = null,
-                 medication = null,
-                 bloodType = "A+",
-                 diabetic = "Yes",
-                 surgery = null,
-                 vacinated = null,
-             }
+           // modelBuilder.Entity<Patient>().HasData(
+           //    new Patient
+           //    {
+           //        Id = 1,
+           //        firstName = "Lhener Jean",
+           //       middleName = "Rareza",
+           //       lastName = "Olaguer",
+           //       Email = "ljolaguer@email.com",
+           //       address ="Cabuyao, Laguna",
+           //       phone = "09504645926",
+           //       gender = "Male"
+           //    }
+           //    );
+           // modelBuilder.Entity<MedicalRecord>().HasData(
+           //  new MedicalRecord
+           //  {
+           //      Id = 1,
+           //      patientId = 1,
+           //      allergy = null,
+           //      medication = null,
+           //      bloodType = "A+",
+           //      diabetic = "Yes",
+           //      surgery = null,
+           //      vacinated = null,
+           //  }
 
-             );
-            modelBuilder.Entity<IdentityRole>().ToTable("aspnetRoles")
-           .HasData(
-               new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
-               new IdentityRole {Name = "Doctor", NormalizedName = "DOCTOR" }
-           );
-            modelBuilder.Entity<Speciality>().HasData(
-             new Speciality
-             {
-                 Id = 1,
-                 SpecialityName = "Neurology"
-             }
-             );
+           //  );
+           // modelBuilder.Entity<IdentityRole>().ToTable("aspnetRoles")
+           //.HasData(
+           //    new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
+           //    new IdentityRole {Name = "Doctor", NormalizedName = "DOCTOR" }
+           //);
+           // modelBuilder.Entity<Speciality>().HasData(
+           //  new Speciality
+           //  {
+           //      Id = 1,
+           //      SpecialityName = "Neurology"
+           //  }
+           //  );
 
-            modelBuilder.Entity<ApplicationUser>().HasData(
-             new ApplicationUser
-             {
-                 firstName = "Juan",
-                 middleName = "Dela",
-                 lastName = "Cruz",
-                 dob = DateTime.Now,
-                 address = "Sta. Rosa, Laguna",
-                 specialityId = 1,
-                 Gender = "Male",
-                 UserName = "juandc",
-                 Email = "juandelacruz@gmail.com",
-                 PasswordHash = "juandelacruz123",
-                 PhoneNumber = "09191231231",
-            }
-            );
+           // modelBuilder.Entity<ApplicationUser>().HasData(
+           //  new ApplicationUser
+           //  {
+           //      firstName = "Juan",
+           //      middleName = "Dela",
+           //      lastName = "Cruz",
+           //      dob = DateTime.Now,
+           //      address = "Sta. Rosa, Laguna",
+           //      specialityId = 1,
+           //      Gender = "Male",
+           //      UserName = "juandc",
+           //      Email = "juandelacruz@gmail.com",
+           //      PasswordHash = "juandelacruz123",
+           //      PhoneNumber = "09191231231",
+           // }
+           // );
         }
     }
 }

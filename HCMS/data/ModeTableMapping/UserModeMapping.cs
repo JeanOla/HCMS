@@ -40,13 +40,13 @@ namespace HCMS.data.ModeTableMapping
                {
                    Id = 1,
                    firstName = "Lhener Jean",
-                  middleName = "Rareza",
-                  lastName = "Olaguer",
-                  Email = "ljolaguer@email.com",
-                  address ="Cabuyao, Laguna",
-                  phone = "09504645926",
-                  gender = "Male",
-                  dob = DateTime.Now,
+                   middleName = "Rareza",
+                   lastName = "Olaguer",
+                   Email = "ljolaguer@email.com",
+                   address = "Cabuyao, Laguna",
+                   phone = "09504645926",
+                   gender = "Male",
+                   dob = DateTime.Now,
                }
                );
             modelBuilder.Entity<MedicalRecord>().HasData(
@@ -63,11 +63,6 @@ namespace HCMS.data.ModeTableMapping
              }
 
             );
-           // modelBuilder.Entity<IdentityRole>().ToTable("aspnetRoles")
-           //.HasData(
-           //    new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
-           //    new IdentityRole {Name = "Doctor", NormalizedName = "DOCTOR" }
-           //);
             modelBuilder.Entity<Speciality>().HasData(
              new Speciality
              {
@@ -75,24 +70,6 @@ namespace HCMS.data.ModeTableMapping
                  SpecialityName = "Neurology"
              }
              );
-
-            /*modelBuilder.Entity<ApplicationUser>().HasData(
-             new ApplicationUser
-             {
-                 firstName = "Juan",
-                 middleName = "Dela",
-                 lastName = "Cruz",
-                 dob = DateTime.Now,
-                 address = "Sta. Rosa, Laguna",
-                 specialityId = null,
-                 Gender = "Male",
-                 UserName = "juandelacruz@gmail.com",
-                 Email = "juandelacruz@gmail.com",
-                 PasswordHash = "juandelacruz123",
-                 PhoneNumber = "09191231231"
-                 
-            }
-            );*/
         }
     }
 }

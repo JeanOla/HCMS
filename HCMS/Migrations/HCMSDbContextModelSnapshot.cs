@@ -122,20 +122,21 @@ namespace HCMS.Migrations
                         {
                             Id = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f8a7dac-ae70-44e6-8c39-4f6d72e07ea5",
+                            ConcurrencyStamp = "766d002d-abf5-4139-8ed9-2d95ce07ac8a",
                             Email = "adminjuan@gmail.com",
                             EmailConfirmed = false,
                             Gender = "Male",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINJUAN@GMAIL.COM",
                             NormalizedUserName = "ADMINJUAN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPpwMvr4Rchr3u6nA3vgieT6iabJQbfj2I+UDwykhB/TDVHadz+C3I81kJHAheHPGA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOGwxNiS16aj5gtKMaYUr/+fmF7utY7a1q+cCwfNOOoyORGRend6ecL1uDiAQth+6A==",
                             PhoneNumber = "09191231231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "16a1fe2b-7ae3-4405-b7b7-5733195de312",
+                            SecurityStamp = "03e9225a-3cd7-442f-93f0-3c01f727c166",
                             TwoFactorEnabled = false,
                             UserName = "adminjuan@gmail.com",
                             address = "Sta. Rosa, Laguna",
+                            dob = new DateTime(2023, 4, 24, 18, 45, 15, 982, DateTimeKind.Local).AddTicks(8067),
                             firstName = "Juan",
                             lastName = "Cruz",
                             middleName = "Dela"
@@ -173,7 +174,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("caseId");
 
-                    b.ToTable("appointments", (string)null);
+                    b.ToTable("appointments");
                 });
 
             modelBuilder.Entity("HCMS.Models.Cases", b =>
@@ -201,7 +202,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("patientId");
 
-                    b.ToTable("cases", (string)null);
+                    b.ToTable("cases");
                 });
 
             modelBuilder.Entity("HCMS.Models.MedicalRecord", b =>
@@ -238,7 +239,7 @@ namespace HCMS.Migrations
                     b.HasIndex("patientId")
                         .IsUnique();
 
-                    b.ToTable("medicalRecords", (string)null);
+                    b.ToTable("medicalRecords");
 
                     b.HasData(
                         new
@@ -292,7 +293,7 @@ namespace HCMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("patients", (string)null);
+                    b.ToTable("patients");
 
                     b.HasData(
                         new
@@ -300,7 +301,7 @@ namespace HCMS.Migrations
                             Id = 1,
                             Email = "ljolaguer@email.com",
                             address = "Cabuyao, Laguna",
-                            dob = new DateTime(2023, 4, 17, 22, 31, 21, 574, DateTimeKind.Local).AddTicks(722),
+                            dob = new DateTime(2023, 4, 24, 18, 45, 15, 984, DateTimeKind.Local).AddTicks(9832),
                             firstName = "Lhener Jean",
                             gender = "Male",
                             lastName = "Olaguer",
@@ -337,7 +338,7 @@ namespace HCMS.Migrations
 
                     b.HasIndex("doctorId");
 
-                    b.ToTable("schedules", (string)null);
+                    b.ToTable("schedules");
                 });
 
             modelBuilder.Entity("HCMS.Models.Speciality", b =>
@@ -354,7 +355,7 @@ namespace HCMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("specialities", (string)null);
+                    b.ToTable("specialities");
 
                     b.HasData(
                         new
@@ -394,14 +395,14 @@ namespace HCMS.Migrations
                         new
                         {
                             Id = "fb63abec-98f5-448e-8f56-302fafd16df4",
-                            ConcurrencyStamp = "b2363851-ee5e-499e-9bae-6e37abaa2d87",
+                            ConcurrencyStamp = "a9bf343b-fbe6-4caa-93e0-65019cf22dfe",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5c965850-234a-4d90-9c24-024ebfac6f20",
-                            ConcurrencyStamp = "e9feb22e-8264-4b76-b9ac-55a362d2b6de",
+                            ConcurrencyStamp = "acb97ac7-1443-4744-8a54-b7a0ad5167cf",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         });
