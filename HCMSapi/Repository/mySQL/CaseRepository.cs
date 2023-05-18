@@ -1,5 +1,6 @@
 ﻿using HCMSapi.data;
 using HCMSapi.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace HCMSapi.Repository.mySQL
@@ -18,37 +19,62 @@ namespace HCMSapi.Repository.mySQL
         }
         public Cases addCase(Cases cases)
         {
-            if (cases.Id == 0 || cases.Id == null)
-            {
-                return cases;
-                
-            }
-            _dbContext.Add(cases);
-            _dbContext.SaveChanges();
+            //SP 
+            var patientId = new SqlParameter("@patientId", cases.patientId);
+            var diagnosis = new SqlParameter("@diagnosis", cases.diagnosis ?? (object)DBNull.Value);
+            var treatmentPlan = new SqlParameter("@treatmentPlan", cases.treatmentPlan ?? (object)DBNull.Value);
+            var reason = new SqlParameter("@reason", cases.reason);
+
+           _dbContext.Database.ExecuteSqlRaw("EXEC addCase @patientId, @diagnosis, @treatmentPlan,@reason", patientId, diagnosis,treatmentPlan, reason );
             return cases;
+            //entity framework
+            //_dbContext.Add(cases);
+            //_dbContext.SaveChanges();
+            //return cases;
 
         }
         public List<Cases> getCases()
         {
-            return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList();
+            //stored procedure
+            return _dbContext.cases.FromSqlRaw($"getCases").ToList();
+            //entity framework
+            //return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList();
         }
         public Cases GetCaseById(int id)
         {
-            return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList().FirstOrDefault(c => c.Id == id);
+            //stored procedure
+            return _dbContext.cases.FromSqlRaw($"getCases").ToList().FirstOrDefault(c => c.Id == id);
+            //entity framework
+            //return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList().FirstOrDefault(c => c.Id == id);
         }
-        public Cases updateCase(Cases casee)
+        public Cases updateCase(Cases cases)
         {
-            _dbContext.cases.Attach(casee);
-            _dbContext.Update(casee);
-            _dbContext.SaveChanges();
-            return casee;
+            var patientId = new SqlParameter("@patientId", cases.patientId);
+            var diagnosis = new SqlParameter("@diagnosis", cases.diagnosis ?? (object)DBNull.Value);
+            var treatmentPlan = new SqlParameter("@treatmentPlan", cases.treatmentPlan ?? (object)DBNull.Value);
+            var reason = new SqlParameter("@reason", cases.reason);
+            var Id = new SqlParameter("@Id", cases.Id);
+
+            _dbContext.Database.ExecuteSqlRaw("EXEC updateCase @patientId, @diagnosis, @treatmentPlan,@reason,@Id ", patientId, diagnosis, treatmentPlan, reason, Id);
+            return cases;
+            //_dbContext.cases.Attach(casee);
+            //_dbContext.Update(casee);
+            //_dbContext.SaveChanges();
+           // return casee;
         }
         public Cases DeleteCase(int Id)
         {
-            var Case = GetCaseById(Id);
-            _dbContext.Remove(Case);
-            _dbContext.SaveChanges();
-            return Case;
+            //stored procedure
+            var cases = GetCaseById(Id);
+
+            var id = new SqlParameter("@Id",Id);
+            _dbContext.Database.ExecuteSqlRaw("EXEC deleteCase @Id ", id);
+            return cases;
+            //entity framework
+            //var Case = GetCaseById(Id);
+            //_dbContext.Remove(Case);
+            //_dbContext.SaveChanges();
+            //return Case;
         }
 
     }

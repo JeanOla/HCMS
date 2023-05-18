@@ -52,7 +52,7 @@ namespace HCMSapi.Controllers
             if (ModelState.IsValid)
             {
                 var admin = await _userManager.FindByNameAsync(loginDTO.UserName);
-                if (admin != null && admin.specialityId == null || admin.specialityId == 0)
+                if (admin != null)
                 {
                     var loginResult = await _repo.SignInUserAsync(loginDTO);
                     if (loginResult.Succeeded)
@@ -69,8 +69,6 @@ namespace HCMSapi.Controllers
                         }
                     }
                 }
-                return BadRequest("Admin users can only acccess API");
-              
             }
             return BadRequest();
         }

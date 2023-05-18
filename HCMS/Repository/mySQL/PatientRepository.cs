@@ -26,7 +26,9 @@ namespace HCMS.Repository.mySQL
         }
         public List<Patient> getPatients()
         {
-            return _dbContext.patients.AsNoTracking().ToList();
+            //store procedure
+            return _dbContext.patients.FromSqlRaw($"getPatients").ToList();
+           // return _dbContext.patients.AsNoTracking().ToList();
         }
         public Patient GetPatienById(int Id)
         {

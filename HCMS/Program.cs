@@ -9,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//api 
+builder.Services.AddSession();
+
 
 builder.Services.AddDbContext<HCMSDbContext>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -29,6 +32,10 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
+//api
+app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.Automigrate();
 app.UseRouting();
@@ -36,6 +43,9 @@ app.UseRouting();
 //app.UseAuthorization();
 app.UseAuthentication();
 app.UseAuthorization();
+//api
+app.UseSession();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=login}/{id?}");

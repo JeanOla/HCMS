@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using TodoAPI.Configurations;
+using HCMSapi.CustomMiddleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,22 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+//wrong port to test
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    {
+        //policy.AllowAnyOrigin()
+        policy.WithOrigins("https://localhost:44360", "mydomain.com")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
@@ -97,7 +114,9 @@ var app = builder.Build();
 
 
 
-
+app.UseCors(MyAllowSpecificOrigins);
+// has a valid api key if it is valid then allow to access the endpoint if not deny
+app.UseMiddleware<ApiKeyAuthMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

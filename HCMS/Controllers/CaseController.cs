@@ -1,39 +1,49 @@
-﻿using HCMS.Models;
+﻿using HCMS.Migrations;
+using HCMS.Models;
 using HCMS.Repository;
+using HCMS.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.VisualBasic;
 
 namespace HCMS.Controllers
 {
     public class CaseController : Controller
     {
         ICaseRepository _repo;
+        
         public CaseController(ICaseRepository repo)
         {
             
             _repo = repo;
         }
-        [Authorize(Roles = "Admin")]
+       
         [HttpGet]
         public IActionResult Create()
         {
+            var token = HttpContext.Session.GetString("JWToken");
+            if (token == null)
+            {
+                return RedirectToAction("Index");
+            }
             ViewBag.options = new SelectList(_repo.GetPatients(), "Id", "FullName");
             Cases casess = new Cases();
             return View(casess);
         }
-        [Authorize(Roles = "Admin")]
+      
         [HttpPost]
-        public IActionResult Create(Cases cases)
+        public async Task<IActionResult> Create(addCaseViewModel cases)
         {
+            var token = HttpContext.Session.GetString("JWToken");
             ViewBag.options = new SelectList(_repo.GetPatients(), "Id", "FullName");
-            var caseee = _repo.getCases();
-            if (caseee.Any(a => a.rawcase.Equals(cases.rawcase, StringComparison.OrdinalIgnoreCase)))
-            {//check if there is already ongoing appointment for this case
-                ModelState.AddModelError("rawcase", "Patient Case Already Exist.");
-                return View(cases);
-            }
+            //var caseee = await _repo.getCases(token);
+            //if (caseee.Any(a => a.rawcase.Equals(cases.rawcase, StringComparison.OrdinalIgnoreCase)))
+            //{//check if there is already ongoing appointment for this case
+            //    ModelState.AddModelError("rawcase", "Patient Case Already Exist.");
+            //    return View(cases);
+            //}
             if (cases.patientId == null || cases.patientId == 0)
             {
                 ModelState.AddModelError("patientId", "Patient is required");
@@ -44,13 +54,16 @@ namespace HCMS.Controllers
                 ModelState.AddModelError("reason", "reason for consultation is required");
                 return View(cases);
             }
-            _repo.addCase(cases);
+            await _repo.addCase(cases, token);
             return RedirectToAction("Index");
         }
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
-           var casee = _repo.getCases();
-            return View(casee);
+            var token = HttpContext.Session.GetString("JWToken");
+            var cases = await _repo.getCases(token);
+
+            //var casee = _repo.getCases(token);
+            return View(cases);
         }
         [HttpGet]
         public IActionResult Details(int Id)
@@ -67,15 +80,22 @@ namespace HCMS.Controllers
             return View(casee);
         }
         [HttpPost]
-        public IActionResult Update(Cases cases)
+        public async Task<IActionResult> Update(UpdateCaseViewModel cases)
         {
-            _repo.updateCase(cases);
+            var token = HttpContext.Session.GetString("JWToken");
+            await _repo.updateCase(cases,token);
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int Id)
+       // [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int Id)
         {
-           _repo.DeleteCase(Id);
+            var token = HttpContext.Session.GetString("JWToken");
+            var res = _repo.GetCaseById(Id);
+            if (res == null)
+            {
+                return RedirectToAction("Index");
+            }
+           await _repo.DeleteCase(Id,token);
             return RedirectToAction("Index");
         }
     }

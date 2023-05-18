@@ -4,6 +4,7 @@ using HCMS.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCMS.Migrations
 {
     [DbContext(typeof(HCMSDbContext))]
-    partial class HCMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230517034424_getCases")]
+    partial class getCases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,21 +124,21 @@ namespace HCMS.Migrations
                         {
                             Id = "f0fbf9f0-eb17-4c87-9c76-9de5451f74ae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "792ac2b5-ed3d-419b-9f70-ad5ae4a5f721",
+                            ConcurrencyStamp = "30087626-1b70-4341-b238-2210437c402b",
                             Email = "adminjuan@gmail.com",
                             EmailConfirmed = false,
                             Gender = "Male",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINJUAN@GMAIL.COM",
                             NormalizedUserName = "ADMINJUAN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBErig8XrSzdxcenmNR34WidXQ3R0QjmKJsgh/Ck5eGr9NfFedf7XRS3pWCxyUiINA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGjdxJ8PQgX/RplDK2j7TanMpq9mtvWKo1sZsXVPJLG8+PmfwkZt1sHaH5uJkzx+Vw==",
                             PhoneNumber = "09191231231",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2979b7b1-a38a-4ab8-8da6-832a57ac2eb3",
+                            SecurityStamp = "160b8e61-5dba-4243-be1e-01e63765838c",
                             TwoFactorEnabled = false,
                             UserName = "adminjuan@gmail.com",
                             address = "Sta. Rosa, Laguna",
-                            dob = new DateTime(2023, 5, 18, 9, 53, 29, 393, DateTimeKind.Local).AddTicks(9246),
+                            dob = new DateTime(2023, 5, 17, 11, 44, 23, 791, DateTimeKind.Local).AddTicks(2295),
                             firstName = "Juan",
                             lastName = "Cruz",
                             middleName = "Dela"
@@ -301,7 +303,7 @@ namespace HCMS.Migrations
                             Id = 1,
                             Email = "ljolaguer@email.com",
                             address = "Cabuyao, Laguna",
-                            dob = new DateTime(2023, 5, 18, 9, 53, 29, 397, DateTimeKind.Local).AddTicks(6644),
+                            dob = new DateTime(2023, 5, 17, 11, 44, 23, 794, DateTimeKind.Local).AddTicks(1594),
                             firstName = "Lhener Jean",
                             gender = "Male",
                             lastName = "Olaguer",
@@ -395,14 +397,14 @@ namespace HCMS.Migrations
                         new
                         {
                             Id = "fb63abec-98f5-448e-8f56-302fafd16df4",
-                            ConcurrencyStamp = "194a4fb5-0419-4ee5-b610-139ede17aee7",
+                            ConcurrencyStamp = "8d719f06-65e2-4458-a740-9250a32acf93",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5c965850-234a-4d90-9c24-024ebfac6f20",
-                            ConcurrencyStamp = "c7adcfa0-bdf3-4b54-9788-e5710b3d7326",
+                            ConcurrencyStamp = "60afed7c-757b-45f6-93eb-3fba37a33ad3",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         });

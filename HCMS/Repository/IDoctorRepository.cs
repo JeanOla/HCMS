@@ -1,4 +1,5 @@
 ﻿using HCMS.Models;
+using HCMS.ViewModel;
 
 namespace HCMS.Repository
 {
@@ -13,5 +14,8 @@ namespace HCMS.Repository
         ApplicationUser getDoctorById(string Id);
 
         List<ApplicationUser>getDoctorsExcept(string email);
+
+        //new
+        Task<string> SignInUserAsync(LoginUserViewModel loginUserViewModel);
     }
 }

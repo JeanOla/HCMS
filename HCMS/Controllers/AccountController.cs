@@ -3,10 +3,12 @@ using HCMS.Repository;
 using HCMS.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -247,15 +249,24 @@ namespace HCMS.Controllers
         public async Task<IActionResult> Login(LoginUserViewModel userViewModel)
         {
             if (ModelState.IsValid)
-            {
-                // login activity -> cookie [Roles and Claims]
+                {
+
                 var result = await _signInManager.PasswordSignInAsync(userViewModel.UserName, userViewModel.Password, userViewModel.RememberMe, false);
                 //login cookie and transfter to the client 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "Home");
+                    var res = await _repo.SignInUserAsync(userViewModel);
+
+                    if (res is not null)
+                    {
+
+                        HttpContext.Session.SetString("JWToken", res);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    ModelState.AddModelError("validation", "invalid login credentials");
                 }
-                ModelState.AddModelError("validation", "invalid login credentials");
+               
             }
             return View(userViewModel);
         }

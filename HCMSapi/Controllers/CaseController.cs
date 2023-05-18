@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using HCMSapi.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace HCMSapi.Controllers
 {
@@ -29,44 +30,43 @@ namespace HCMSapi.Controllers
         [HttpGet("Get All Patient Cases")]
         public IActionResult getPatientCases()
         {
-
-            /*  List<Cases> cases;
-              try
-              {
-                   cases = _repo.getCases();
-                  if (cases == null)
-                      return NoContent();
-              }
-              catch (Exception ex)
-              {
-                  return StatusCode(500, ex.Message);
-              }
-              var options = new JsonSerializerOptions
-              {
-                  ReferenceHandler = ReferenceHandler.Preserve,
-                  MaxDepth = 32,
-                  WriteIndented = true
-              };
-              var json = JsonSerializer.Serialize(cases, options);
-
-              return Ok(json);*/
-
             try
             {
-                var cases = _repo.getCases().Select(s => new
-                {
-                    PatientName = s.patient.FullName,
-                    reason = s.reason,
-                    DoctorDiagnosis = s.diagnosis,
-                    TreatementPlan = s.treatmentPlan
-                }).ToList();
+                /* var cases = _repo.getCases().Select(s => new
+                 {
+                     Id = s.Id,
+                     PatientName = s.patient.FullName,
+                     reason = s.reason,
+                     DoctorDiagnosis = s.diagnosis,
+                     TreatementPlan = s.treatmentPlan
+                 }).ToList();
 
-                if (cases.Count == 0)
+                 if (cases.Count == 0)
+                 {
+                     return NoContent();
+                 }
+
+                 return Ok(cases);*/
+                /*List<Cases> cases;
+                try
                 {
-                    return NoContent();
+                    cases = _repo.getCases();
+                    if (cases == null)
+                        return NoContent();
                 }
-
-                return Ok(cases);
+                catch (Exception ex)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+                var options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    MaxDepth = 32,
+                    WriteIndented = true
+                };
+                var json = JsonSerializer.Serialize(cases, options);
+                */
+                return Ok(_repo.getCases());
             }
             catch (Exception ex)
             {
@@ -80,8 +80,6 @@ namespace HCMSapi.Controllers
                 return BadRequest("No data provided");
             if (ModelState.IsValid)
             {
-               
-
                 var caase = _mapper.Map<Cases>(addPatientCase);
 
                 var newcase = _repo.addCase(caase);
@@ -110,6 +108,37 @@ namespace HCMSapi.Controllers
             return Ok(cases);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateCase(int id, [FromBody] UpdateCasaeDTO updatedCase)
+        {
+            var existingCase = _repo.GetCaseById(id);
+
+            if (existingCase == null)
+            {
+                return NotFound();
+            }
+            existingCase.Id = id;
+            existingCase.reason = updatedCase.reason;
+            existingCase.treatmentPlan = updatedCase.treatmentPlan;
+            existingCase.diagnosis = updatedCase.diagnosis;
+            existingCase.patientId = updatedCase.patientId;
+           // var caase = _mapper.Map<Cases>(updatedCase);
+            _repo.updateCase(existingCase);
+            return Ok(updatedCase);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCase(int id)
+        {
+            var existingCase = _repo.GetCaseById(id);
+
+            if (existingCase == null)
+            {
+                return NotFound();
+            }
+            _repo.DeleteCase(id);
+            return Ok(existingCase);
+        }
 
     }
 }
