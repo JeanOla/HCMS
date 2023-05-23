@@ -66,14 +66,14 @@ namespace HCMS.Repository.mySQL
         public async Task<string> SignInUserAsync(LoginUserViewModel loginUserViewModel)
         {
             // rest api call
-            var newTodoAsString = JsonConvert.SerializeObject(loginUserViewModel);
-            var requestBody = new StringContent(newTodoAsString, Encoding.UTF8, "application/json");
+            var accountDetails = JsonConvert.SerializeObject(loginUserViewModel);
+            var requestBody = new StringContent(accountDetails, Encoding.UTF8, "application/json");
             _httpClient.DefaultRequestHeaders.Add("ApiKey", _configs.GetValue<string>("ApiKey"));
             var response = await _httpClient.PostAsync("/api/Account/login", requestBody);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                // extract token from responce and store it in session
+                // extract token from response and store it in session as string
                 var token = JObject.Parse(content)["token"].ToString();
 
                 return token;

@@ -14,5 +14,8 @@ namespace HCMS.Repository
         Task<Cases?> updateCase(UpdateCaseViewModel casee, string token);
         // Cases DeleteCase(int Id, string token);
          Task<Cases?> DeleteCase(int Id, string token);
+        List<Cases> getAllCases();
+
     }
+
 }

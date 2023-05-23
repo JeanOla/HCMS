@@ -58,13 +58,12 @@ builder.Services.AddAuthentication(options =>
 });
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-//wrong port to test
+
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy(name: MyAllowSpecificOrigins, policy =>
     {
-        //policy.AllowAnyOrigin()
-        policy.WithOrigins("https://localhost:44360", "mydomain.com")
+        policy.WithOrigins("https://localhost:44360")
         .AllowAnyHeader()
         .AllowAnyMethod();
     });

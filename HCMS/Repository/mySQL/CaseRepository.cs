@@ -126,5 +126,10 @@ namespace HCMS.Repository.mySQL
             //}
 
         }
+
+        public List<Cases> getAllCases()
+        {
+            return _dbContext.cases.Include(p => p.patient).AsNoTracking().ToList();
+        }
     }
 }

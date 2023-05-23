@@ -29,7 +29,7 @@ namespace HCMS.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.options = new SelectList(_repo.GetPatients(), "Id", "FullName");
-            Cases casess = new Cases();
+            addCaseViewModel casess = new addCaseViewModel();
             return View(casess);
         }
       
@@ -38,12 +38,12 @@ namespace HCMS.Controllers
         {
             var token = HttpContext.Session.GetString("JWToken");
             ViewBag.options = new SelectList(_repo.GetPatients(), "Id", "FullName");
-            //var caseee = await _repo.getCases(token);
-            //if (caseee.Any(a => a.rawcase.Equals(cases.rawcase, StringComparison.OrdinalIgnoreCase)))
-            //{//check if there is already ongoing appointment for this case
-            //    ModelState.AddModelError("rawcase", "Patient Case Already Exist.");
-            //    return View(cases);
-            //}
+            var caseee =  _repo.getAllCases();
+            if (caseee.Any(a => a.rawcase.Equals(cases.rawcase, StringComparison.OrdinalIgnoreCase)))
+            {//check if there is already ongoing appointment for this case
+                ModelState.AddModelError("rawcase", "Patient Case Already Exist.");
+                return View(cases);
+            }
             if (cases.patientId == null || cases.patientId == 0)
             {
                 ModelState.AddModelError("patientId", "Patient is required");

@@ -266,7 +266,9 @@ namespace HCMS.Controllers
                     }
                     ModelState.AddModelError("validation", "invalid login credentials");
                 }
-               
+                ModelState.AddModelError("validation", "invalid login credentials");
+
+
             }
             return View(userViewModel);
         }
